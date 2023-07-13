@@ -5,7 +5,7 @@ import Container from '@/components/FormComponents/Container';
 import FormGroup from '@/components/FormComponents/FormGroup';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useState, ChangeEvent, MouseEvent } from 'react';
+import { useState, ChangeEvent, MouseEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks';
 import fetchUserThunk from '@/store/thunks/fetchUserThunk';
 import { UserBody } from '@/types/userTypes';
@@ -13,6 +13,7 @@ import styles from '../../styles/Form.module.scss';
 import { useRouter } from 'next/router';
 import { wrapper } from '@/store';
 import { authError } from '@/store/slices/userSlice';
+import AuthLayout from '@/components/GeneralComponents/AuthLayout';
 
 export default function AuthPage({ isLogin }: { isLogin: boolean }) {
   const [email, setEmail] = useState<string>('');
@@ -29,6 +30,11 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
     setPassword(e.target.value);
   };
 
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, [pageTitle]);
+
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const userBody: UserBody = {
@@ -43,34 +49,36 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
   };
 
   return (
-    <div className={styles.authPage}>
-      <Head>
-        <title>{pageTitle}</title>
-        <meta
-          title="description"
-          content={
-            isLogin
-              ? 'Войти для доступа к рабочим пространствам'
-              : 'Зарегистрироваться для доступа и добавлению своих рабочих пространств'
-          }
-        />
-      </Head>
-      <FormGroup>
-        <h1>{isLogin ? 'Войти' : 'Зарегистрироваться'}</h1>
-        <Container>
-          <CompoundLabel>Email: </CompoundLabel>
-          <CompoundInput type="email" value={email} onChange={handleEmail} />
-        </Container>
-        <Container>
-          <CompoundLabel>Пароль: </CompoundLabel>
-          <CompoundInput type="password" value={password} onChange={handlePassword} />
-        </Container>
-        <p className={styles.authPage__errorMessage}>{isError && isError}</p>
-        <CompoundButton disabled={isLoading ? true : false} onClick={handleSubmit}>
-          {isLogin ? 'Войти' : 'Зарегистрироваться'}
-        </CompoundButton>
-      </FormGroup>
-    </div>
+    <AuthLayout>
+      <div className={styles.authPage}>
+        <Head>
+          <title>{pageTitle}</title>
+          <meta
+            title="description"
+            content={
+              isLogin
+                ? 'Войти для доступа к рабочим пространствам'
+                : 'Зарегистрироваться для доступа и добавлению своих рабочих пространств'
+            }
+          />
+        </Head>
+        <FormGroup>
+          <h1>{isLogin ? 'Войти' : 'Зарегистрироваться'}</h1>
+          <Container>
+            <CompoundLabel>Email: </CompoundLabel>
+            <CompoundInput type="email" value={email} onChange={handleEmail} />
+          </Container>
+          <Container>
+            <CompoundLabel>Пароль: </CompoundLabel>
+            <CompoundInput type="password" value={password} onChange={handlePassword} />
+          </Container>
+          <p className={styles.authPage__errorMessage}>{isError && isError}</p>
+          <CompoundButton disabled={isLoading ? true : false} onClick={handleSubmit}>
+            {isLogin ? 'Войти' : 'Зарегистрироваться'}
+          </CompoundButton>
+        </FormGroup>
+      </div>
+    </AuthLayout>
   );
 }
 

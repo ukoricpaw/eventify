@@ -16,8 +16,10 @@ function App({ Component, ...rest }: AppProps) {
 
 App.getInitialProps = wrapper.getInitialAppProps(store => async ctx => {
   let pageProps = {};
-  const { accessToken } = nookies.get(ctx.ctx, { path: '/' });
-  if (!accessToken) {
+  const { refreshToken, visited } = nookies.get(ctx.ctx, { path: '/' });
+  if (!refreshToken) {
+    nookies.destroy(ctx.ctx, 'accessToken');
+  } else if (!visited) {
     await store.dispatch(checkAuthThunk(ctx.ctx.req?.headers?.cookie as string)).then(res => {
       if (typeof res === 'object') {
         nookies.set(ctx.ctx, 'refreshToken', res.refreshToken, {

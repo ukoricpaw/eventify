@@ -2,11 +2,30 @@
 
 * {
   font-family: 'Rubik', sans-serif;
-}
-
-html,
-body,
-p {
   padding: 0;
   margin: 0;
+}
+
+li,
+ol,
+ul {
+  text-decoration: none;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--light-white-color);
+}
+
+// variables
+
+$light-green: #54d8a8;
+$dark-green: #4eca9d;
+$light-white: #fff;
+
+:root {
+  --light-green-color: #{$light-green};
+  --dark-green-color: #{$dark-green};
+  --light-white-color: #{$light-white};
 }

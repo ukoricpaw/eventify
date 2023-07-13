@@ -1,16 +1,51 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { wrapper } from '@/store';
+import { useAppSelector } from '@/hooks/reduxHooks';
+import { userSelector } from '@/store/slices/userSlice';
+import AuthLayout from '@/components/GeneralComponents/AuthLayout';
+import styles from '../styles/Home.module.scss';
+import rightHeaderImage from '../assets/images/rightHeaderSection.png';
+import Image from 'next/image';
+import CompoundButton from '@/components/FormComponents/CompoundButton';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const { isAuth } = useAppSelector(userSelector);
+  const router = useRouter();
+  const navigateToRegister = () => {
+    router.push('/auth/registration');
+  };
+
+  const navigateToWspace = () => {
+    router.push('/');
+  };
+
   return (
-    <div>
+    <AuthLayout>
       <Head>
         <title>Eventify</title>
-        <meta title="description" content="this is my hompage" />
+        <meta title="description" content="this is my homepage" />
       </Head>
-      <Link href={'/auth/login'}>Hello</Link>
-    </div>
+      <header className={styles.headerSection}>
+        <div className={styles.headerSection__leftContainer}>
+          <h1 className={styles.leftContainer__title}>
+            Добро пожаловать в <span className={styles.titleAccent}>Eventify</span> - твоё удобное приложение для
+            организации и управления событиями!
+          </h1>
+          <CompoundButton onClick={isAuth ? navigateToWspace : navigateToRegister}>
+            {isAuth ? 'Войти в систему' : 'Зарегистрироваться'}
+          </CompoundButton>
+        </div>
+        <Image
+          className={styles.rightHeaderImage}
+          src={rightHeaderImage}
+          priority
+          width={575}
+          height={572}
+          alt="rightHeaderImage"
+        />
+      </header>
+    </AuthLayout>
   );
 }
 

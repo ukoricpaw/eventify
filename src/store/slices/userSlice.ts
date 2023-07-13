@@ -1,6 +1,7 @@
 import { UserState, UserType } from '@/types/userTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
+import { AppStore, RootState } from '..';
 
 const initialState: UserState = {
   isAuth: false,
@@ -38,6 +39,6 @@ const userSlice = createSlice({
     },
   },
 });
-
+export const userSelector = (store: RootState) => store.userReducer;
 export const { authError, authLoading, authSuccess } = userSlice.actions;
 export default userSlice.reducer;

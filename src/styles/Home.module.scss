@@ -1,0 +1,36 @@
+.mainHomeLayout {
+  display: flex;
+  justify-content: center;
+  .mainHomeLayout__wrapper {
+    width: 1360px;
+
+    & .headerSection {
+      display: flex;
+      justify-content: space-between;
+
+      & .headerSection__leftContainer {
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+
+        .leftContainer__title {
+          width: 430px;
+          font-size: 32px;
+          font-weight: 400;
+          text-align: center;
+
+          .titleAccent {
+            color: var(--light-green-color);
+          }
+        }
+      }
+
+      & .rightHeaderImage {
+        // flex: 1;
+        object-fit: contain;
+      }
+    }
+  }
+}

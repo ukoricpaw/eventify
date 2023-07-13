@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+
+.navContainer {
+  display: flex;
+  justify-content: center;
+  background-color: var(--light-green-color);
+  color: var(--light-white-color);
+  & .navContainer__list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1360px;
+
+    & .leftListItem {
+      cursor: pointer;
+      font-family: 'Changa One', cursive;
+      text-transform: uppercase;
+      font-size: 40px;
+      margin: 0 35px;
+    }
+    & .rightListItem {
+      cursor: pointer;
+      font-size: 24px;
+      background-color: var(--dark-green-color);
+      padding: 30px 40px;
+    }
+  }
+}
