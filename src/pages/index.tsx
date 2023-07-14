@@ -10,14 +10,14 @@ import CompoundButton from '@/components/FormComponents/CompoundButton';
 import { useRouter } from 'next/router';
 
 export default function Home() {
-  const { isAuth } = useAppSelector(userSelector);
+  const { isAuth, data } = useAppSelector(userSelector);
   const router = useRouter();
   const navigateToRegister = () => {
     router.push('/auth/registration');
   };
 
   const navigateToWspace = () => {
-    router.push('/');
+    router.push(`/users/${data.id}/dashboard`);
   };
 
   return (
@@ -32,7 +32,7 @@ export default function Home() {
             Добро пожаловать в <span className={styles.titleAccent}>Eventify</span> - твоё удобное приложение для
             организации и управления событиями!
           </h1>
-          <CompoundButton onClick={isAuth ? navigateToWspace : navigateToRegister}>
+          <CompoundButton variant="success" mt={'40'} onClick={isAuth ? navigateToWspace : navigateToRegister}>
             {isAuth ? 'Войти в систему' : 'Зарегистрироваться'}
           </CompoundButton>
         </div>

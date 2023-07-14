@@ -15,10 +15,11 @@ export default function fetchUserThunk(body: UserBody, authType: 'login' | 'reg'
         result = await $publicApi.post<UserResponse>('/api/user/registration', body);
       }
       dispatch(authSuccess(result.data.user));
-      return 'submitted';
+      return result.data;
     } catch (err) {
       if (isAxiosError(err)) {
-        return dispatch(authError(err.response?.data.message));
+        dispatch(authError(err.response?.data.message));
+        return;
       }
       dispatch(authError('Произошла ошибка'));
     }

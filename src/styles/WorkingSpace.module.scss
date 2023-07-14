@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
+@mixin borderTemplate($br) {
+  border-radius: #{$br}px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+%defaultImageTemplate {
+  background-image: url('../assets/images/default_picture.jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@mixin textEllipsis($mw) {
+  max-width: #{$mw}px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+%flexTemplate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+%flexColumnTemplate {
+  display: flex;
+  flex-direction: column;
+}
+
+.leftSection::-webkit-scrollbar,
+.rightSection__wspacesList::-webkit-scrollbar {
+  width: 6px;
+  left: -10px;
+}
+
+.leftSection::-webkit-scrollbar-thumb,
+.rightSection__wspacesList::-webkit-scrollbar-thumb {
+  background-color: var(--light-green-color);
+  border-radius: 20px;
+}
+
+.leftSection {
+  overflow-y: scroll;
+  & .itemSettings {
+    @extend %flexColumnTemplate;
+    margin-left: 24px;
+    margin-top: 10px;
+    gap: 10px;
+    cursor: pointer;
+    & .settingItem {
+      @extend %flexTemplate;
+      justify-content: left;
+      gap: 15px;
+      transition: all 0.15s;
+      padding: 3px 2px;
+      & .settingContent {
+        font-size: 14px;
+        color: var(--dark-color);
+      }
+    }
+
+    & .settingItem:hover {
+      background-color: var(--dark-gray-color);
+      border-radius: 10px;
+    }
+  }
+
+  & .leftSection__titleContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .leftSectionWspacesList {
+    @extend %flexColumnTemplate;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  background-color: var(--light-gray-color);
+  padding: 20px 30px;
+  @include borderTemplate(15);
+  height: calc(100vh - 150px);
+
+  .itemTitleContainer {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.15s;
+    cursor: pointer;
+
+    & .dropdownIcon {
+      transform: rotate(180deg);
+    }
+  }
+  .leftSectionItem {
+    @extend %flexColumnTemplate;
+  }
+
+  .itemTitleContainer:hover {
+    background-color: rgb(240, 240, 240);
+    border-radius: 20px;
+    padding: 10px;
+  }
+
+  .itemTitleContainer:active {
+    background-color: rgb(226, 226, 226);
+  }
+}
+
+.leftSection__titleContainer {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+
+  .title {
+    font-size: 18px;
+    color: var(--dark-color);
+  }
+}
+
+.itemTitleContainer__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  & .itemTitle {
+    font-weight: 300;
+    color: var(--dark-color);
+    font-size: 18px;
+    @include textEllipsis(130);
+  }
+
+  & .itemLetter {
+    font-family: 'Changa One', sans-serif;
+    background-color: var(--light-green-color);
+    padding: 6px;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    @extend %flexTemplate;
+    color: var(--light-gray-color);
+    @include borderTemplate(5);
+  }
+}
+
+.rightSection {
+  flex: 1;
+  margin-left: 20px;
+
+  & .rightSection__title {
+    font-weight: 500;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+  .rightSection__wspacesList {
+    margin-top: 20px;
+    background-color: var(--light-white-color);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    height: calc(100vh - 210px);
+    padding: 20px 25px;
+    @extend %flexColumnTemplate;
+    gap: 30px;
+    @include borderTemplate(15);
+    overflow-y: scroll;
+
+    & .rightSection__desksList {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 20px;
+      row-gap: 20px;
+
+      & .addNewDeskTitle {
+        text-align: center;
+        font-size: 20px;
+        @include textEllipsis(160);
+      }
+
+      & .rightSection__deskItem:hover > .rightSection__deskImage,
+      & .rightSection__deskItem:hover > .rightSection__deskDefaultImage {
+        filter: brightness(75%);
+      }
+      & .rightSection__deskItem {
+        @extend %flexTemplate;
+        height: 150px;
+        @include borderTemplate(15);
+        cursor: pointer;
+        color: var(--light-white-color);
+        text-transform: uppercase;
+        position: relative;
+
+        & .rightSection__deskImage,
+        & .rightSection__deskDefaultImage {
+          position: absolute;
+          @include borderTemplate(15);
+          width: 100%;
+          height: 100%;
+          filter: brightness(50%);
+          transition: filter 0.15s;
+          object-fit: cover;
+        }
+
+        & .rightSection__deskDefaultImage {
+          @extend %defaultImageTemplate;
+        }
+
+        & .deskTitle {
+          z-index: 100;
+        }
+      }
+    }
+
+    .rightSection__itemSettings {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      & .itemSettingsList {
+        display: flex;
+        gap: 18px;
+      }
+    }
+  }
+}

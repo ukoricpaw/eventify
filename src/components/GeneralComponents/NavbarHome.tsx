@@ -6,10 +6,10 @@ import { userSelector } from '@/store/slices/userSlice';
 
 export default function NavbarHome() {
   const { query } = useRouter();
-  const { isAuth } = useAppSelector(userSelector);
+  const { isAuth, data } = useAppSelector(userSelector);
   const authPathnameCondition = query.authtype === 'login' || query.authtype === 'registration';
   const isLogin = query.authtype === 'login' ? '/auth/registration' : '/auth/login';
-  const isUserAuth = isAuth ? '/' : '/auth/login';
+  const isUserAuth = isAuth ? `/users/${data.id}/dashboard` : '/auth/login';
   return (
     <nav className={styles.navContainer} aria-label="primary-navigation">
       <ul className={styles.navContainer__list}>

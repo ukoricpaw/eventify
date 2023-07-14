@@ -3,6 +3,7 @@ export type UserType = {
   email: string;
   isActivated: boolean;
   role: 'ADMIN' | 'USER';
+  avatar: string | null;
 };
 
 export interface UserResponse {

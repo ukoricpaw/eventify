@@ -42,8 +42,8 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
       email,
     };
     await dispatch(fetchUserThunk(userBody, isLogin ? 'login' : 'reg')).then(res => {
-      if (typeof res === 'string') {
-        router.push('/');
+      if (typeof res === 'object') {
+        router.push(`/users/${res.user.id}/dashboard`);
       }
     });
   };
@@ -66,14 +66,34 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
           <h1>{isLogin ? 'Войти' : 'Зарегистрироваться'}</h1>
           <Container>
             <CompoundLabel>Email: </CompoundLabel>
-            <CompoundInput type="email" value={email} onChange={handleEmail} />
+            <CompoundInput
+              padding={{
+                x: '20',
+                y: '10',
+              }}
+              placeholder="Введите email"
+              variant="success"
+              type="email"
+              value={email}
+              onChange={handleEmail}
+            />
           </Container>
           <Container>
             <CompoundLabel>Пароль: </CompoundLabel>
-            <CompoundInput type="password" value={password} onChange={handlePassword} />
+            <CompoundInput
+              padding={{
+                x: '20',
+                y: '10',
+              }}
+              placeholder="Введите пароль"
+              variant="success"
+              type="password"
+              value={password}
+              onChange={handlePassword}
+            />
           </Container>
           <p className={styles.authPage__errorMessage}>{isError && isError}</p>
-          <CompoundButton disabled={isLoading ? true : false} onClick={handleSubmit}>
+          <CompoundButton variant="light" disabled={isLoading ? true : false} onClick={handleSubmit}>
             {isLogin ? 'Войти' : 'Зарегистрироваться'}
           </CompoundButton>
         </FormGroup>

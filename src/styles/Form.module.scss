@@ -1,11 +1,80 @@
+.form__formContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .formContainer__button {
   outline: none;
   border: none;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.formContainer__button-success:hover {
+  background-color: var(--dark-green-color);
+}
+.formContainer__button-light:hover {
+  background-color: var(--light-gray-color);
+}
+.formContainer__button-dark:hover {
+  background-color: var(--dark-color);
+}
+
+.formContainer__button-success {
+  transition: all 0.15s;
   color: var(--light-white-color);
   background-color: var(--light-green-color);
-  font-size: 20px;
-  padding: 18px 35px;
+}
+
+.formContainer__button-light {
+  transition: all 0.15s;
+  color: var(--dark-color);
+  background-color: var(--light-white-color);
+}
+
+.formContainer__button-dark {
+  transition: all 0.15s;
+  color: var(--light-white-color);
+  background-color: var(--dark-color);
+}
+
+.formContainer__inputContainer {
+  display: flex;
+  align-items: center;
+  padding: 2px 10px;
   border-radius: 10px;
-  margin-top: 40px;
-  cursor: pointer;
+  gap: 10px;
+  .formContainer__input-success::placeholder,
+  .formContainer__input-dark::placeholder {
+    color: #fff;
+  }
+  .formContainer__input-light::placeholder {
+    color: var(--dark-color);
+  }
+  .formContainer__input-light,
+  .formContainer__input-dark,
+  .formContainer__input-success {
+    transition: all 0.15s;
+    outline: none;
+    border: none;
+  }
+}
+.formContainer__inputContainer-light,
+.formContainer__input-light {
+  background-color: #fff;
+  color: #000;
+}
+
+.formContainer__inputContainer-dark,
+.formContainer__input-dark {
+  background-color: var(--dark-color);
+  color: #fff;
+}
+
+.formContainer__inputContainer-success,
+.formContainer__input-success {
+  background-color: var(--light-green-color);
+  color: #fff;
 }

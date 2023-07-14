@@ -23,9 +23,15 @@ a {
 $light-green: #54d8a8;
 $dark-green: #4eca9d;
 $light-white: #fff;
+$dark-color: #272727;
+$light-gray: #fcfcfc;
+$dark-gray: rgb(238, 237, 237);
 
 :root {
   --light-green-color: #{$light-green};
   --dark-green-color: #{$dark-green};
   --light-white-color: #{$light-white};
+  --dark-color: #{$dark-color};
+  --light-gray-color: #{$light-gray};
+  --dark-gray-color: #{$dark-gray};
 }

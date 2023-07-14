@@ -1,15 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Changa+One&display=swap');
 
-.navContainer {
+%containerTemplate {
   display: flex;
   justify-content: center;
+}
+
+%widthTemplate {
+  display: flex;
+  width: 1360px;
+}
+
+.mainContainer {
+  @extend %containerTemplate;
+
+  & .mainWrapper {
+    @extend %widthTemplate;
+    margin: 24px 24px;
+    justify-content: space-between;
+  }
+}
+
+.navContainer {
+  @extend %containerTemplate;
   background-color: var(--light-green-color);
   color: var(--light-white-color);
-  & .navContainer__list {
+
+  & .navContainer__ownRightSection {
     display: flex;
+    align-items: center;
+    gap: 50px;
+    background-color: var(--dark-green-color);
+    padding: 10px 20px;
+  }
+  & .navContainer__ownLeftSection {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+
+    & .ownLeftSection__wspaceTitle {
+      display: flex;
+      gap: 10px;
+      cursor: pointer;
+    }
+  }
+
+  & .navContainer__list {
+    @extend %widthTemplate;
     justify-content: space-between;
     align-items: center;
-    width: 1360px;
 
     & .leftListItem {
       cursor: pointer;
@@ -25,4 +63,10 @@
       padding: 30px 40px;
     }
   }
+}
+
+.userAvatar {
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
