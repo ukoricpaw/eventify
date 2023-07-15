@@ -45,6 +45,7 @@ export default function CompoundButton({ size, mt, padding, variant, onClick, ch
           align-items: center;
         }
         .settings {
+          justify-content: center;
           padding: ${padding ? (padding.y ? padding.y : '18') : '18'}px
             ${padding ? (padding.x ? padding.x : '35') : '35'}px;
           ${mt && `margin-top: ${mt}px;`}

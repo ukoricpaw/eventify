@@ -4,7 +4,9 @@ export default function ItemTitleWrapper({ wspace }: { wspace: string }) {
   return (
     <div className={styles.itemTitleContainer__wrapper}>
       <div className={styles.itemLetter}>{wspace.charAt(0).toUpperCase()}</div>
-      <h3 className={styles.itemTitle}>{wspace}</h3>
+      <h3 className={styles.itemTitle} title={wspace}>
+        {wspace}
+      </h3>
     </div>
   );
 }

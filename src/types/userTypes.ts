@@ -16,7 +16,7 @@ export interface UserState {
   isAuth: boolean;
   isLoading: boolean;
   isError: null | string;
-  data: UserType;
+  userData: UserType;
 }
 
 export type UserBody = {

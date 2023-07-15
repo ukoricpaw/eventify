@@ -8,9 +8,13 @@ import { userSelector } from '@/store/slices/userSlice';
 import { FaUser } from 'react-icons/fa';
 import UserAvatar from '../WspaceComponents/UserAvatar';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useContext } from 'react';
+import { DashBoardContext } from '@/pages/users/[user]/dashboard';
 
 export default function OwnNavbar() {
-  const { data } = useAppSelector(userSelector);
+  const { userData } = useAppSelector(userSelector);
+  const { setActiveModal } = useContext(DashBoardContext);
+
   return (
     <nav className={styles.navContainer} aria-label="primary-navigation">
       <ul className={styles.navContainer__list}>
@@ -23,7 +27,7 @@ export default function OwnNavbar() {
             <IoIosArrowDropdown size={20} cursor={'pointer'} />
           </li>
           <li className={styles.ownLeftSection__wspaceButton}>
-            <CompoundButton size={'30'} variant={'light'} padding={{ y: '5' }}>
+            <CompoundButton onClick={setActiveModal} size={'30'} variant={'light'} padding={{ y: '5' }}>
               Создать
             </CompoundButton>
           </li>
@@ -40,7 +44,7 @@ export default function OwnNavbar() {
           >
             <AiOutlineSearch cursor={'pointer'} />
           </CompoundInput>
-          {data.avatar ? <UserAvatar size={40} src={data.avatar} /> : <FaUser color="white" size={40} />}
+          {userData.avatar ? <UserAvatar size={40} src={userData.avatar} /> : <FaUser color="white" size={40} />}
         </li>
       </ul>
     </nav>

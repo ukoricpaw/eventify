@@ -31,12 +31,16 @@ export default function CompoundInput({ padding, variant, onChange, placeholder,
         type={type}
         value={value}
         onChange={onChange}
-        className={styles[inputStyles[1]]}
+        className={`${styles[inputStyles[1]]} inputSettings`}
       />
       <style jsx>{`
         .settings {
           padding: ${padding ? (padding.y ? padding.y : '18') : '18'}px
             ${padding ? (padding.x ? padding.x : '35') : '35'}px;
+        }
+
+        .inputSettings {
+          flex: 1;
         }
       `}</style>
       {children}

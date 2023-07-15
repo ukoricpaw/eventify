@@ -10,14 +10,14 @@ import CompoundButton from '@/components/FormComponents/CompoundButton';
 import { useRouter } from 'next/router';
 
 export default function Home() {
-  const { isAuth, data } = useAppSelector(userSelector);
+  const { isAuth, userData } = useAppSelector(userSelector);
   const router = useRouter();
   const navigateToRegister = () => {
     router.push('/auth/registration');
   };
 
   const navigateToWspace = () => {
-    router.push(`/users/${data.id}/dashboard`);
+    router.push(`/users/${userData.id}/dashboard`);
   };
 
   return (

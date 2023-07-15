@@ -1,13 +1,13 @@
 import { UserState, UserType } from '@/types/userTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { AppStore, RootState } from '..';
+import { RootState } from '..';
 
 const initialState: UserState = {
   isAuth: false,
   isLoading: false,
   isError: null,
-  data: {} as UserType,
+  userData: {} as UserType,
 };
 
 const userSlice = createSlice({
@@ -17,12 +17,12 @@ const userSlice = createSlice({
     authLoading(state) {
       state.isLoading = true;
       state.isError = null;
-      state.data = {} as UserType;
+      state.userData = {} as UserType;
       state.isAuth = false;
     },
     authSuccess(state, action: PayloadAction<UserType>) {
       state.isLoading = false;
-      state.data = action.payload;
+      state.userData = action.payload;
       state.isAuth = true;
     },
     authError(state, action: PayloadAction<string | null>) {

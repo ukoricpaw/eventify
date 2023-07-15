@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 export default function RightSectionDeskItem({ desk }: { desk: DeskType }) {
   const loader = () => `${process.env.NEXT_PUBLIC_API_URL}/api/image/${desk.background}`;
-
   return (
     <Link href="/">
       <div className={styles.rightSection__deskItem}>
@@ -21,7 +20,9 @@ export default function RightSectionDeskItem({ desk }: { desk: DeskType }) {
         ) : (
           <div className={styles.rightSection__deskDefaultImage}></div>
         )}
-        <p className={styles.deskTitle}>{desk.name}</p>
+        <p title={desk.name} className={styles.deskTitle}>
+          {desk.name}
+        </p>
       </div>
     </Link>
   );

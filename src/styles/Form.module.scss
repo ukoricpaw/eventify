@@ -1,3 +1,9 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .form__formContainer {
   display: flex;
   align-items: center;
@@ -20,6 +26,13 @@
 }
 .formContainer__button-dark:hover {
   background-color: var(--dark-color);
+}
+
+.formContainer__button-dark:disabled,
+.formContainer__button-light:disabled,
+.formContainer__button-success:disabled {
+  filter: brightness(80%);
+  cursor: default;
 }
 
 .formContainer__button-success {
