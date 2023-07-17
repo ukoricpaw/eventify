@@ -1,44 +1,48 @@
-import { CgUserList } from 'react-icons/cg';
-import { BiTable } from 'react-icons/bi';
-import { IoIosSettings } from 'react-icons/io';
 import styles from '../../styles/WorkingSpace.module.scss';
 import { MouseEvent, ReactNode } from 'react';
+import Link from 'next/link';
+import { getHref } from '@/utils/getHref';
+import useItemSettings from '@/hooks/useItemSettings';
+import { useRouter } from 'next/router';
 
 export interface ItemsInterface {
+  name: string;
   icon: ReactNode;
   content: string;
 }
 
-const ItemList: ItemsInterface[] = [
-  {
-    icon: <CgUserList size={25} color="gray" />,
-    content: 'Участники',
-  },
-  {
-    icon: <BiTable size={25} color="gray" />,
-    content: 'Доски',
-  },
-  {
-    icon: <IoIosSettings size={25} color="gray" />,
-    content: 'Настройки',
-  },
-];
-
-export default function LeftSectionItemSettings({ wspaceId }: { wspaceId: number }) {
+interface LeftSectionItemSettingsIProps {
+  wspaceId?: number;
+  margin?: string;
+}
+export default function LeftSectionItemSettings({ wspaceId, margin }: LeftSectionItemSettingsIProps) {
   const handleStopPropogation = (e: MouseEvent<HTMLUListElement>) => {
     e.stopPropagation();
   };
 
+  const ItemList = useItemSettings(25, 'gray');
+  const { query } = useRouter();
+
   return (
-    <ul className={styles.itemSettings} onClick={handleStopPropogation}>
+    <ul className={`${styles.itemSettings} settingsStyles`} onClick={handleStopPropogation}>
       {ItemList.map(item => {
         return (
-          <li className={styles.settingItem} key={item.content}>
-            {item.icon}
-            <p className={styles.settingContent}>{item.content}</p>
-          </li>
+          <Link
+            href={getHref(Number(query.user), query.id ? Number(query.id) : Number(wspaceId), item.name)}
+            key={item.content}
+          >
+            <li className={styles.settingItem}>
+              {item.icon}
+              <p className={styles.settingContent}>{item.content}</p>
+            </li>
+          </Link>
         );
       })}
+      <style jsx>
+        {`
+          ${margin && `.settingsStyles {margin: ${margin};}`}
+        `}
+      </style>
     </ul>
   );
 }

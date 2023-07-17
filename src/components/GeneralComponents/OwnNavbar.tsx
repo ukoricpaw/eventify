@@ -9,11 +9,11 @@ import { FaUser } from 'react-icons/fa';
 import UserAvatar from '../WspaceComponents/UserAvatar';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useContext } from 'react';
-import { DashBoardContext } from '@/pages/users/[user]/dashboard';
+import { ModalContext } from './CreateWspaceModalProvider';
 
 export default function OwnNavbar() {
   const { userData } = useAppSelector(userSelector);
-  const { setActiveModal } = useContext(DashBoardContext);
+  const { setActiveModal } = useContext(ModalContext);
 
   return (
     <nav className={styles.navContainer} aria-label="primary-navigation">
@@ -23,7 +23,9 @@ export default function OwnNavbar() {
             <li className={styles.leftListItem}>eventify</li>
           </Link>
           <li className={styles.ownLeftSection__wspaceTitle}>
-            <p className={styles.wspaceTitle}>Рабочие пространства</p>
+            <Link href={`/users/${userData.id}/dashboard`}>
+              <p className={styles.wspaceTitle}>Рабочие пространства</p>
+            </Link>
             <IoIosArrowDropdown size={20} cursor={'pointer'} />
           </li>
           <li className={styles.ownLeftSection__wspaceButton}>

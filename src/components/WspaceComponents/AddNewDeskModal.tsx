@@ -5,13 +5,14 @@ import default_picture from '../../assets/images/default_picture.jpeg';
 import Image from 'next/image';
 import { useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
 import { useState } from 'react';
-import { File } from 'buffer';
 import CompoundInput from '../FormComponents/CompoundInput';
 import CompoundLabel from '../FormComponents/CompoundLabel';
 import CompoundButton from '../FormComponents/CompoundButton';
 import { usePostNewDeskInWorkingSpaceMutation } from '@/store/api/wspaceApi';
 import { PostNewDesk } from '@/store/api/wspaceApi';
 import ModalLayout from '../GeneralComponents/ModalLayout';
+import { useAppSelector } from '@/hooks/reduxHooks';
+import { userSelector } from '@/store/slices/userSlice';
 
 interface AddNewDeskModalIProps {
   setActiveModal: () => void;
@@ -19,8 +20,9 @@ interface AddNewDeskModalIProps {
 }
 
 export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDeskModalIProps) {
-  const { data } = useGetWorkingSpacesClientQuery(null);
-  const [background, setBackground] = useState<File | null>(null);
+  const { userData } = useAppSelector(userSelector);
+  const { data } = useGetWorkingSpacesClientQuery(userData.id);
+  const [background, setBackground] = useState<Blob | null>(null);
   const [wspaceNumber, setWspaceId] = useState<number>(wspaceId);
   const [name, setName] = useState<string>('');
   const [postNewDesk, { isLoading, error }] = usePostNewDeskInWorkingSpaceMutation();
@@ -49,7 +51,7 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
       },
     };
     if (background) {
-      body.body.background = background as File;
+      body.body.background = background;
     }
     await postNewDesk(body);
     setActiveModal();
@@ -66,7 +68,7 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
               className={styles.backgroundDefaultImage}
               src={default_picture}
               alt="background"
-              width={300}
+              width={340}
               height={200}
               priority
             />

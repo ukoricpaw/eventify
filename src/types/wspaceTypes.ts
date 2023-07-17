@@ -42,3 +42,12 @@ type RoleType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export interface MembersResponse {
+  count: number;
+  rows: MembersType[];
+}
+
+export type MembersType = Omit<WorkingSpaceRole, 'role'> & { role: Omit<RoleType, 'createdAt' | 'updatedAt'> } & {
+  user: Omit<UserType, 'isActivated' | 'role'>;
+};

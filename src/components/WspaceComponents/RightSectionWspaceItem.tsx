@@ -8,7 +8,7 @@ export default function RightSectionWspaceItem({ wspace }: { wspace: WorkingSpac
   const { data } = useGetSingleWorkingSpaceClientQuery(wspace.id);
   return (
     <div className={styles.rightSection__wspaceItem}>
-      <RightSectionItemSettings wspaceName={wspace.name} />
+      <RightSectionItemSettings wspaceName={wspace.name} wspaceId={wspace.id} />
       {data && <RightSectionDeskList desks={data.workingSpace.desks} wspaceId={data.workingSpace.id} />}
     </div>
   );

@@ -1,34 +1,33 @@
 import styles from '../../styles/WorkingSpace.module.scss';
 import ItemTitleWrapper from './ItemTitleWrapper';
-import { ItemsInterface } from './LeftSectionItemSettings';
 import CompoundButton from '../FormComponents/CompoundButton';
-import { CgUserList } from 'react-icons/cg';
-import { BiTable } from 'react-icons/bi';
-import { IoIosSettings } from 'react-icons/io';
+import { useAppSelector } from '@/hooks/reduxHooks';
+import { userSelector } from '@/store/slices/userSlice';
+import { useRouter } from 'next/router';
+import { getHref } from '@/utils/getHref';
+import useItemSettings from '@/hooks/useItemSettings';
 
-const ItemList: ItemsInterface[] = [
-  {
-    icon: <CgUserList size={18} color="white" />,
-    content: 'Участники',
-  },
-  {
-    icon: <BiTable size={18} color="white" />,
-    content: 'Доски',
-  },
-  {
-    icon: <IoIosSettings size={18} color="white" />,
-    content: 'Настройки',
-  },
-];
+interface RightSectionItemSettingsIProps {
+  wspaceName: string;
+  wspaceId: number;
+}
 
-export default function RightSectionItemSettings({ wspaceName }: { wspaceName: string }) {
+export default function RightSectionItemSettings({ wspaceName, wspaceId }: RightSectionItemSettingsIProps) {
+  const { userData } = useAppSelector(userSelector);
+  const router = useRouter();
+  const ItemList = useItemSettings(18, 'white');
   return (
     <div className={styles.rightSection__itemSettings}>
       <ItemTitleWrapper wspace={wspaceName} />
       <ul className={styles.itemSettingsList}>
         {ItemList.map(item => {
           return (
-            <CompoundButton padding={{ x: '9', y: '4' }} variant="success" key={item.content}>
+            <CompoundButton
+              onClick={() => router.push(getHref(userData.id, wspaceId, item.name))}
+              padding={{ x: '9', y: '4' }}
+              variant="success"
+              key={item.content}
+            >
               {item.content}
               {item.icon}
             </CompoundButton>

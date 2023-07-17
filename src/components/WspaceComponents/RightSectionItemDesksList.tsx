@@ -19,7 +19,7 @@ export default function RightSectionDeskList({ desks, wspaceId }: DeskListIProps
 
   return (
     <ul className={styles.rightSection__desksList}>
-      <DesksList desks={desks} />
+      {desks && <DesksList desks={desks} />}
       <CompoundButton onClick={setActiveModal} variant="success" padding={{ y: '60' }}>
         <p className={styles.addNewDeskTitle}>Создать доску</p>
       </CompoundButton>
