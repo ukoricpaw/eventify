@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import AddNewWspaceModal from '../WspaceComponents/AddNewWspaceModal';
+import AddNewWspaceModal from '../WspaceComponents/GeneralWspaceComponents/AddNewWspaceModal';
 
 export const ModalContext = createContext<{ setActiveModal: () => void; activeModal: boolean }>({
   setActiveModal: () => {},

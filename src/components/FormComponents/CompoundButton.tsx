@@ -9,9 +9,19 @@ interface ButtonIProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     x?: string;
   };
   size?: string;
+  width?: string;
 }
 
-export default function CompoundButton({ size, mt, padding, variant, onClick, children, disabled }: ButtonIProps) {
+export default function CompoundButton({
+  width,
+  size,
+  mt,
+  padding,
+  variant,
+  onClick,
+  children,
+  disabled,
+}: ButtonIProps) {
   let variantClass = 'formContainer__button-light';
 
   switch (variant) {
@@ -43,6 +53,7 @@ export default function CompoundButton({ size, mt, padding, variant, onClick, ch
           display: flex;
           gap: 10px;
           align-items: center;
+          ${width && `width: ${width};`}
         }
         .settings {
           justify-content: center;

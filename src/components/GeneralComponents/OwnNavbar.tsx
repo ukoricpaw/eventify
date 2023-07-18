@@ -6,7 +6,7 @@ import CompoundInput from '../FormComponents/CompoundInput';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import { FaUser } from 'react-icons/fa';
-import UserAvatar from '../WspaceComponents/UserAvatar';
+import UserAvatar from '../WspaceComponents/GeneralWspaceComponents/UserAvatar';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useContext } from 'react';
 import { ModalContext } from './CreateWspaceModalProvider';

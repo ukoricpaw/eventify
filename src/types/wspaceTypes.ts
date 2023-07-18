@@ -2,7 +2,7 @@ import { DeskType } from './deskTypes';
 import { UserType } from './userTypes';
 export interface WorkingSpacesResponce {
   count: number;
-  rows: WorkingSpaceType[];
+  rows: Omit<WorkingSpaceType, 'desks' | 'private' | 'description' | 'inviteLink' | 'createdAt'>[];
 }
 
 export interface WorkingSpaceType {
@@ -26,7 +26,7 @@ export interface NewWorkingSpaceResponse {
 }
 
 export interface SingleWorkingSpaceType extends SingleWorkingSpace {
-  workingSpaceRole: {};
+  workingSpaceRole: WorkingSpaceRole;
 }
 
 export interface WorkingSpaceRole {
@@ -51,3 +51,9 @@ export interface MembersResponse {
 export type MembersType = Omit<WorkingSpaceRole, 'role'> & { role: Omit<RoleType, 'createdAt' | 'updatedAt'> } & {
   user: Omit<UserType, 'isActivated' | 'role'>;
 };
+
+export type MessageType = {
+  message: string;
+};
+
+export interface UpdatedWspace extends Omit<WorkingSpaceType, 'desks'> {}

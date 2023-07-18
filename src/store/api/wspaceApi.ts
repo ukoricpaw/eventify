@@ -3,6 +3,7 @@ import {
   MembersResponse,
   NewWorkingSpaceResponse,
   SingleWorkingSpaceType,
+  UpdatedWspace,
   WorkingSpacesResponce,
 } from '@/types/wspaceTypes';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -14,6 +15,15 @@ export interface PostNewDesk {
   body: {
     name: string;
     background?: Blob;
+  };
+}
+
+export interface UploadedWspaceInfo {
+  wspaceId: number;
+  wspaceBody: {
+    name?: string;
+    isPrivate?: string;
+    description?: string;
   };
 }
 
@@ -58,11 +68,19 @@ export const wspaceApi = createApi({
       },
       invalidatesTags: desk => [{ type: 'wspace', id: desk?.workingSpaceId }],
     }),
-    getWspaceMembers: builder.query<MembersResponse, number>({
-      queryFn: async wspaceId => {
-        return await queryFn(`/api/wspace/members/${wspaceId}`, 'GET');
+    getWspaceMembers: builder.query<MembersResponse, { wspaceId: number; search: string; page: number; limit: number }>(
+      {
+        queryFn: async ({ wspaceId, search, page, limit }) => {
+          return await queryFn(`/api/wspace/members/${wspaceId}?search=${search}&page=${page}&limit=${limit}`, 'GET');
+        },
+        providesTags: ['members'],
       },
-      providesTags: ['members'],
+    ),
+    updateWspace: builder.mutation<UpdatedWspace, UploadedWspaceInfo>({
+      queryFn: async ({ wspaceId, wspaceBody }) => {
+        return await queryFn(`/api/wspace/${wspaceId}`, 'PUT', wspaceBody);
+      },
+      invalidatesTags: wspace => [{ type: 'wspace', id: wspace?.id }],
     }),
   }),
   extractRehydrationInfo(action, { reducerPath }) {
@@ -73,6 +91,7 @@ export const wspaceApi = createApi({
 });
 
 export const {
+  useUpdateWspaceMutation,
   useGetWspaceMembersQuery,
   usePostNewWorkingSpaceMutation,
   useGetSingleWorkingSpaceClientQuery,

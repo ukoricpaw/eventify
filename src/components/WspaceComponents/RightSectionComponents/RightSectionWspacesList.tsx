@@ -1,10 +1,10 @@
 import { WorkingSpacesResponce } from '@/types/wspaceTypes';
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import RightSectionWspaceItem from './RightSectionWspaceItem';
-import CompoundButton from '../FormComponents/CompoundButton';
+import CompoundButton from '../../FormComponents/CompoundButton';
 import Image from 'next/image';
-import emptyList from '../../assets/images/emptyList.png';
-import { ModalContext } from '../GeneralComponents/CreateWspaceModalProvider';
+import emptyList from '../../../assets/images/emptyList.png';
+import { ModalContext } from '../../GeneralComponents/CreateWspaceModalProvider';
 import { useContext } from 'react';
 
 export default function RightSectionWspacesList({ wspaces }: { wspaces: WorkingSpacesResponce | null }) {
@@ -14,7 +14,7 @@ export default function RightSectionWspacesList({ wspaces }: { wspaces: WorkingS
     <ul className={styles.rightSection__wspacesList}>
       {wspaces && wspaces.count > 0 ? (
         wspaces.rows.map(wspaceItem => {
-          return <RightSectionWspaceItem key={wspaceItem.id} wspace={wspaceItem} />;
+          return <RightSectionWspaceItem key={wspaceItem.id} wspace={wspaceItem.id} />;
         })
       ) : (
         <div className={styles.rightSection__wspacesListEmpty}>

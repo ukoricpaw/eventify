@@ -1,7 +1,7 @@
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import ItemTitleWrapper from './ItemTitleWrapper';
-import CompoundButton from '../FormComponents/CompoundButton';
+import CompoundButton from '@/components/FormComponents/CompoundButton';
 import { BiUserPlus } from 'react-icons/bi';
 
 interface WspaceDescriptionIProps {

@@ -1,4 +1,4 @@
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import { MouseEvent, ReactNode } from 'react';
 import Link from 'next/link';
 import { getHref } from '@/utils/getHref';

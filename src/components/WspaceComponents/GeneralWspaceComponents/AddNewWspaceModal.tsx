@@ -1,15 +1,16 @@
-import CompoundButton from '../FormComponents/CompoundButton';
-import CompoundInput from '../FormComponents/CompoundInput';
-import CompoundLabel from '../FormComponents/CompoundLabel';
-import FormGroup from '../FormComponents/FormGroup';
-import ModalLayout from '../GeneralComponents/ModalLayout';
-import styles from '../../styles/WorkingSpace.module.scss';
+import CompoundButton from '@/components/FormComponents/CompoundButton';
+import CompoundInput from '@/components/FormComponents/CompoundInput';
+import CompoundLabel from '@/components/FormComponents/CompoundLabel';
+import FormGroup from '@/components/FormComponents/FormGroup';
+import ModalLayout from '@/components/GeneralComponents/ModalLayout';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { PostNewWS, usePostNewWorkingSpaceMutation } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import { useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
+import useFormFields from '@/hooks/useFormFields';
 
 interface AddNewWspaceModalIProps {
   setActiveModal: () => void;
@@ -23,28 +24,20 @@ type InfoType = {
 export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalIProps) {
   const { userData } = useAppSelector(userSelector);
   const { data } = useGetWorkingSpacesClientQuery(userData.id);
-  const [info, setInfo] = useState<InfoType>({
+  const { state, onChange } = useFormFields({
     name: `Рабочее пространство ${data?.count ? data.count + 1 : ''}`,
     description: '',
   });
   const [postNewWS, { isLoading, error }] = usePostNewWorkingSpaceMutation();
   const router = useRouter();
 
-  const changeDescriptionHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setInfo(prev => ({ ...prev, description: e.target.value }));
-  };
-
-  const changeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInfo(prev => ({ ...prev, name: e.target.value }));
-  };
-
   const handlerSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const body: PostNewWS = {
-      name: info.name,
+      name: state.name,
     };
-    if (info.description.trim() !== '') {
-      body.description = info.description;
+    if (state.description.trim() !== '') {
+      body.description = state.description;
     }
     await postNewWS(body);
     if (router.pathname.split('/').reverse()[0] !== 'dashboard') {
@@ -57,13 +50,13 @@ export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalI
       <FormGroup>
         <h2 className={styles.addNewWSTitle}>Новое рабочее пространство</h2>
         <CompoundLabel>Название рабочего пространства</CompoundLabel>
-        <CompoundInput value={info.name} onChange={changeNameHandler} variant="success" padding={{ x: '10', y: '8' }} />
+        <CompoundInput value={state.name} onChange={onChange('name')} variant="success" padding={{ x: '10', y: '8' }} />
         <CompoundLabel>
           Описание <span>(необязательно)</span>
         </CompoundLabel>
         <textarea
-          value={info.description}
-          onChange={changeDescriptionHandler}
+          value={state.description}
+          onChange={onChange('description')}
           className={styles.addNewWSTextArea}
           rows={6}
         />
@@ -71,7 +64,7 @@ export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalI
           'Пожалуйста подождите...'
         ) : (
           <CompoundButton
-            disabled={info.name.trim().length > 3 ? false : true}
+            disabled={state.name.trim().length > 3 ? false : true}
             onClick={handlerSubmit}
             variant="light"
             padding={{ x: '10', y: '15' }}

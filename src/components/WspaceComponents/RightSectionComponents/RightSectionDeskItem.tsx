@@ -1,5 +1,5 @@
 import { DeskType } from '@/types/deskTypes';
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 

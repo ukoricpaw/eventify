@@ -5,7 +5,7 @@ import Container from '@/components/FormComponents/Container';
 import FormGroup from '@/components/FormComponents/FormGroup';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useState, ChangeEvent, MouseEvent, useEffect } from 'react';
+import { useState, useCallback, ChangeEvent, MouseEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks';
 import fetchUserThunk from '@/store/thunks/fetchUserThunk';
 import { UserBody } from '@/types/userTypes';
@@ -23,12 +23,12 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
   const router = useRouter();
   const pageTitle = `${isLogin ? 'Авторизация' : 'Регистрация'} | Eventify`;
 
-  const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  };
-  const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
+  }, []);
+  const handlePassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-  };
+  }, []);
 
   useEffect(() => {
     setEmail('');

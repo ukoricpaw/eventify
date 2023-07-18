@@ -1,7 +1,7 @@
 import { WorkingSpacesResponce } from '@/types/wspaceTypes';
 import { useState, useCallback } from 'react';
 import LeftSectionWspaceItem from './LeftSectionWspaceItem';
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 
 export default function LeftSectionWspacesList({ wspaces }: { wspaces: WorkingSpacesResponce | null }) {
   const [active, setActive] = useState<number | null>(null);
@@ -14,7 +14,12 @@ export default function LeftSectionWspacesList({ wspaces }: { wspaces: WorkingSp
     <ul className={styles.leftSectionWspacesList}>
       {wspaces && wspaces.count > 0 ? (
         wspaces.rows.map(wspaceItem => (
-          <LeftSectionWspaceItem key={wspaceItem.id} handleActive={handleActive} active={active} wspace={wspaceItem} />
+          <LeftSectionWspaceItem
+            key={wspaceItem.id}
+            handleActive={handleActive}
+            active={active}
+            wspaceId={wspaceItem.id}
+          />
         ))
       ) : (
         <p>У вас ещё нет рабочих пространств</p>

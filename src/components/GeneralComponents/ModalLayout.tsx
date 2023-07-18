@@ -1,5 +1,5 @@
 import styles from '../../styles/WorkingSpace.module.scss';
-import { MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode, useEffect } from 'react';
 
 interface ModalLayoutIProps {
   setActiveModal: () => void;
@@ -10,6 +10,14 @@ export default function ModalLayout({ setActiveModal, children }: ModalLayoutIPr
   const stopModalPropagation = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
+
+  useEffect(() => {
+    document.body.style.overflowY = 'hidden';
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
+  }, []);
+
   return (
     <div className={styles.addNewWspaceModal} onClick={setActiveModal}>
       <div className={styles.modalWrapper} onClick={stopModalPropagation}>

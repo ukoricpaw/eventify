@@ -1,6 +1,6 @@
-import styles from '../../styles/WorkingSpace.module.scss';
-import ItemTitleWrapper from './ItemTitleWrapper';
-import CompoundButton from '../FormComponents/CompoundButton';
+import styles from '../../../styles/WorkingSpace.module.scss';
+import ItemTitleWrapper from '../GeneralWspaceComponents/ItemTitleWrapper';
+import CompoundButton from '../../FormComponents/CompoundButton';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import { useRouter } from 'next/router';

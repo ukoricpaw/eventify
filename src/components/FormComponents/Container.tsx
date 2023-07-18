@@ -1,6 +1,22 @@
 import { ReactNode } from 'react';
 import styles from '../../styles/Form.module.scss';
 
-export default function Container({ children }: { children: ReactNode }) {
-  return <div className={styles.form__formContainer}>{children}</div>;
+interface ContainerIProps {
+  children: ReactNode;
+  display?: 'flex' | 'column';
+}
+
+export default function Container({ children, display }: ContainerIProps) {
+  return (
+    <div className={`${styles.form__formContainer} settingsContainer`}>
+      {children}
+      <style jsx>
+        {`
+          .settingsContainer {
+            ${display && `flex-direction: ${display}; align-items: flex-start; gap: 12px`}
+          }
+        `}
+      </style>
+    </div>
+  );
 }

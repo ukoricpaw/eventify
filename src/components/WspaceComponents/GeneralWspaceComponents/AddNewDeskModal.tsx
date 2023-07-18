@@ -1,30 +1,38 @@
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import { ChangeEvent, MouseEvent } from 'react';
-import FormGroup from '../FormComponents/FormGroup';
-import default_picture from '../../assets/images/default_picture.jpeg';
+import FormGroup from '../../FormComponents/FormGroup';
+import default_picture from '../../../assets/images/default_picture.jpeg';
 import Image from 'next/image';
 import { useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
 import { useState } from 'react';
-import CompoundInput from '../FormComponents/CompoundInput';
-import CompoundLabel from '../FormComponents/CompoundLabel';
-import CompoundButton from '../FormComponents/CompoundButton';
+import CompoundInput from '../../FormComponents/CompoundInput';
+import CompoundLabel from '../../FormComponents/CompoundLabel';
+import CompoundButton from '../../FormComponents/CompoundButton';
 import { usePostNewDeskInWorkingSpaceMutation } from '@/store/api/wspaceApi';
 import { PostNewDesk } from '@/store/api/wspaceApi';
-import ModalLayout from '../GeneralComponents/ModalLayout';
+import ModalLayout from '../../GeneralComponents/ModalLayout';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
+import useFormFields from '@/hooks/useFormFields';
 
 interface AddNewDeskModalIProps {
   setActiveModal: () => void;
   wspaceId: number;
 }
 
+interface DeskState {
+  wspaceNumber: number;
+  name: string;
+}
+
 export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDeskModalIProps) {
   const { userData } = useAppSelector(userSelector);
   const { data } = useGetWorkingSpacesClientQuery(userData.id);
+  const { state, onChange } = useFormFields<DeskState>({
+    wspaceNumber: wspaceId,
+    name: '',
+  });
   const [background, setBackground] = useState<Blob | null>(null);
-  const [wspaceNumber, setWspaceId] = useState<number>(wspaceId);
-  const [name, setName] = useState<string>('');
   const [postNewDesk, { isLoading, error }] = usePostNewDeskInWorkingSpaceMutation();
 
   const setBackgroundHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,20 +42,12 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
     }
   };
 
-  const changeWspaceNumber = (e: ChangeEvent<HTMLSelectElement>) => {
-    setWspaceId(Number(e.target.value));
-  };
-
-  const setNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
   const postNewDeskHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const body: PostNewDesk = {
-      id: wspaceNumber,
+      id: state.wspaceNumber,
       body: {
-        name,
+        name: state.name,
       },
     };
     if (background) {
@@ -82,11 +82,16 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
         </div>
         <div className={styles.nameInputContainer}>
           <CompoundLabel>Название доски</CompoundLabel>
-          <CompoundInput padding={{ x: '10', y: '10' }} onChange={setNameHandler} value={name} variant="success" />
+          <CompoundInput
+            padding={{ x: '10', y: '10' }}
+            onChange={onChange('name')}
+            value={state.name}
+            variant="success"
+          />
         </div>
         <div className={styles.changeWspaceContainer}>
           <CompoundLabel>Рабочее пространство</CompoundLabel>
-          <select className={styles.selectContainer} onChange={changeWspaceNumber} value={wspaceNumber}>
+          <select className={styles.selectContainer} onChange={onChange('wspaceNumber')} value={state.wspaceNumber}>
             {data?.rows.map(item => (
               <option key={item.id} value={item.id}>
                 {item.name}
@@ -98,7 +103,7 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
           'Пожалуйста подождите...'
         ) : (
           <CompoundButton
-            disabled={name.trim().length > 3 ? false : true}
+            disabled={state.name.trim().length > 3 ? false : true}
             mt="15"
             padding={{ x: '30', y: '10' }}
             variant="light"

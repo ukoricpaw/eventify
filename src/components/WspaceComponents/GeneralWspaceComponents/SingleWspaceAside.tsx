@@ -1,9 +1,9 @@
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import { useState } from 'react';
 import { CgLock, CgLockUnlock } from 'react-icons/cg';
-import LeftSectionItemSettings from './LeftSectionItemSettings';
+import LeftSectionItemSettings from '../LeftSectionComponents/LeftSectionItemSettings';
 
 interface SingleWspaceSideIProps {
   data?: SingleWorkingSpaceType;

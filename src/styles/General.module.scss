@@ -70,3 +70,34 @@
   border-radius: 50%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
+
+// pagination
+
+.paginationList,
+.paginationList__items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.paginationList__items {
+  width: 300px;
+  justify-content: center;
+  gap: 10px;
+
+  .paginationItem {
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  }
+
+  .paginationItemSelected {
+    color: rgb(103, 103, 228);
+    cursor: auto;
+  }
+}
+
+.paginationList {
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}

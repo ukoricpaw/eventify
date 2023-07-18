@@ -7,9 +7,19 @@ interface InputIProps extends InputHTMLAttributes<HTMLInputElement> {
     y?: string;
     x?: string;
   };
+  width?: string;
 }
 
-export default function CompoundInput({ padding, variant, onChange, placeholder, type, value, children }: InputIProps) {
+export default function CompoundInput({
+  width,
+  padding,
+  variant,
+  onChange,
+  placeholder,
+  type,
+  value,
+  children,
+}: InputIProps) {
   let inputStyles = ['formContainer__inputContainer-light', 'formContainer__input-light'];
 
   switch (variant) {
@@ -37,6 +47,7 @@ export default function CompoundInput({ padding, variant, onChange, placeholder,
         .settings {
           padding: ${padding ? (padding.y ? padding.y : '18') : '18'}px
             ${padding ? (padding.x ? padding.x : '35') : '35'}px;
+          ${width ? `width: ${width}` : ''}
         }
 
         .inputSettings {

@@ -1,6 +1,12 @@
 .form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.formContainer__label {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styles from '../../styles/WorkingSpace.module.scss';
+import styles from '../../../styles/WorkingSpace.module.scss';
 
 interface ItemTitleWrapperIProps {
   wspace: string;
