@@ -12,5 +12,5 @@ export default function useFormFields<PropType>(initialState: PropType) {
       },
     [],
   );
-  return { state, onChange };
+  return { state, onChange, setState };
 }

@@ -2,7 +2,7 @@ import { DeskType } from '@/types/deskTypes';
 import styles from '../../../styles/WorkingSpace.module.scss';
 import CompoundButton from '../../FormComponents/CompoundButton';
 import { createPortal } from 'react-dom';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import AddNewDeskModal from '../GeneralWspaceComponents/AddNewDeskModal';
 import DesksList from './DesksList';
 interface DeskListIProps {
@@ -14,9 +14,9 @@ interface DeskListIProps {
 export default function RightSectionDeskList({ desks, wspaceId, userWspaceRole }: DeskListIProps) {
   const [modalActive, setModalActive] = useState<boolean>(false);
 
-  const setActiveModal = () => {
+  const setActiveModal = useCallback(() => {
     setModalActive(prev => !prev);
-  };
+  }, []);
 
   return (
     <ul className={styles.rightSection__desksList}>

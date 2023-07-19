@@ -12,14 +12,21 @@ export default function WspaceDescription({ data }: WspaceDescriptionIProps) {
   return (
     <div className={styles.wspaceDescription}>
       {data && (
-        <ItemTitleWrapper wspace={data?.workingSpace.name as string} ellipsis="350px">
-          <div className={styles.wspaceEditInvite}>
-            <CompoundButton variant="success" padding={{ x: '12', y: '4' }}>
-              <BiUserPlus size={18} />
-              Пригласить пользователя в рабочее пространств
-            </CompoundButton>
-          </div>
-        </ItemTitleWrapper>
+        <>
+          <ItemTitleWrapper wspace={data?.workingSpace.name as string} ellipsis="350px">
+            <div className={styles.wspaceEditInvite}>
+              <CompoundButton variant="success" padding={{ x: '12', y: '4' }}>
+                <BiUserPlus size={18} />
+                Пригласить пользователя в рабочее пространств
+              </CompoundButton>
+            </div>
+          </ItemTitleWrapper>
+          {data.workingSpace.description ? (
+            <p className={styles.wspaceDescription__content}>{data.workingSpace.description}</p>
+          ) : (
+            ''
+          )}
+        </>
       )}
     </div>
   );

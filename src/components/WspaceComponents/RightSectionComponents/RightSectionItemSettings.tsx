@@ -10,12 +10,17 @@ import useItemSettings from '@/hooks/useItemSettings';
 interface RightSectionItemSettingsIProps {
   wspaceName: string;
   wspaceId: number;
+  wspaceRoleId: number;
 }
 
-export default function RightSectionItemSettings({ wspaceName, wspaceId }: RightSectionItemSettingsIProps) {
+export default function RightSectionItemSettings({
+  wspaceRoleId,
+  wspaceName,
+  wspaceId,
+}: RightSectionItemSettingsIProps) {
   const { userData } = useAppSelector(userSelector);
   const router = useRouter();
-  const ItemList = useItemSettings(18, 'white');
+  const ItemList = useItemSettings(18, 'white', wspaceRoleId);
   return (
     <div className={styles.rightSection__itemSettings}>
       <ItemTitleWrapper wspace={wspaceName} />

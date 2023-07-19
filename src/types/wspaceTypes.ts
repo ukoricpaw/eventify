@@ -2,7 +2,9 @@ import { DeskType } from './deskTypes';
 import { UserType } from './userTypes';
 export interface WorkingSpacesResponce {
   count: number;
-  rows: Omit<WorkingSpaceType, 'desks' | 'private' | 'description' | 'inviteLink' | 'createdAt'>[];
+  rows: (Omit<WorkingSpaceType, 'desks' | 'private' | 'description' | 'inviteLink' | 'createdAt'> & {
+    working_space_roles: Pick<WorkingSpaceRole, 'roleId'>[];
+  })[];
 }
 
 export interface WorkingSpaceType {

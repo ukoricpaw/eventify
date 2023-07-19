@@ -8,13 +8,11 @@ import { userSelector } from '@/store/slices/userSlice';
 import { FaUser } from 'react-icons/fa';
 import UserAvatar from '../WspaceComponents/GeneralWspaceComponents/UserAvatar';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useContext } from 'react';
 import { ModalContext } from './CreateWspaceModalProvider';
+import { memo } from 'react';
 
-export default function OwnNavbar() {
+export default memo(function OwnNavbar() {
   const { userData } = useAppSelector(userSelector);
-  const { setActiveModal } = useContext(ModalContext);
-
   return (
     <nav className={styles.navContainer} aria-label="primary-navigation">
       <ul className={styles.navContainer__list}>
@@ -29,9 +27,13 @@ export default function OwnNavbar() {
             <IoIosArrowDropdown size={20} cursor={'pointer'} />
           </li>
           <li className={styles.ownLeftSection__wspaceButton}>
-            <CompoundButton onClick={setActiveModal} size={'30'} variant={'light'} padding={{ y: '5' }}>
-              Создать
-            </CompoundButton>
+            <ModalContext.Consumer>
+              {value => (
+                <CompoundButton onClick={value.setActiveModal} size={'30'} variant={'light'} padding={{ y: '5' }}>
+                  Создать
+                </CompoundButton>
+              )}
+            </ModalContext.Consumer>
           </li>
         </ul>
         <li className={styles.navContainer__ownRightSection}>
@@ -51,4 +53,4 @@ export default function OwnNavbar() {
       </ul>
     </nav>
   );
-}
+});

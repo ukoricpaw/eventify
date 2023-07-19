@@ -393,12 +393,20 @@
   }
 
   .wspaceDescription {
-    @extend %flexTemplate;
+    @extend %flexColumnTemplate;
+    gap: 20px;
     justify-content: flex-start;
     @include borderTemplate(10);
     width: 1000px;
     padding: 10px 10px;
     box-sizing: border-box;
+
+    & .wspaceDescription__content {
+      color: var(--dark-color);
+      @include textEllipsis(1000);
+      white-space: normal;
+      max-height: 400px;
+    }
   }
   .wspaceLayoutChildren {
     & .wspaceLayoutChildren__elements {
@@ -496,7 +504,7 @@
   & .settings__textArea {
     resize: none;
     width: 82%;
-    height: 200px;
+    height: 100px;
     outline: none;
     padding: 15px;
     box-sizing: border-box;
@@ -515,4 +523,18 @@
     cursor: pointer;
     margin-top: 20px;
   }
+}
+
+.deleteWpaceQ {
+  font-weight: 300;
+  font-size: 24px;
+}
+
+.deleteWspace__buttons {
+  & .deleteButton {
+    background-color: red;
+  }
+  @extend %flexTemplate;
+  margin-top: 30px;
+  gap: 30px;
 }

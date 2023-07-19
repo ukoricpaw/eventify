@@ -1,6 +1,7 @@
 import { DeskType } from '@/types/deskTypes';
 import {
   MembersResponse,
+  MessageType,
   NewWorkingSpaceResponse,
   SingleWorkingSpaceType,
   UpdatedWspace,
@@ -82,6 +83,12 @@ export const wspaceApi = createApi({
       },
       invalidatesTags: wspace => [{ type: 'wspace', id: wspace?.id }],
     }),
+    deleteWspace: builder.mutation<MessageType, number>({
+      queryFn: async wspaceId => {
+        return await queryFn(`/api/wspace/${wspaceId}`, 'DELETE');
+      },
+      invalidatesTags: ['wspace'],
+    }),
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
@@ -91,6 +98,7 @@ export const wspaceApi = createApi({
 });
 
 export const {
+  useDeleteWspaceMutation,
   useUpdateWspaceMutation,
   useGetWspaceMembersQuery,
   usePostNewWorkingSpaceMutation,

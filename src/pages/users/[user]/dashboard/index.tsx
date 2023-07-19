@@ -39,7 +39,7 @@ export default function DashboardPage({ status }: InferGetServerSidePropsType<ty
         <div className={styles.leftSection__titleContainer}>
           <p className={styles.title}>Рабочие пространства</p>
           <ModalContext.Consumer>
-            {ctx => <AiOutlinePlus onClick={ctx.setActiveModal} cursor={'pointer'} size={18} />}
+            {value => <AiOutlinePlus onClick={value.setActiveModal} cursor={'pointer'} size={18} />}
           </ModalContext.Consumer>
         </div>
         {data && <LeftSectionWspacesList wspaces={data} />}

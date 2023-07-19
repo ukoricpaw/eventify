@@ -1,25 +1,26 @@
 import { CgArrowLeft, CgArrowRight } from 'react-icons/cg';
 import styles from '../../styles/General.module.scss';
 import PaginationItem from './PaginationItem';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useCallback } from 'react';
 import getPages from '@/utils/getPages';
-
+import { memo } from 'react';
+import { MembersListState } from '../WspaceComponents/RightSectionComponents/MembersInputContainer';
 interface PaginationIProps {
   count: number;
   current: number;
   limit: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  setPage: Dispatch<SetStateAction<MembersListState>>;
 }
 
-export default function Pagination({ count, current, limit, setPage }: PaginationIProps) {
+export default memo(function Pagination({ count, current, limit, setPage }: PaginationIProps) {
   const pageCount = Math.ceil(count / limit);
   const pages = getPages(pageCount, current);
-  const prevPage = () => {
-    setPage(prev => prev - 1);
-  };
-  const nextPage = () => {
-    setPage(prev => prev + 1);
-  };
+  const prevPage = useCallback(() => {
+    setPage(prev => ({ ...prev, page: prev.page - 1 }));
+  }, []);
+  const nextPage = useCallback(() => {
+    setPage(prev => ({ ...prev, page: prev.page + 1 }));
+  }, []);
   return (
     <ul className={styles.paginationList}>
       {current !== 1 && <CgArrowLeft color="gray" size={25} onClick={prevPage} cursor={'pointer'} />}
@@ -34,4 +35,4 @@ export default function Pagination({ count, current, limit, setPage }: Paginatio
       {current !== pageCount && <CgArrowRight color="gray" size={25} onClick={nextPage} cursor={'pointer'} />}
     </ul>
   );
-}
+});

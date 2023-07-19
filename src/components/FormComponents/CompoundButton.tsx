@@ -1,6 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
 import styles from '../../styles/Form.module.scss';
-
 interface ButtonIProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: 'light' | 'success' | 'dark';
   mt?: string;

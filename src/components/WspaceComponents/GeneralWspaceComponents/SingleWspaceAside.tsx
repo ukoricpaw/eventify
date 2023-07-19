@@ -29,7 +29,7 @@ export default function SingleWspaceAside({ data, query }: SingleWspaceSideIProp
             )}
           </p>
         </div>
-        <LeftSectionItemSettings margin="15px 0" />
+        {data && <LeftSectionItemSettings wspaceRoleId={data?.workingSpaceRole.roleId} margin="15px 0" />}
       </div>
       <div className={styles.arrowAside} onClick={hideHandler}>
         {isHide ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}

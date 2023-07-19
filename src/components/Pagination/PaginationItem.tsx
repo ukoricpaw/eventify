@@ -1,6 +1,6 @@
 import styles from '../../styles/General.module.scss';
 import { ReactNode, useContext } from 'react';
-import { MembersContext } from '@/pages/users/[user]/wspace/[id]/members';
+import { MembersContext } from '../WspaceComponents/RightSectionComponents/MembersInputContainer';
 
 interface PaginationItemIProps {
   isSelected?: boolean;
@@ -9,11 +9,11 @@ interface PaginationItemIProps {
 }
 
 export default function PaginationItem({ isSelected, value, children }: PaginationItemIProps) {
-  const { setPage } = useContext(MembersContext);
+  const { setState } = useContext(MembersContext);
   return (
     <>
       <p
-        onClick={isSelected ? () => null : () => setPage(value)}
+        onClick={isSelected ? () => null : () => setState(prev => ({ ...prev, page: value }))}
         className={`${styles.paginationItem} ${isSelected ? styles.paginationItemSelected : ''}`}
       >
         {value}

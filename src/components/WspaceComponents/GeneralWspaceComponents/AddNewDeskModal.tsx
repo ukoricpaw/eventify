@@ -92,11 +92,15 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
         <div className={styles.changeWspaceContainer}>
           <CompoundLabel>Рабочее пространство</CompoundLabel>
           <select className={styles.selectContainer} onChange={onChange('wspaceNumber')} value={state.wspaceNumber}>
-            {data?.rows.map(item => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
+            {data?.rows.map(item =>
+              item.working_space_roles[0].roleId !== 3 ? (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ) : (
+                ''
+              ),
+            )}
           </select>
         </div>
         {isLoading ? (

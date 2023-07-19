@@ -14,13 +14,14 @@ export interface ItemsInterface {
 interface LeftSectionItemSettingsIProps {
   wspaceId?: number;
   margin?: string;
+  wspaceRoleId: number;
 }
-export default function LeftSectionItemSettings({ wspaceId, margin }: LeftSectionItemSettingsIProps) {
+export default function LeftSectionItemSettings({ wspaceId, wspaceRoleId, margin }: LeftSectionItemSettingsIProps) {
   const handleStopPropogation = (e: MouseEvent<HTMLUListElement>) => {
     e.stopPropagation();
   };
 
-  const ItemList = useItemSettings(25, 'gray');
+  const ItemList = useItemSettings(25, 'gray', wspaceRoleId);
   const { query } = useRouter();
 
   return (

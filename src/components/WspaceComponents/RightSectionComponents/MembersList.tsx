@@ -3,25 +3,20 @@ import styles from '../../../styles/WorkingSpace.module.scss';
 import MemberItem from './MemberItem';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
-import { useContext } from 'react';
-import { WspaceLayoutContext } from '../../GeneralComponents/WorkingSpaceLayout';
+import { WspaceLayoutContext } from '@/components/GeneralComponents/WorkingSpaceLayout';
+import { memo } from 'react';
 
-export default function MembersList({ memberData }: { memberData: MembersType[] }) {
+export default memo(function MembersList({ memberData }: { memberData: MembersType[] }) {
   const { userData } = useAppSelector(userSelector);
-  const data = useContext(WspaceLayoutContext);
+
   return (
     <ul className={styles.membersList}>
       {memberData &&
-        memberData.map(item => {
-          return (
-            <MemberItem
-              userId={userData.id}
-              wspaceUserId={data?.workingSpace.user.id as number}
-              key={item.userId}
-              data={item}
-            />
-          );
-        })}
+        memberData.map(item => (
+          <WspaceLayoutContext.Consumer key={item.userId}>
+            {val => <MemberItem userId={userData.id} wspaceUserId={val.workingSpace.user.id as number} data={item} />}
+          </WspaceLayoutContext.Consumer>
+        ))}
     </ul>
   );
-}
+});

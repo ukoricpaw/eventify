@@ -13,7 +13,11 @@ export const WspaceLayoutContext = createContext<SingleWorkingSpaceType>({} as S
 
 export default function WorkingSpaceLayout({ children }: { children: ReactNode }) {
   const { query, pathname } = useRouter();
-  const { data } = useGetSingleWorkingSpaceClientQuery(Number(query.id));
+  const { data, isLoading } = useGetSingleWorkingSpaceClientQuery(Number(query.id));
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <WspaceLayoutContext.Provider value={data ?? ({} as SingleWorkingSpaceType)}>

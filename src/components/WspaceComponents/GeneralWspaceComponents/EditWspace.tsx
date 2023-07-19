@@ -90,7 +90,7 @@ export default function EditWspace({ data }: { data: SingleWorkingSpaceType }) {
             Публичное рабочее пространство. Видно всем пользователям.
           </ScopeLabelContainer>
         )}
-        <DeleteWspace />
+        <DeleteWspace wspaceId={data.workingSpace.id} />
         {isLoading ? (
           'Пожалуйста подождите'
         ) : (
