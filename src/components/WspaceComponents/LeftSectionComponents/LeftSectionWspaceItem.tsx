@@ -2,31 +2,37 @@ import styles from '../../../styles/WorkingSpace.module.scss';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import LeftSectionItemSettings from './LeftSectionItemSettings';
 import ItemTitleWrapper from '../GeneralWspaceComponents/ItemTitleWrapper';
-import { useGetSingleWorkingSpaceClientQuery } from '@/store/api/wspaceApi';
+import { selectWorkingSpacesResult, useGetSingleWorkingSpaceClientQuery } from '@/store/api/wspaceApi';
 import { useCallback } from 'react';
+import { useAppSelector } from '@/hooks/reduxHooks';
 
 interface LeftSectionWspaceItemIProps {
   handleActive: (itemNumber: number) => void;
   active: number | null;
   wspaceId: number;
+  roleId: number;
+  name: string;
 }
 
-export default function LeftSectionWspaceItem({ wspaceId, handleActive, active }: LeftSectionWspaceItemIProps) {
-  const { data } = useGetSingleWorkingSpaceClientQuery(wspaceId);
+export default function LeftSectionWspaceItem({
+  wspaceId,
+  handleActive,
+  active,
+  roleId,
+  name,
+}: LeftSectionWspaceItemIProps) {
   const handler = useCallback(() => handleActive(wspaceId), []);
   return (
     <div onClick={handler} className={styles.leftSectionItem}>
       <div className={styles.itemTitleContainer}>
-        {data && <ItemTitleWrapper wspace={data.workingSpace.name} />}
+        <ItemTitleWrapper wspace={name} />
         {active === wspaceId ? (
           <IoIosArrowDropdown className={styles.dropdownIcon} color="gray" />
         ) : (
           <IoIosArrowDropdown color="gray" />
         )}
       </div>
-      {active === wspaceId && data && (
-        <LeftSectionItemSettings wspaceRoleId={data?.workingSpaceRole.roleId} wspaceId={wspaceId} />
-      )}
+      {active === wspaceId && <LeftSectionItemSettings wspaceRoleId={roleId} wspaceId={wspaceId} />}
     </div>
   );
 }

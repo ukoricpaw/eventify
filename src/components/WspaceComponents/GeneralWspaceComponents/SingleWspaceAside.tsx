@@ -7,10 +7,9 @@ import LeftSectionItemSettings from '../LeftSectionComponents/LeftSectionItemSet
 
 interface SingleWspaceSideIProps {
   data?: SingleWorkingSpaceType;
-  query: 'settings' | 'members' | 'desks';
 }
 
-export default function SingleWspaceAside({ data, query }: SingleWspaceSideIProps) {
+export default function SingleWspaceAside({ data }: SingleWspaceSideIProps) {
   const [isHide, setHide] = useState<boolean>(false);
   const hideHandler = () => {
     setHide(prev => !prev);
@@ -29,7 +28,12 @@ export default function SingleWspaceAside({ data, query }: SingleWspaceSideIProp
             )}
           </p>
         </div>
-        {data && <LeftSectionItemSettings wspaceRoleId={data?.workingSpaceRole.roleId} margin="15px 0" />}
+        {data && (
+          <LeftSectionItemSettings
+            wspaceRoleId={data?.workingSpaceRole ? data.workingSpaceRole.roleId : 0}
+            margin="15px 0"
+          />
+        )}
       </div>
       <div className={styles.arrowAside} onClick={hideHandler}>
         {isHide ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}

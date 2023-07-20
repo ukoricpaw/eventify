@@ -4,13 +4,13 @@ import CompoundLabel from '@/components/FormComponents/CompoundLabel';
 import FormGroup from '@/components/FormComponents/FormGroup';
 import ModalLayout from '@/components/GeneralComponents/ModalLayout';
 import styles from '../../../styles/WorkingSpace.module.scss';
-import { ChangeEvent, MouseEvent, useState } from 'react';
-import { PostNewWS, usePostNewWorkingSpaceMutation } from '@/store/api/wspaceApi';
+import { MouseEvent } from 'react';
+import { PostNewWS, selectWorkingSpacesResult, usePostNewWorkingSpaceMutation } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
-import { useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
 import useFormFields from '@/hooks/useFormFields';
+import { WorkingSpacesResponce } from '@/types/wspaceTypes';
 
 interface AddNewWspaceModalIProps {
   setActiveModal: () => void;
@@ -23,7 +23,7 @@ type InfoType = {
 
 export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalIProps) {
   const { userData } = useAppSelector(userSelector);
-  const { data } = useGetWorkingSpacesClientQuery(userData.id);
+  const data = useAppSelector(state => selectWorkingSpacesResult(state, userData.id) as WorkingSpacesResponce);
   const { state, onChange } = useFormFields({
     name: `Рабочее пространство ${data?.count ? data.count + 1 : ''}`,
     description: '',

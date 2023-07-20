@@ -8,6 +8,7 @@ export default function RightSectionWspaceItem({ wspace }: { wspace: number }) {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className={styles.rightSection__wspaceItem}>
       {data && (
@@ -17,13 +18,7 @@ export default function RightSectionWspaceItem({ wspace }: { wspace: number }) {
           wspaceId={data.workingSpace.id}
         />
       )}
-      {data && (
-        <RightSectionDeskList
-          userWspaceRole={data.workingSpaceRole.roleId}
-          desks={data.workingSpace.desks}
-          wspaceId={data.workingSpace.id}
-        />
-      )}
+      {data && <RightSectionDeskList wspaceId={data.workingSpace.id} />}
     </div>
   );
 }

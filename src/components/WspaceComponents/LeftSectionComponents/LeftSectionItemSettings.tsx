@@ -22,7 +22,7 @@ export default function LeftSectionItemSettings({ wspaceId, wspaceRoleId, margin
   };
 
   const ItemList = useItemSettings(25, 'gray', wspaceRoleId);
-  const { query } = useRouter();
+  const { query, pathname } = useRouter();
 
   return (
     <ul className={`${styles.itemSettings} settingsStyles`} onClick={handleStopPropogation}>
@@ -32,7 +32,11 @@ export default function LeftSectionItemSettings({ wspaceId, wspaceRoleId, margin
             href={getHref(Number(query.user), query.id ? Number(query.id) : Number(wspaceId), item.name)}
             key={item.content}
           >
-            <li className={styles.settingItem}>
+            <li
+              className={`${styles.settingItem} ${
+                pathname.split('/').reverse()[0] === item.name && styles.settingItemActive
+              }`}
+            >
               {item.icon}
               <p className={styles.settingContent}>{item.content}</p>
             </li>

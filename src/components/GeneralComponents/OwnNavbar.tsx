@@ -9,9 +9,9 @@ import { FaUser } from 'react-icons/fa';
 import UserAvatar from '../WspaceComponents/GeneralWspaceComponents/UserAvatar';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { ModalContext } from './CreateWspaceModalProvider';
-import { memo } from 'react';
+import ContextConsumer from './ContextConsumer';
 
-export default memo(function OwnNavbar() {
+export default function OwnNavbar() {
   const { userData } = useAppSelector(userSelector);
   return (
     <nav className={styles.navContainer} aria-label="primary-navigation">
@@ -27,13 +27,13 @@ export default memo(function OwnNavbar() {
             <IoIosArrowDropdown size={20} cursor={'pointer'} />
           </li>
           <li className={styles.ownLeftSection__wspaceButton}>
-            <ModalContext.Consumer>
+            <ContextConsumer Context={ModalContext}>
               {value => (
                 <CompoundButton onClick={value.setActiveModal} size={'30'} variant={'light'} padding={{ y: '5' }}>
                   Создать
                 </CompoundButton>
               )}
-            </ModalContext.Consumer>
+            </ContextConsumer>
           </li>
         </ul>
         <li className={styles.navContainer__ownRightSection}>
@@ -53,4 +53,4 @@ export default memo(function OwnNavbar() {
       </ul>
     </nav>
   );
-});
+}

@@ -9,7 +9,7 @@ export default function Error({ error }: { error: FetchBaseQueryError | string }
         <title>Ошибка запроса | Eventify</title>
         <meta title="description" content="Страница недоступна" />
       </Head>
-      <div>Ошибка: {typeof error === 'string' ? 'Срок сессии истёк, зайдите в профиль заново' : error.status}</div>
+      <div>Ошибка: {typeof error === 'string' ? 'Ошибка запроса' : error.status}</div>
     </AuthLayout>
   );
 }

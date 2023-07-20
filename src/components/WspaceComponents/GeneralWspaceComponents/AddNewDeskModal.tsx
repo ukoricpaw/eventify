@@ -3,7 +3,7 @@ import { ChangeEvent, MouseEvent } from 'react';
 import FormGroup from '../../FormComponents/FormGroup';
 import default_picture from '../../../assets/images/default_picture.jpeg';
 import Image from 'next/image';
-import { useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
+import { selectWorkingSpacesResult } from '@/store/api/wspaceApi';
 import { useState } from 'react';
 import CompoundInput from '../../FormComponents/CompoundInput';
 import CompoundLabel from '../../FormComponents/CompoundLabel';
@@ -14,6 +14,7 @@ import ModalLayout from '../../GeneralComponents/ModalLayout';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import useFormFields from '@/hooks/useFormFields';
+import { WorkingSpacesResponce } from '@/types/wspaceTypes';
 
 interface AddNewDeskModalIProps {
   setActiveModal: () => void;
@@ -27,7 +28,7 @@ interface DeskState {
 
 export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDeskModalIProps) {
   const { userData } = useAppSelector(userSelector);
-  const { data } = useGetWorkingSpacesClientQuery(userData.id);
+  const data = useAppSelector(state => selectWorkingSpacesResult(state, userData.id) as WorkingSpacesResponce);
   const { state, onChange } = useFormFields<DeskState>({
     wspaceNumber: wspaceId,
     name: '',

@@ -2,10 +2,12 @@ import { configureStore, combineReducers, ThunkAction, Action, getDefaultMiddlew
 import { createWrapper } from 'next-redux-wrapper';
 import userSlice from './slices/userSlice';
 import { wspaceApi } from './api/wspaceApi';
+import { deskApi } from './api/deskApi';
 
 const rootReducer = combineReducers({
   userReducer: userSlice,
   [wspaceApi.reducerPath]: wspaceApi.reducer,
+  [deskApi.reducerPath]: deskApi.reducer,
 });
 
 export const store = () =>
@@ -13,7 +15,7 @@ export const store = () =>
     reducer: rootReducer,
     devTools: true,
     middleware: getDefaultMiddleware => {
-      return getDefaultMiddleware().concat(wspaceApi.middleware);
+      return getDefaultMiddleware().concat([wspaceApi.middleware, deskApi.middleware]);
     },
   });
 

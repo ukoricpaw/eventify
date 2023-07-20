@@ -12,6 +12,7 @@ import RightSectionWspacesList from '@/components/WspaceComponents/RightSectionC
 import { useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { ModalContext } from '@/components/GeneralComponents/CreateWspaceModalProvider';
+import ContextConsumer from '@/components/GeneralComponents/ContextConsumer';
 interface DashboardPageIProps {
   status: string;
 }
@@ -38,9 +39,9 @@ export default function DashboardPage({ status }: InferGetServerSidePropsType<ty
       <section className={styles.leftSection} id={'leftSection'}>
         <div className={styles.leftSection__titleContainer}>
           <p className={styles.title}>Рабочие пространства</p>
-          <ModalContext.Consumer>
+          <ContextConsumer Context={ModalContext}>
             {value => <AiOutlinePlus onClick={value.setActiveModal} cursor={'pointer'} size={18} />}
-          </ModalContext.Consumer>
+          </ContextConsumer>
         </div>
         {data && <LeftSectionWspacesList wspaces={data} />}
       </section>

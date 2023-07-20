@@ -23,7 +23,7 @@ export default function RightSectionItemSettings({
   const ItemList = useItemSettings(18, 'white', wspaceRoleId);
   return (
     <div className={styles.rightSection__itemSettings}>
-      <ItemTitleWrapper wspace={wspaceName} />
+      <ItemTitleWrapper wspace={wspaceName} ellipsis="350px" />
       <ul className={styles.itemSettingsList}>
         {ItemList.map(item => {
           return (

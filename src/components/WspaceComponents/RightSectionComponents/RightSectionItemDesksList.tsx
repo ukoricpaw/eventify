@@ -1,33 +1,40 @@
-import { DeskType } from '@/types/deskTypes';
 import styles from '../../../styles/WorkingSpace.module.scss';
 import CompoundButton from '../../FormComponents/CompoundButton';
 import { createPortal } from 'react-dom';
 import { useCallback, useState } from 'react';
 import AddNewDeskModal from '../GeneralWspaceComponents/AddNewDeskModal';
 import DesksList from './DesksList';
-interface DeskListIProps {
-  desks: DeskType[];
-  wspaceId: number;
-  userWspaceRole: number;
-}
+import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
+import { useRouter } from 'next/router';
+import { memo } from 'react';
+import { useAppSelector } from '@/hooks/reduxHooks';
+import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
 
-export default function RightSectionDeskList({ desks, wspaceId, userWspaceRole }: DeskListIProps) {
+export default function RightSectionDeskList({ wspaceId }: { wspaceId?: number }) {
+  const { query } = useRouter();
   const [modalActive, setModalActive] = useState<boolean>(false);
-
+  const data = useAppSelector(
+    state => selectSingleWorkingSpaceResult(state, wspaceId ?? Number(query.id)) as SingleWorkingSpaceType,
+  );
   const setActiveModal = useCallback(() => {
     setModalActive(prev => !prev);
   }, []);
 
   return (
     <ul className={styles.rightSection__desksList}>
-      {desks && <DesksList desks={desks} />}
-      {userWspaceRole !== 3 && (
+      {data.workingSpace && <DesksList desks={data.workingSpace.desks} />}
+      {data?.workingSpaceRole.roleId !== 3 && data?.workingSpaceRole.roleId !== 0 ? (
         <CompoundButton onClick={setActiveModal} variant="success" padding={{ y: '60' }}>
           <p className={styles.addNewDeskTitle}>Создать доску</p>
         </CompoundButton>
+      ) : (
+        <p className={styles.emptyWspaceTitle}>В рабочем пространстве нет досок</p>
       )}
       {modalActive &&
-        createPortal(<AddNewDeskModal wspaceId={wspaceId} setActiveModal={setActiveModal} />, document.body)}
+        createPortal(
+          <AddNewDeskModal wspaceId={wspaceId ?? Number(query.id)} setActiveModal={setActiveModal} />,
+          document.body,
+        )}
     </ul>
   );
 }

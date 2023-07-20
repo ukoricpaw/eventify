@@ -15,6 +15,8 @@ export default function LeftSectionWspacesList({ wspaces }: { wspaces: WorkingSp
       {wspaces && wspaces.count > 0 ? (
         wspaces.rows.map(wspaceItem => (
           <LeftSectionWspaceItem
+            roleId={wspaceItem.working_space_roles[0].roleId}
+            name={wspaceItem.name}
             key={wspaceItem.id}
             handleActive={handleActive}
             active={active}

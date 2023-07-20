@@ -63,9 +63,14 @@
     }
   }
 
-  & .settingItem:hover {
+  & .settingItem:hover,
+  & .settingItemActive {
     background-color: var(--dark-gray-color);
     border-radius: 10px;
+  }
+
+  & .settingItemActive {
+    cursor: default;
   }
 }
 .leftSection {
@@ -200,6 +205,12 @@
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
   row-gap: 20px;
+
+  & .emptyWspaceTitle {
+    width: 500px;
+    color: gray;
+    font-size: 18px;
+  }
 
   & .addNewDeskTitle {
     text-align: center;
