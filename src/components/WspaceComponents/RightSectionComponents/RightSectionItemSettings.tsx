@@ -11,19 +11,23 @@ interface RightSectionItemSettingsIProps {
   wspaceName: string;
   wspaceId: number;
   wspaceRoleId: number;
+  deskCount: number;
 }
 
 export default function RightSectionItemSettings({
   wspaceRoleId,
   wspaceName,
   wspaceId,
+  deskCount,
 }: RightSectionItemSettingsIProps) {
   const { userData } = useAppSelector(userSelector);
   const router = useRouter();
   const ItemList = useItemSettings(18, 'white', wspaceRoleId);
   return (
     <div className={styles.rightSection__itemSettings}>
-      <ItemTitleWrapper wspace={wspaceName} ellipsis="350px" />
+      <ItemTitleWrapper wspace={wspaceName} ellipsis="300px">
+        Количество досок ({deskCount})
+      </ItemTitleWrapper>
       <ul className={styles.itemSettingsList}>
         {ItemList.map(item => {
           return (

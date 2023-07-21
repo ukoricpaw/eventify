@@ -6,7 +6,6 @@ import AddNewDeskModal from '../GeneralWspaceComponents/AddNewDeskModal';
 import DesksList from './DesksList';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
-import { memo } from 'react';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
 

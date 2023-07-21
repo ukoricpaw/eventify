@@ -15,6 +15,7 @@ import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import useFormFields from '@/hooks/useFormFields';
 import { WorkingSpacesResponce } from '@/types/wspaceTypes';
+import { DeskType } from '@/types/deskTypes';
 
 interface AddNewDeskModalIProps {
   setActiveModal: () => void;
@@ -34,7 +35,7 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
     name: '',
   });
   const [background, setBackground] = useState<Blob | null>(null);
-  const [postNewDesk, { isLoading, error }] = usePostNewDeskInWorkingSpaceMutation();
+  const [postNewDesk, { isLoading, error, isError }] = usePostNewDeskInWorkingSpaceMutation();
 
   const setBackgroundHandler = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -54,8 +55,11 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
     if (background) {
       body.body.background = background;
     }
-    await postNewDesk(body);
-    setActiveModal();
+    await postNewDesk(body).then(res => {
+      if ((res as { data: DeskType }).data) {
+        setActiveModal();
+      }
+    });
   };
 
   return (
@@ -104,6 +108,7 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
             )}
           </select>
         </div>
+        {isError && <p style={{ color: 'red' }}>{error as string}</p>}
         {isLoading ? (
           'Пожалуйста подождите...'
         ) : (

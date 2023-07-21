@@ -1,10 +1,10 @@
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import styles from '../../../styles/WorkingSpace.module.scss';
 
 interface ItemTitleWrapperIProps {
   wspace: string;
   ellipsis?: string;
-  children?: ReactElement;
+  children?: ReactNode;
 }
 
 export default function ItemTitleWrapper({ wspace, ellipsis, children }: ItemTitleWrapperIProps) {
@@ -14,9 +14,12 @@ export default function ItemTitleWrapper({ wspace, ellipsis, children }: ItemTit
       <h3 className={`${styles.itemTitle} ellipsis`} title={wspace}>
         {wspace}
       </h3>
-      {children}
+      <div className="childParagraph">{children}</div>
       <style jsx>
         {`
+          .childParagraph {
+            font-weight: 300;
+          }
           .ellipsis {
             max-width: ${ellipsis ? ellipsis : '130px'};
           }

@@ -13,6 +13,7 @@ export default function RightSectionWspaceItem({ wspace }: { wspace: number }) {
     <div className={styles.rightSection__wspaceItem}>
       {data && (
         <RightSectionItemSettings
+          deskCount={data.workingSpace.desks.length}
           wspaceRoleId={data.workingSpaceRole.roleId}
           wspaceName={data?.workingSpace.name}
           wspaceId={data.workingSpace.id}

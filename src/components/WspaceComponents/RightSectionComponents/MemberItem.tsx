@@ -26,7 +26,8 @@ export default function MemberItem({ memberData, userId }: MemberItemIProps) {
         {memberData.user.avatar ? (
           <Image
             className={styles.memberImage}
-            priority
+            placeholder="blur"
+            blurDataURL={`${process.env.NEXT_PUBLIC_API_URL}/api/image/${memberData.user.avatar}`}
             alt="userImage"
             width={60}
             height={60}

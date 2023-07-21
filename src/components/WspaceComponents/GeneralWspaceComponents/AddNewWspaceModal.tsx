@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import useFormFields from '@/hooks/useFormFields';
-import { WorkingSpacesResponce } from '@/types/wspaceTypes';
+import { WorkingSpacesResponce, NewWorkingSpaceResponse } from '@/types/wspaceTypes';
 
 interface AddNewWspaceModalIProps {
   setActiveModal: () => void;
@@ -28,9 +28,8 @@ export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalI
     name: `Рабочее пространство ${data?.count ? data.count + 1 : ''}`,
     description: '',
   });
-  const [postNewWS, { isLoading, error }] = usePostNewWorkingSpaceMutation();
+  const [postNewWS, { isLoading, error, isError }] = usePostNewWorkingSpaceMutation();
   const router = useRouter();
-
   const handlerSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const body: PostNewWS = {
@@ -39,10 +38,14 @@ export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalI
     if (state.description.trim() !== '') {
       body.description = state.description;
     }
-    await postNewWS(body);
-    if (router.pathname.split('/').reverse()[0] !== 'dashboard') {
-      router.push(`/users/${userData.id}/dashboard`);
-    }
+    await postNewWS(body).then(res => {
+      if ((res as { data: NewWorkingSpaceResponse }).data) {
+        setActiveModal();
+        if (router.pathname.split('/').reverse()[0] !== 'dashboard') {
+          router.push(`/users/${userData.id}/dashboard`);
+        }
+      }
+    });
   };
 
   return (
@@ -60,6 +63,7 @@ export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalI
           className={styles.addNewWSTextArea}
           rows={6}
         />
+        {isError && <p style={{ color: 'red' }}>{error as string}</p>}
         {isLoading ? (
           'Пожалуйста подождите...'
         ) : (
