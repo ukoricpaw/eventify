@@ -2,6 +2,7 @@ import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/dist/query/react';
 import queryFn from '@/utils/queryFn';
 import { SingleDesk } from '@/types/deskListTypes';
 import { FullTagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
+import { RootState, store } from '..';
 
 export interface DeskRequest {
   wspaceId: number;
@@ -34,5 +35,8 @@ export const deskApi = createApi({
     }),
   }),
 });
+
+export const selectAllDeskLists = (state: RootState, { wspaceId, deskId }: DeskRequest) =>
+  deskApi.endpoints.getFullDesk.select({ wspaceId, deskId })(state).data ?? {};
 
 export const { useGetFullDeskQuery } = deskApi;

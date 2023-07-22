@@ -17,7 +17,7 @@ export default function WorkingSpaceLayout({ children }: { children: ReactNode }
   const { data, isLoading, isError, error } = useGetSingleWorkingSpaceClientQuery(Number(query.id));
   const { userData } = useAppSelector(userSelector);
   const wspaceData = useGetWorkingSpacesClientQuery(userData.id);
-  if (isLoading && wspaceData.isLoading) {
+  if (isLoading || wspaceData.isLoading) {
     return <div>Loading...</div>;
   }
 

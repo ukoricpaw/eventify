@@ -1,7 +1,10 @@
-import DeskLayout from '@/components/GeneralComponents/DeskLayout';
-import { useRouter } from 'next/router';
+import DeskLayout from '@/components/DeskComponents/DeskLayout';
+import ColumnList from '@/components/DeskComponents/ColumnList';
 
 export default function DeskPage() {
-  const { query } = useRouter();
-  return <DeskLayout>{query.deskId}</DeskLayout>;
+  return (
+    <DeskLayout>
+      <ColumnList />
+    </DeskLayout>
+  );
 }
