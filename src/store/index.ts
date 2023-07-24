@@ -3,11 +3,13 @@ import { createWrapper } from 'next-redux-wrapper';
 import userSlice from './slices/userSlice';
 import { wspaceApi } from './api/wspaceApi';
 import { deskApi } from './api/deskApi';
+import deskSlice from './slices/deskSlice';
 
 const rootReducer = combineReducers({
   userReducer: userSlice,
   [wspaceApi.reducerPath]: wspaceApi.reducer,
   [deskApi.reducerPath]: deskApi.reducer,
+  deskReducer: deskSlice,
 });
 
 export const store = () =>

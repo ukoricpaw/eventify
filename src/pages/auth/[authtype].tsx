@@ -3,7 +3,6 @@ import CompoundInput from '@/components/FormComponents/CompoundInput';
 import CompoundLabel from '@/components/FormComponents/CompoundLabel';
 import Container from '@/components/FormComponents/Container';
 import FormGroup from '@/components/FormComponents/FormGroup';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useState, useCallback, ChangeEvent, MouseEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks';

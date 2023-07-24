@@ -27,9 +27,12 @@
 
   & .column {
     @extend %flexColumnTemplate;
-    @extend %borderTemplate;
-    border-radius: 10px;
-    background-color: var(--light-white-color);
+
+    & .column__wrapper {
+      border-radius: 10px;
+      background-color: var(--light-white-color);
+      @extend %borderTemplate;
+    }
 
     .itemList {
       margin: 15px;
@@ -38,6 +41,8 @@
       padding: 10px 0;
       background-color: var(--light-white-color);
       & .columnItem {
+        border-radius: 5px;
+        background-color: var(--light-white-color);
         text-align: center;
         padding: 10px;
         @extend %borderTemplate;

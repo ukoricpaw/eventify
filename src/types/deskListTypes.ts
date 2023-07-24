@@ -1,3 +1,13 @@
+export type SingleDeskState = {
+  status: {
+    isLoading: boolean;
+    isError: null | string;
+  };
+  data: SingleDesk;
+  lists: DeskList[];
+  listItems: DeskListItem[];
+};
+
 export interface SingleDesk {
   id: number;
   name: string;

@@ -1,26 +1,55 @@
 import { useAppSelector } from '@/hooks/reduxHooks';
-import { selectAllDeskLists } from '@/store/api/deskApi';
-import { SingleDesk } from '@/types/deskListTypes';
 import { useRouter } from 'next/router';
 import styles from '../../styles/Desk.module.scss';
 import SingleColumn from './SingleColumn';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { deskDataSelectorResult } from '@/store/slices/deskSlice';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import type { DropResult } from 'react-beautiful-dnd';
+import { reorderItem } from '@/store/slices/deskSlice';
+import { useAppDispatch } from '@/hooks/reduxHooks';
+import { useCallback } from 'react';
 
 export default function ColumnList() {
   const { query } = useRouter();
 
-  const data = useAppSelector(
-    state => selectAllDeskLists(state, { wspaceId: Number(query.id), deskId: Number(query.deskId) }) as SingleDesk,
-  );
+  const dispatch = useAppDispatch();
+
+  const onDragEnd = useCallback((result: DropResult) => {
+    const source = {
+      id: Number(result.source.droppableId),
+      index: result.source.index,
+    };
+    let destination = null;
+    if (result.destination) {
+      destination = {
+        id: Number(result.destination?.droppableId),
+        index: result.destination.index,
+      };
+    }
+    dispatch(
+      reorderItem({
+        draggableId: Number(result.draggableId),
+        source,
+        destination,
+        type: result.type as 'columns' | 'items',
+      }),
+    );
+  }, []);
+
+  const data = useAppSelector(deskDataSelectorResult);
 
   return (
-    <ul className={styles.columnList}>
-      <DndProvider backend={HTML5Backend}>
-        {data.desk_lists.map(list => (
-          <SingleColumn list={list} key={list.id} />
-        ))}
-      </DndProvider>
-    </ul>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="all-columns" type="columns" direction="horizontal">
+        {provided => (
+          <ul ref={provided.innerRef} {...provided.droppableProps} className={styles.columnList}>
+            {data.map((list, index) => (
+              <SingleColumn index={index} listId={list.id} key={String(list.id)} />
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }
