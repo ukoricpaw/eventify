@@ -2,10 +2,7 @@ import styles from '../../../styles/WorkingSpace.module.scss';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import LeftSectionItemSettings from './LeftSectionItemSettings';
 import ItemTitleWrapper from '../GeneralWspaceComponents/ItemTitleWrapper';
-import { selectWorkingSpacesResult, useGetSingleWorkingSpaceClientQuery } from '@/store/api/wspaceApi';
 import { useCallback } from 'react';
-import { useAppSelector } from '@/hooks/reduxHooks';
-
 interface LeftSectionWspaceItemIProps {
   handleActive: (itemNumber: number) => void;
   active: number | null;

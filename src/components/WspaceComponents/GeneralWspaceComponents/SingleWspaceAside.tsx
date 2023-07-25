@@ -1,15 +1,14 @@
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
 import styles from '../../../styles/WorkingSpace.module.scss';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
-import { useState } from 'react';
+import { useState, ReactElement } from 'react';
 import { CgLock, CgLockUnlock } from 'react-icons/cg';
-import LeftSectionItemSettings from '../LeftSectionComponents/LeftSectionItemSettings';
-
 interface SingleWspaceSideIProps {
   data?: SingleWorkingSpaceType;
+  children: ReactElement;
 }
 
-export default function SingleWspaceAside({ data }: SingleWspaceSideIProps) {
+export default function SingleWspaceAside({ data, children }: SingleWspaceSideIProps) {
   const [isHide, setHide] = useState<boolean>(false);
   const hideHandler = () => {
     setHide(prev => !prev);
@@ -28,12 +27,7 @@ export default function SingleWspaceAside({ data }: SingleWspaceSideIProps) {
             )}
           </p>
         </div>
-        {data && (
-          <LeftSectionItemSettings
-            wspaceRoleId={data?.workingSpaceRole ? data.workingSpaceRole.roleId : 0}
-            margin="15px 0"
-          />
-        )}
+        {data && children}
       </div>
       <div className={styles.arrowAside} onClick={hideHandler}>
         {isHide ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}

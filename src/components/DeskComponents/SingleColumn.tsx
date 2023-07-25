@@ -18,8 +18,6 @@ export default memo(function SingleColumn({ listId, index }: SingleColumnIProps)
     return;
   }
 
-  console.log(list);
-
   return (
     <Draggable draggableId={String(list.id)} index={index}>
       {provided => (

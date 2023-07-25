@@ -348,60 +348,63 @@
   padding: 5px;
 }
 
+.singleAside {
+  @extend %flexTemplate;
+  @include borderTemplate(10);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  align-items: normal;
+  height: calc(100vh - 110px);
+  background-color: rgb(250, 250, 250);
+
+  & .singleContentAside {
+    @extend %flexColumnTemplate;
+    transition: 0.15s;
+    padding: 20px;
+    overflow: hidden;
+    min-width: 200px;
+  }
+  & .singleContentAsideHided {
+    display: none;
+  }
+
+  & .singleAside__titleContainer {
+    @extend %flexTemplate;
+    gap: 10px;
+    justify-content: flex-start;
+    & .singleAside__title {
+      @include textEllipsis(400);
+      font-size: 20px;
+      font-weight: 500;
+      box-sizing: border-box;
+    }
+  }
+
+  & .arrowAside {
+    @extend %flexTemplate;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: var(--light-gray-color);
+    transition: all 0.15s;
+  }
+
+  .arrowAside:hover {
+    background-color: rgb(238, 238, 238);
+  }
+
+  .arrowAside:active {
+    background-color: rgb(224, 224, 224);
+  }
+}
+
 .workingSpaceContainer {
   @extend %flexTemplate;
   justify-content: space-between;
   align-items: normal;
   margin-top: 20px;
-
-  & .singleAside {
-    @extend %flexTemplate;
-    @include borderTemplate(10);
-    align-items: normal;
-    height: calc(100vh - 110px);
-
-    & .singleContentAside {
-      @extend %flexColumnTemplate;
-      transition: 0.15s;
-      padding: 20px;
-      overflow: hidden;
-      min-width: 200px;
-    }
-    & .singleContentAsideHided {
-      display: none;
-    }
-
-    & .singleAside__titleContainer {
-      @extend %flexTemplate;
-      gap: 10px;
-      justify-content: flex-start;
-      & .singleAside__title {
-        @include textEllipsis(200);
-        font-size: 20px;
-        font-weight: 500;
-        box-sizing: border-box;
-      }
-    }
-
-    & .arrowAside {
-      @extend %flexTemplate;
-      padding: 10px;
-      box-sizing: border-box;
-      cursor: pointer;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-      background-color: var(--light-gray-color);
-      transition: all 0.15s;
-    }
-
-    .arrowAside:hover {
-      background-color: rgb(238, 238, 238);
-    }
-
-    .arrowAside:active {
-      background-color: rgb(224, 224, 224);
-    }
-  }
 
   .wspaceDescription {
     @extend %flexColumnTemplate;

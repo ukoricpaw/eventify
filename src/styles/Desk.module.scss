@@ -1,3 +1,26 @@
+%flexTemplate {
+  display: flex;
+  justify-content: center;
+}
+
+%widthTemplate {
+  display: flex;
+  width: 1360px;
+}
+%flexColumnTemplate {
+  display: flex;
+  flex-direction: column;
+}
+.deskContainer {
+  @extend %flexTemplate;
+  justify-content: space-between;
+
+  & .deskWrapper {
+    flex: 1;
+    @extend %widthTemplate;
+    @extend %flexColumnTemplate;
+  }
+}
 .deskBackground {
   height: 100vh;
   width: 100%;
@@ -9,16 +32,27 @@
   filter: brightness(0.5);
 }
 
-%flexColumnTemplate {
-  display: flex;
-  flex-direction: column;
-}
-
 %borderTemplate {
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
 }
 
+.deskInfo {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 20px 0;
+  @extend %flexTemplate;
+  & .deskInfo__wrapper {
+    color: var(--light-white-color);
+    @extend %widthTemplate;
+
+    & .deskInfo__name {
+      margin-left: 20px;
+      font-weight: 300;
+      text-transform: capitalize;
+      font-size: 32px;
+    }
+  }
+}
 .columnList {
   width: 100%;
   display: grid;
@@ -30,7 +64,7 @@
 
     & .column__wrapper {
       border-radius: 10px;
-      background-color: var(--light-white-color);
+      background-color: rgb(250, 250, 250);
       @extend %borderTemplate;
     }
 
@@ -39,7 +73,7 @@
       @extend %flexColumnTemplate;
       gap: 10px;
       padding: 10px 0;
-      background-color: var(--light-white-color);
+      background-color: rgb(250, 250, 250);
       & .columnItem {
         border-radius: 5px;
         background-color: var(--light-white-color);
@@ -59,6 +93,62 @@
       text-align: center;
       font-size: 18px;
       font-weight: 500;
+    }
+  }
+}
+
+.asideSettings {
+  @extend %flexColumnTemplate;
+  margin-top: 20px;
+  max-width: 300px;
+
+  & .asideSettings__btns {
+    @extend %flexTemplate;
+    justify-content: flex-start;
+    gap: 20px;
+
+    & .settingButton {
+      flex: 1;
+      border: none;
+      padding: 10px;
+    }
+  }
+}
+
+.deskAct__list::-webkit-scrollbar {
+  left: -100px;
+  width: 8px;
+}
+
+.deskAct__list::-webkit-scrollbar-thumb {
+  background-color: var(--light-green-color);
+  border-radius: 12px;
+}
+
+.deskAct__list {
+  margin-top: 20px;
+  @extend %flexColumnTemplate;
+  gap: 15px;
+  overflow-y: scroll;
+  height: calc(100vh - 230px);
+  padding-right: 20px;
+
+  .deskAct__item {
+    @extend %flexTemplate;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: center;
+
+    & .deskAct__itemInfo {
+      & .actDescription {
+        font-size: 17px;
+      }
+      & .actCreatedAt {
+        font-size: 14px;
+        color: gray;
+      }
+      @extend %flexColumnTemplate;
+      gap: 6px;
     }
   }
 }

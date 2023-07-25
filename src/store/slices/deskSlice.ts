@@ -58,8 +58,10 @@ const deskSlice = createSlice({
           }
         }
       } else if (action.payload.type === 'columns') {
-        const [movedItem] = state.lists.splice(action.payload.source.index, 1);
-        state.lists.splice((action.payload.destination as sourceDest).index, 0, movedItem);
+        if (action.payload.destination) {
+          const [movedItem] = state.lists.splice(action.payload.source.index, 1);
+          state.lists.splice((action.payload.destination as sourceDest).index, 0, movedItem);
+        }
       }
     },
   },
@@ -88,6 +90,8 @@ export const { reorderItem } = deskSlice.actions;
 export const deskSelector = (state: RootState) => state.deskReducer.data;
 export const statusSelector = (state: RootState) => state.deskReducer.status;
 export const deskDataSelector = (state: RootState) => state.deskReducer.lists;
+
+export const getDeskInfo = createSelector(deskSelector, res => res);
 
 export const deskDataSelectorResult = createSelector(deskDataSelector, res => res);
 

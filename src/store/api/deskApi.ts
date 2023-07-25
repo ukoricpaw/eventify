@@ -1,42 +1,19 @@
-import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/dist/query/react';
+import { DeskHistoryType } from '@/types/deskTypes';
 import queryFn from '@/utils/queryFn';
-import { SingleDesk } from '@/types/deskListTypes';
-import { FullTagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
-import { RootState, store } from '..';
-
-export interface DeskRequest {
-  wspaceId: number;
-  deskId: number;
-}
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const deskApi = createApi({
   reducerPath: 'api/deskApi',
-  tagTypes: ['desk', 'list', 'item'],
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL as string }),
+  tagTypes: ['history'],
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
   endpoints: builder => ({
-    getFullDesk: builder.query<SingleDesk, DeskRequest>({
+    getHistory: builder.query<DeskHistoryType, { wspaceId: number; deskId: number }>({
       queryFn: async ({ wspaceId, deskId }) => {
-        return await queryFn(`/api/wspace/desk/${wspaceId}/${deskId}`, 'GET');
+        return await queryFn(`/api/wspace/desk/story/${wspaceId}/${deskId}`, 'GET');
       },
-      providesTags: desk => {
-        const result: FullTagDescription<'desk' | 'item' | 'list'>[] = [{ type: 'desk', id: 'fullDesk' }];
-        if (desk) {
-          desk.desk_lists.map(list => {
-            result.push({ type: 'list', id: String(list.id) });
-            if (list.desk_list_items) {
-              list.desk_list_items.map(item => {
-                result.push({ type: 'item', id: String(item.id) });
-              });
-            }
-          });
-        }
-        return result;
-      },
+      providesTags: [{ type: 'history', id: 'LIST' }],
     }),
   }),
 });
 
-export const selectAllDeskLists = (state: RootState, { wspaceId, deskId }: DeskRequest) =>
-  deskApi.endpoints.getFullDesk.select({ wspaceId, deskId })(state).data ?? {};
-
-export const { useGetFullDeskQuery } = deskApi;
+export const { useGetHistoryQuery } = deskApi;

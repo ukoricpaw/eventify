@@ -54,7 +54,7 @@
       font-family: 'Changa One', cursive;
       text-transform: uppercase;
       font-size: 40px;
-      margin: 0 35px;
+      margin-right: 35px;
     }
     & .rightListItem {
       cursor: pointer;
@@ -66,7 +66,6 @@
 }
 
 .userAvatar {
-  cursor: pointer;
   border-radius: 50%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }

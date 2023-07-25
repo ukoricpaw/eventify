@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import SingleWspaceAside from '../WspaceComponents/GeneralWspaceComponents/SingleWspaceAside';
 import { useRouter } from 'next/router';
 import { useGetSingleWorkingSpaceClientQuery, useGetWorkingSpacesClientQuery } from '@/store/api/wspaceApi';
 import OwnNavbar from './OwnNavbar';
@@ -11,6 +10,7 @@ import Head from 'next/head';
 import getWspacePath, { SinglePath } from '@/utils/getWspacePath';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
+import LeftWspaceAside from '../WspaceComponents/LeftSectionComponents/LeftWspaceAside';
 
 export default function WorkingSpaceLayout({ children }: { children: ReactNode }) {
   const { query, pathname } = useRouter();
@@ -34,7 +34,7 @@ export default function WorkingSpaceLayout({ children }: { children: ReactNode }
       </Head>
       <OwnNavbar />
       <div className={styles.workingSpaceContainer}>
-        <SingleWspaceAside data={data} />
+        <LeftWspaceAside data={data} />
         <div className={styles.wspaceLayoutChildren}>
           <WspaceDescription data={data} />
           <div className={styles.wspaceLayoutChildren__elements}>{children}</div>
