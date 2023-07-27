@@ -35,7 +35,10 @@ export default function AddNewColumnButton() {
       <ContextConsumer Context={DeskWSocketContext}>
         {value => (
           <CompoundButton
-            onClick={() => value?.addNewColumn(name)}
+            onClick={() => {
+              value?.addNewColumn(name);
+              setName('');
+            }}
             variant="success"
             padding={{ y: '15', x: '40' }}
             width="220px"

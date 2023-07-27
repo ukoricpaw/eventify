@@ -7,6 +7,7 @@ import { reloadData } from '@/store/slices/deskSlice';
 interface DeskWSocketContextInterface {
   addNewColumn: (name: string) => void;
   deleteColumn: (id: number) => void;
+  reorderColumns: (id: number, order: number) => void;
 }
 
 export const DeskWSocketContext = createContext<null | DeskWSocketContextInterface>(null);
@@ -43,5 +44,13 @@ export default function DeskWSocketProvider({ children, wspaceId, deskId }: Desk
     socketRef.current?.emit('list:delete', id);
   }, []);
 
-  return <DeskWSocketContext.Provider value={{ addNewColumn, deleteColumn }}>{children}</DeskWSocketContext.Provider>;
+  const reorderColumns = useCallback((id: number, order: number) => {
+    socketRef.current?.emit('list:reorder', id, order);
+  }, []);
+
+  return (
+    <DeskWSocketContext.Provider value={{ addNewColumn, deleteColumn, reorderColumns }}>
+      {children}
+    </DeskWSocketContext.Provider>
+  );
 }

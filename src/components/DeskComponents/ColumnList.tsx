@@ -6,12 +6,13 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import type { DropResult } from 'react-beautiful-dnd';
 import { reorderItem } from '@/store/slices/deskSlice';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
+import { DeskWSocketContext } from './DeskWSocketProvider';
 import AddNewColumnButton from './AddNewColumnButton';
-import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 
 export default function ColumnList() {
   const dispatch = useAppDispatch();
+  const deskWSocketData = useContext(DeskWSocketContext);
 
   const onDragEnd = useCallback((result: DropResult) => {
     const source = {
@@ -24,6 +25,7 @@ export default function ColumnList() {
         id: Number(result.destination?.droppableId),
         index: result.destination.index,
       };
+      deskWSocketData?.reorderColumns(Number(result.draggableId), result.destination.index + 1);
     }
     dispatch(
       reorderItem({
