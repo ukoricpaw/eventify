@@ -9,6 +9,7 @@ interface ButtonIProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   };
   size?: string;
   width?: string;
+  gap?: string;
 }
 
 export default function CompoundButton({
@@ -20,6 +21,9 @@ export default function CompoundButton({
   onClick,
   children,
   disabled,
+  title,
+  gap,
+  className,
 }: ButtonIProps) {
   let variantClass = 'formContainer__button-light';
 
@@ -41,16 +45,19 @@ export default function CompoundButton({
   return (
     <>
       <button
+        title={title}
         disabled={disabled}
         onClick={onClick}
-        className={`${styles[variantClass]} ${styles.formContainer__button} settings buttonContainer`}
+        className={`${styles[variantClass]} ${className ? className : ''} ${
+          styles.formContainer__button
+        } settings buttonContainer`}
       >
         {children}
       </button>
       <style jsx>{`
         .buttonContainer {
           display: flex;
-          gap: 10px;
+          gap: ${gap ? gap : '10'}px;
           align-items: center;
           ${width && `width: ${width};`}
         }

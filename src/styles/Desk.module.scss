@@ -58,6 +58,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   column-gap: 25px;
+  row-gap: 25px;
 
   & .column {
     @extend %flexColumnTemplate;
@@ -104,7 +105,7 @@
 
   & .asideSettings__btns {
     @extend %flexTemplate;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 20px;
 
     & .settingButton {
@@ -126,18 +127,20 @@
 }
 
 .deskAct__list {
-  margin-top: 20px;
+  margin-top: 25px;
   @extend %flexColumnTemplate;
   gap: 15px;
   overflow-y: scroll;
-  height: calc(100vh - 230px);
-  padding-right: 20px;
+  height: calc(100vh - 238px);
+  padding-left: 20px;
+  direction: rtl;
 
   .deskAct__item {
     @extend %flexTemplate;
     gap: 20px;
     justify-content: flex-start;
     align-items: center;
+    direction: ltr;
 
     & .deskAct__itemInfo {
       & .actDescription {
@@ -151,4 +154,7 @@
       gap: 6px;
     }
   }
+}
+
+.addNewColumnButton:hover {
 }

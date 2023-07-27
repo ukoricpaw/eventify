@@ -1,1 +1,3 @@
-export default function DeskArchive() {}
+export default function DeskArchive() {
+  return <>Archive</>;
+}

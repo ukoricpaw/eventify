@@ -1,10 +1,14 @@
-import type { DeskList } from '@/types/deskListTypes';
 import styles from '../../styles/Desk.module.scss';
 import ColumnItem from './ColumnItem';
 import { Droppable } from 'react-beautiful-dnd';
 import { useAppSelector } from '@/hooks/reduxHooks';
-import { memo, Fragment } from 'react';
+import { memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
+import { useRouter } from 'next/router';
+import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
+import ContextConsumer from '../GeneralComponents/ContextConsumer';
+import { DeskWSocketContext } from './DeskWSocketProvider';
 
 interface SingleColumnIProps {
   listId: number;
@@ -13,31 +17,51 @@ interface SingleColumnIProps {
 
 export default memo(function SingleColumn({ listId, index }: SingleColumnIProps) {
   const list = useAppSelector(state => state.deskReducer.lists.find(list => list.id == listId));
+  const { query } = useRouter();
+  const wspace = useAppSelector(
+    state => selectSingleWorkingSpaceResult(state, Number(query.id)) as SingleWorkingSpaceType,
+  );
 
   if (!list) {
     return;
   }
 
   return (
-    <Draggable draggableId={String(list.id)} index={index}>
+    <Draggable isDragDisabled={wspace.workingSpaceRole.roleId === 3} draggableId={String(list.id)} index={index}>
       {provided => (
-        <li ref={provided.innerRef} {...provided.draggableProps} className={styles.column}>
-          <div className={styles.column__wrapper}>
-            <p className={styles.column__columnName} {...provided.dragHandleProps}>
-              {list.name}
-            </p>
-            <Droppable droppableId={String(list.id)} type="items">
-              {provided => (
-                <ul {...provided.droppableProps} ref={provided.innerRef} className={styles.itemList}>
-                  {list.desk_list_items.filter(Boolean).map((item, index) => {
-                    return <ColumnItem key={String(item.id)} itemId={item.id} index={index} />;
-                  })}
-                  {provided.placeholder}
-                </ul>
-              )}
-            </Droppable>
-          </div>
-        </li>
+        <ContextConsumer Context={DeskWSocketContext}>
+          {value => (
+            <li
+              onDoubleClick={() => value?.deleteColumn(list.id)}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              className={styles.column}
+            >
+              <div className={styles.column__wrapper}>
+                <p className={styles.column__columnName} {...provided.dragHandleProps}>
+                  {list.name}
+                </p>
+                <Droppable droppableId={String(list.id)} type="items">
+                  {provided => (
+                    <ul {...provided.droppableProps} ref={provided.innerRef} className={styles.itemList}>
+                      {list.desk_list_items.filter(Boolean).map((item, index) => {
+                        return (
+                          <ColumnItem
+                            roleId={wspace.workingSpaceRole.roleId}
+                            key={String(item.id)}
+                            itemId={item.id}
+                            index={index}
+                          />
+                        );
+                      })}
+                      {provided.placeholder}
+                    </ul>
+                  )}
+                </Droppable>
+              </div>
+            </li>
+          )}
+        </ContextConsumer>
       )}
     </Draggable>
   );

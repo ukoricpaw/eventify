@@ -1,5 +1,5 @@
 import { $privateApi } from '@/axios/config';
-import { DeskListItem, SingleDesk, SingleDeskState } from '@/types/deskListTypes';
+import { DeskListItem, ReloadedDeskData, SingleDesk, SingleDeskState } from '@/types/deskListTypes';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
 import { RootState } from '..';
@@ -38,6 +38,10 @@ const deskSlice = createSlice({
   name: 'deskSlice',
   initialState,
   reducers: {
+    reloadData(state, action: PayloadAction<ReloadedDeskData>) {
+      state.lists = action.payload.desk.desk_lists;
+      state.listItems = action.payload.items;
+    },
     reorderItem(state, action: PayloadAction<Reorder>) {
       if (action.payload.type === 'items') {
         if (action.payload.destination) {
@@ -80,12 +84,13 @@ const deskSlice = createSlice({
     });
     builder.addCase(getSingleDesk.rejected, (state, action) => {
       state.status.isError = action.error.message as string;
+      state.status.isLoading = false;
     });
   },
 });
 
 export default deskSlice.reducer;
-export const { reorderItem } = deskSlice.actions;
+export const { reorderItem, reloadData } = deskSlice.actions;
 
 export const deskSelector = (state: RootState) => state.deskReducer.data;
 export const statusSelector = (state: RootState) => state.deskReducer.status;

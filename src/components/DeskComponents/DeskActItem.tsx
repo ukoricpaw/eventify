@@ -18,7 +18,7 @@ export default function DeskActItem({
 }: DeskActItemIProps & Pick<DeskHistoryItemType, 'user'>) {
   return (
     <div className={styles.deskAct__item}>
-      {user.avatar ? <UserAvatar noCursor={true} src={user.avatar} size={45} /> : <FaUser size={20} />}
+      {user.avatar ? <UserAvatar noCursor={true} src={user.avatar} size={45} /> : <FaUser size={45} />}
       <div className={styles.deskAct__itemInfo}>
         <p className={styles.actDescription}>{defineHistoryAction(deskAct)}</p>
         <p className={styles.actCreatedAt}>{getDate(createdAt)}</p>

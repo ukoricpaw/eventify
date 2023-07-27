@@ -1,5 +1,4 @@
 import { useAppSelector } from '@/hooks/reduxHooks';
-import { useRouter } from 'next/router';
 import styles from '../../styles/Desk.module.scss';
 import SingleColumn from './SingleColumn';
 import { deskDataSelectorResult } from '@/store/slices/deskSlice';
@@ -8,10 +7,10 @@ import type { DropResult } from 'react-beautiful-dnd';
 import { reorderItem } from '@/store/slices/deskSlice';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { useCallback } from 'react';
+import AddNewColumnButton from './AddNewColumnButton';
+import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 
 export default function ColumnList() {
-  const { query } = useRouter();
-
   const dispatch = useAppDispatch();
 
   const onDragEnd = useCallback((result: DropResult) => {
@@ -47,6 +46,7 @@ export default function ColumnList() {
               <SingleColumn index={index} listId={list.id} key={String(list.id)} />
             ))}
             {provided.placeholder}
+            {<AddNewColumnButton />}
           </ul>
         )}
       </Droppable>

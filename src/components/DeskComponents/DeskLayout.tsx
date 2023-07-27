@@ -13,7 +13,7 @@ import OwnNavbar from '../GeneralComponents/OwnNavbar';
 import homeStyles from '../../styles/General.module.scss';
 import DeskInfo from './DeskInfo';
 import DeskAsideInfo from './DeskAsideInfo';
-
+import DeskWSocketProvider from './DeskWSocketProvider';
 interface DeskLayoutIProps {
   children: ReactNode;
 }
@@ -21,11 +21,11 @@ interface DeskLayoutIProps {
 export default function DeskLayout({ children }: DeskLayoutIProps) {
   const { query } = useRouter();
   const { userData } = useAppSelector(userSelector);
-  const { background, isLoading } = useAppSelector(layoutSelector);
-  // const { data, isLoading } = useGetFullDeskQuery({ wspaceId: Number(query.id), deskId: Number(query.deskId) });
+  const { background, isLoading, isError } = useAppSelector(layoutSelector);
   const dispatch = useAppDispatch();
   const wspaceData = useGetWorkingSpacesClientQuery(userData.id);
   const singleWspace = useGetSingleWorkingSpaceClientQuery(Number(query.id));
+
   useEffect(() => {
     dispatch(getSingleDesk({ wspaceId: Number(query.id), deskId: Number(query.deskId) }));
   }, []);
@@ -35,10 +35,13 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
       return <div>Loading...</div>;
     }
 
-    console.log('render');
+    if (wspaceData.isError || isError || singleWspace.isError) {
+      return <div>Error</div>;
+    }
 
+    console.log('render');
     return (
-      <>
+      <DeskWSocketProvider wspaceId={Number(query.id)} deskId={Number(query.deskId)}>
         <Head>
           <title>Доска</title>
         </Head>
@@ -66,7 +69,7 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
             </div>
           </div>
         </CreateWspaceModalProvider>
-      </>
+      </DeskWSocketProvider>
     );
   };
 

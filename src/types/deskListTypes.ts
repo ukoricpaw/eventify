@@ -29,3 +29,5 @@ export interface DeskList extends Omit<SingleDesk, 'background' | 'desk_lists' |
 export interface DeskListItem extends Omit<DeskList, 'isarchived' | 'deskId' | 'desk_list_items'> {
   deadline: string;
 }
+
+export type ReloadedDeskData = { desk: SingleDesk; items: DeskListItem[] };

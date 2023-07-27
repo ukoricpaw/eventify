@@ -11,8 +11,8 @@ export default function DeskAsideInfo() {
     selectSingleWorkingSpaceResult(state, Number(query.id)),
   ) as SingleWorkingSpaceType;
   return (
-    <SingleWspaceAside data={data}>
-      <LeftAsideSettings />
+    <SingleWspaceAside noBorder={true} data={data}>
+      <LeftAsideSettings wspaceId={data.workingSpace.id} wspaceRoleId={data.workingSpaceRole.roleId} />
     </SingleWspaceAside>
   );
 }

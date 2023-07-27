@@ -6,15 +6,16 @@ import { memo } from 'react';
 interface ColumnItemIProps {
   itemId: number;
   index: number;
+  roleId: number;
 }
 
-export default memo(function ColumnItem({ itemId, index }: ColumnItemIProps) {
+export default memo(function ColumnItem({ itemId, index, roleId }: ColumnItemIProps) {
   const item = useAppSelector(state => state.deskReducer.listItems.find(item => item.id === itemId));
   if (!item) {
     return;
   }
   return (
-    <Draggable draggableId={String(item.id)} index={index}>
+    <Draggable isDragDisabled={roleId === 3} draggableId={String(item.id)} index={index}>
       {provided => (
         <li
           {...provided.draggableProps}

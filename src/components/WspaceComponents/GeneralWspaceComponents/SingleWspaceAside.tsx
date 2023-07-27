@@ -5,10 +5,11 @@ import { useState, ReactElement } from 'react';
 import { CgLock, CgLockUnlock } from 'react-icons/cg';
 interface SingleWspaceSideIProps {
   data?: SingleWorkingSpaceType;
+  noBorder?: boolean;
   children: ReactElement;
 }
 
-export default function SingleWspaceAside({ data, children }: SingleWspaceSideIProps) {
+export default function SingleWspaceAside({ data, children, noBorder }: SingleWspaceSideIProps) {
   const [isHide, setHide] = useState<boolean>(false);
   const hideHandler = () => {
     setHide(prev => !prev);
@@ -29,7 +30,7 @@ export default function SingleWspaceAside({ data, children }: SingleWspaceSideIP
         </div>
         {data && children}
       </div>
-      <div className={styles.arrowAside} onClick={hideHandler}>
+      <div style={noBorder ? { borderTopRightRadius: 0 } : {}} className={styles.arrowAside} onClick={hideHandler}>
         {isHide ? <AiOutlineArrowRight /> : <AiOutlineArrowLeft />}
       </div>
     </aside>
