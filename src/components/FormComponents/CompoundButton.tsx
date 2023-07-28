@@ -10,6 +10,8 @@ interface ButtonIProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: string;
   width?: string;
   gap?: string;
+  noBrTop?: boolean;
+  noBrBottom?: boolean;
 }
 
 export default function CompoundButton({
@@ -24,6 +26,8 @@ export default function CompoundButton({
   title,
   gap,
   className,
+  noBrTop,
+  noBrBottom,
 }: ButtonIProps) {
   let variantClass = 'formContainer__button-light';
 
@@ -62,6 +66,10 @@ export default function CompoundButton({
           ${width && `width: ${width};`}
         }
         .settings {
+          border-top-left-radius: ${noBrTop ? '0' : '10px'};
+          border-top-right-radius: ${noBrTop ? '0' : '10px'};
+          border-bottom-left-radius: ${noBrBottom ? '0' : '10px'};
+          border-bottom-right-radius: ${noBrBottom ? '0' : '10px'};
           justify-content: center;
           padding: ${padding ? (padding.y ? padding.y : '18') : '18'}px
             ${padding ? (padding.x ? padding.x : '35') : '35'}px;

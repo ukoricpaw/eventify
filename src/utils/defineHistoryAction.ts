@@ -21,31 +21,31 @@ export default function defineHistoryAction(deskAct: ActType) {
     : null;
   switch (deskAct.act.id) {
     case 2:
-      return `${userEmail} проинициализировал доску с именем '${firstItem}'`;
+      return `${userEmail} проинициализировал(-а) доску с именем '${firstItem}'`;
     case 3:
-      return `${userEmail} обновил доску '${firstItem}'`;
+      return `${userEmail} обновил(-а) доску '${firstItem}'`;
     case 4:
-      return `${userEmail} создал колонну с именем '${firstItem}'`;
+      return `${userEmail} создал(-а) колонну с именем '${firstItem}'`;
     case 6:
-      return `${userEmail} удалил колонну '${firstItem}'`;
+      return `${userEmail} удалил(-а) колонну '${firstItem}'`;
     case 7:
-      return `${userEmail} заархивировал колонну '${firstItem}'`;
+      return `${userEmail} заархивировал(-а)колонну '${firstItem}'`;
     case 8:
-      return `${userEmail} переименовал колонну '${firstItem}' в '${secondItem}'`;
+      return `${userEmail} переименовал(-а) колонну '${firstItem}' в '${secondItem}'`;
     case 9:
-      return `${userEmail} добавил описание к колонне '${firstItem}'`;
+      return `${userEmail} добавил(-а) описание к колонне '${firstItem}'`;
     case 10:
-      return `${userEmail} создал задание '${firstItem}'`;
+      return `${userEmail} создал(-а) задание '${firstItem}'`;
     case 11:
-      return `${userEmail} добавил дедлайн до '${secondItem}' к заданию '${firstItem}'`;
+      return `${userEmail} добавил(-а) дедлайн до '${secondItem}' к заданию '${firstItem}'`;
     case 12:
-      return `${userEmail} переименовал задание '${firstItem}' в '${secondItem}'`;
+      return `${userEmail} переименовал(-а) задание '${firstItem}' в '${secondItem}'`;
     case 13:
-      return `${userEmail} добавил описание к заданию '${firstItem}'`;
+      return `${userEmail} добавил(-а) описание к заданию '${firstItem}'`;
     case 14:
-      return `${userEmail} удалил задание '${firstItem}'`;
+      return `${userEmail} удалил(-а) задание '${firstItem}'`;
     case 15:
-      return `${userEmail} разархивировал колонну '${firstItem}'`;
+      return `${userEmail} разархивировал(-а) колонну '${firstItem}'`;
     default:
       return;
   }

@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/hooks/reduxHooks';
 import { useCallback, useContext } from 'react';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import AddNewColumnButton from './AddNewColumnButton';
+import ColumnsActiveProvider from './ColumnsActiveProvider';
 
 export default function ColumnList() {
   const dispatch = useAppDispatch();
@@ -25,7 +26,23 @@ export default function ColumnList() {
         id: Number(result.destination?.droppableId),
         index: result.destination.index,
       };
-      deskWSocketData?.reorderColumns(Number(result.draggableId), result.destination.index + 1);
+      if (result.type === 'columns' && result.destination.index !== result.source.index) {
+        deskWSocketData?.reorderColumns(Number(result.draggableId), result.destination.index);
+      } else if (result.type === 'items') {
+        let secondList = null;
+        if (result.destination.droppableId !== result.source.droppableId) {
+          secondList = result.destination.droppableId;
+        }
+        if (secondList === null && result.source.index === result.destination.index) {
+          return;
+        }
+        deskWSocketData?.reorderItemInColumns(
+          Number(result.source.droppableId),
+          Number(result.draggableId),
+          Number(result.destination.index),
+          Number(secondList),
+        );
+      }
     }
     dispatch(
       reorderItem({
@@ -40,18 +57,20 @@ export default function ColumnList() {
   const data = useAppSelector(deskDataSelectorResult);
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" type="columns" direction="horizontal">
-        {provided => (
-          <ul ref={provided.innerRef} {...provided.droppableProps} className={styles.columnList}>
-            {data.map((list, index) => (
-              <SingleColumn index={index} listId={list.id} key={String(list.id)} />
-            ))}
-            {provided.placeholder}
-            {<AddNewColumnButton />}
-          </ul>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <ColumnsActiveProvider>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="all-columns" type="columns" direction="horizontal">
+          {provided => (
+            <ul ref={provided.innerRef} {...provided.droppableProps} className={styles.columnList}>
+              {data.map((list, index) => (
+                <SingleColumn index={index} listId={list.id} key={String(list.id)} />
+              ))}
+              {provided.placeholder}
+              {<AddNewColumnButton />}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </ColumnsActiveProvider>
   );
 }

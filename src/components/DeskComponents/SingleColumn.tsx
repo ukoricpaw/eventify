@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
 import ContextConsumer from '../GeneralComponents/ContextConsumer';
 import { DeskWSocketContext } from './DeskWSocketProvider';
+import AddNewItemButton from './AddNewItemButton';
+import { ColumnsContext } from './ColumnsActiveProvider';
 
 interface SingleColumnIProps {
   listId: number;
@@ -26,13 +28,19 @@ export default memo(function SingleColumn({ listId, index }: SingleColumnIProps)
     return;
   }
 
+  console.log(list);
+
   return (
-    <Draggable isDragDisabled={wspace.workingSpaceRole.roleId === 3} draggableId={String(list.id)} index={index}>
+    <Draggable
+      isDragDisabled={!wspace.workingSpaceRole || wspace.workingSpaceRole.roleId === 3}
+      draggableId={String(list.id)}
+      index={index}
+    >
       {provided => (
         <ContextConsumer Context={DeskWSocketContext}>
           {value => (
             <li
-              onDoubleClick={() => value?.deleteColumn(list.id)}
+              // onDoubleClick={() => value?.deleteColumn(list.id)}
               ref={provided.innerRef}
               {...provided.draggableProps}
               className={styles.column}
@@ -44,20 +52,30 @@ export default memo(function SingleColumn({ listId, index }: SingleColumnIProps)
                 <Droppable droppableId={String(list.id)} type="items">
                   {provided => (
                     <ul {...provided.droppableProps} ref={provided.innerRef} className={styles.itemList}>
-                      {list.desk_list_items.filter(Boolean).map((item, index) => {
-                        return (
-                          <ColumnItem
-                            roleId={wspace.workingSpaceRole.roleId}
-                            key={String(item.id)}
-                            itemId={item.id}
-                            index={index}
-                          />
-                        );
-                      })}
+                      {list.desk_list_items &&
+                        list.desk_list_items.filter(Boolean).map((item, index) => {
+                          return (
+                            <ColumnItem
+                              roleId={wspace.workingSpaceRole ? wspace.workingSpaceRole.roleId : 0}
+                              key={String(item.id)}
+                              itemId={item.id}
+                              index={index}
+                            />
+                          );
+                        })}
                       {provided.placeholder}
                     </ul>
                   )}
                 </Droppable>
+                <ContextConsumer Context={ColumnsContext}>
+                  {value => (
+                    <AddNewItemButton
+                      columnId={listId}
+                      activeColumn={value?.activeColumn}
+                      setActiveColumnHandler={value?.setActiveColumnHandler}
+                    />
+                  )}
+                </ContextConsumer>
               </div>
             </li>
           )}

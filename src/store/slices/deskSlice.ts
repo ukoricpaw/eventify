@@ -1,5 +1,5 @@
 import { $privateApi } from '@/axios/config';
-import { DeskListItem, ReloadedDeskData, SingleDesk, SingleDeskState } from '@/types/deskListTypes';
+import { DeskList, DeskListItem, ReloadedDeskData, SingleDesk, SingleDeskState } from '@/types/deskListTypes';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
 import { RootState } from '..';
@@ -38,9 +38,27 @@ const deskSlice = createSlice({
   name: 'deskSlice',
   initialState,
   reducers: {
+    changeColumns(state, action: PayloadAction<{ list: DeskList; secondList: null | DeskList }>) {
+      const list = state.lists.find(list => list.id === action.payload.list.id);
+      if (!list) return;
+      list.desk_list_items = action.payload.list.desk_list_items;
+      if (action.payload.secondList) {
+        const secondList = state.lists.find(list => list.id === action.payload.secondList?.id);
+        (secondList as DeskList).desk_list_items = action.payload.secondList.desk_list_items;
+      }
+    },
+    addNewItemToColumn(state, action: PayloadAction<{ listId: number; item: DeskListItem }>) {
+      const list = state.lists.find(list => list.id === action.payload.listId);
+      if (!list) return;
+      list.desk_list_items.push(action.payload.item);
+      state.listItems.push(action.payload.item);
+    },
+    addNewColumn(state, action: PayloadAction<DeskList>) {
+      action.payload.desk_list_items = [];
+      state.lists.splice(state.lists.length, 0, action.payload);
+    },
     reloadData(state, action: PayloadAction<ReloadedDeskData>) {
       state.lists = action.payload.desk.desk_lists;
-      state.listItems = action.payload.items;
     },
     reorderItem(state, action: PayloadAction<Reorder>) {
       if (action.payload.type === 'items') {
@@ -90,7 +108,7 @@ const deskSlice = createSlice({
 });
 
 export default deskSlice.reducer;
-export const { reorderItem, reloadData } = deskSlice.actions;
+export const { reorderItem, reloadData, addNewColumn, addNewItemToColumn, changeColumns } = deskSlice.actions;
 
 export const deskSelector = (state: RootState) => state.deskReducer.data;
 export const statusSelector = (state: RootState) => state.deskReducer.status;

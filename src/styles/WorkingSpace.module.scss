@@ -545,9 +545,6 @@
 }
 
 .deleteWspace__buttons {
-  & .deleteButton {
-    background-color: red;
-  }
   @extend %flexTemplate;
   margin-top: 30px;
   gap: 30px;

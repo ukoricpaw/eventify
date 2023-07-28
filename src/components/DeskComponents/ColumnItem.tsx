@@ -15,7 +15,7 @@ export default memo(function ColumnItem({ itemId, index, roleId }: ColumnItemIPr
     return;
   }
   return (
-    <Draggable isDragDisabled={roleId === 3} draggableId={String(item.id)} index={index}>
+    <Draggable isDragDisabled={roleId === 3 || roleId === 0} draggableId={String(item.id)} index={index}>
       {provided => (
         <li
           {...provided.draggableProps}

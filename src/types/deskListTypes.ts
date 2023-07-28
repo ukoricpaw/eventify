@@ -30,4 +30,4 @@ export interface DeskListItem extends Omit<DeskList, 'isarchived' | 'deskId' | '
   deadline: string;
 }
 
-export type ReloadedDeskData = { desk: SingleDesk; items: DeskListItem[] };
+export type ReloadedDeskData = { desk: SingleDesk };

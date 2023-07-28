@@ -12,7 +12,10 @@ export default function DeskAsideInfo() {
   ) as SingleWorkingSpaceType;
   return (
     <SingleWspaceAside noBorder={true} data={data}>
-      <LeftAsideSettings wspaceId={data.workingSpace.id} wspaceRoleId={data.workingSpaceRole.roleId} />
+      <LeftAsideSettings
+        wspaceId={data.workingSpace.id}
+        wspaceRoleId={(data.workingSpaceRole && data.workingSpaceRole.roleId) ?? 0}
+      />
     </SingleWspaceAside>
   );
 }

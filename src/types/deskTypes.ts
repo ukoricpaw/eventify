@@ -1,5 +1,5 @@
 import { UserType } from './userTypes';
-
+import { MouseEvent } from 'react';
 export interface DeskType {
   id: number;
   name: string;
@@ -29,3 +29,11 @@ export type DeskAct = {
   id: number;
   name: string;
 };
+
+export interface DeskWSocketContextInterface {
+  addNewColumn: (name: string) => void;
+  deleteColumn: (id: number) => void;
+  addNewItem: (e: MouseEvent<HTMLButtonElement>, columnId: number, name: string) => void;
+  reorderColumns: (id: number, order: number) => void;
+  reorderItemInColumns: (listId: number, itemId: number, order: number, secondList: number | null) => void;
+}

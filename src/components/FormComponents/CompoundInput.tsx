@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import styles from '../../styles/Form.module.scss';
+import { forwardRef } from 'react';
 
 interface InputIProps extends InputHTMLAttributes<HTMLInputElement> {
   variant: 'dark' | 'light' | 'success';
@@ -8,18 +9,15 @@ interface InputIProps extends InputHTMLAttributes<HTMLInputElement> {
     x?: string;
   };
   width?: string;
+  noBrTop?: boolean;
+  noBrBottom?: boolean;
+  focus?: boolean;
 }
 
-export default function CompoundInput({
-  width,
-  padding,
-  variant,
-  onChange,
-  placeholder,
-  type,
-  value,
-  children,
-}: InputIProps) {
+export default forwardRef<HTMLInputElement, InputIProps>(function CompoundInput(
+  { width, padding, variant, onChange, placeholder, type, value, children, noBrTop, noBrBottom, focus },
+  ref,
+) {
   let inputStyles = ['formContainer__inputContainer-light', 'formContainer__input-light'];
 
   switch (variant) {
@@ -37,6 +35,7 @@ export default function CompoundInput({
   return (
     <div className={`${styles[inputStyles[0]]} ${styles.formContainer__inputContainer} settings`}>
       <input
+        ref={ref}
         placeholder={placeholder}
         type={type}
         value={value}
@@ -45,6 +44,10 @@ export default function CompoundInput({
       />
       <style jsx>{`
         .settings {
+          border-top-left-radius: ${noBrTop ? '0' : '10px'};
+          border-top-right-radius: ${noBrTop ? '0' : '10px'};
+          border-bottom-left-radius: ${noBrBottom ? '0' : '10px'};
+          border-bottom-right-radius: ${noBrBottom ? '0' : '10px'};
           padding: ${padding ? (padding.y ? padding.y : '18') : '18'}px
             ${padding ? (padding.x ? padding.x : '35') : '35'}px;
           ${width ? `width: ${width}` : ''}
@@ -53,8 +56,10 @@ export default function CompoundInput({
         .inputSettings {
           flex: 1;
         }
+
+        ${focus && '.inputSettings:focus {border: 1px solid #4eca9d;border-radius: 5px;padding: 5px;}'}
       `}</style>
       {children}
     </div>
   );
-}
+});

@@ -22,7 +22,7 @@ export default function RightSectionDeskList({ wspaceId }: { wspaceId?: number }
   return (
     <ul className={styles.rightSection__desksList}>
       {data.workingSpace && <DesksList desks={data.workingSpace.desks} />}
-      {data?.workingSpaceRole.roleId !== 3 ? (
+      {data.workingSpaceRole && data?.workingSpaceRole.roleId !== 3 ? (
         <CompoundButton onClick={setActiveModal} variant="success" padding={{ y: '60' }}>
           <p className={styles.addNewDeskTitle}>Создать доску</p>
         </CompoundButton>

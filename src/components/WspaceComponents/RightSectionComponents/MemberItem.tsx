@@ -20,6 +20,7 @@ export default function MemberItem({ memberData, userId }: MemberItemIProps) {
   const data = useAppSelector(
     state => selectSingleWorkingSpaceResult(state, memberData.workingSpaceId) as SingleWorkingSpaceType,
   );
+
   return (
     <div className={styles.membersList__memberItem}>
       <div className={styles.membersItem__userInfo}>
@@ -39,13 +40,17 @@ export default function MemberItem({ memberData, userId }: MemberItemIProps) {
         )}
         <p className={styles.memberTitle}>@{memberData.user.email.slice(0, memberData.user.email.indexOf('@'))}</p>
       </div>
-      {userId !== data?.workingSpaceRole.roleId ? (
-        <p className={styles.membersRole}>{getRole(memberData.roleId)}</p>
-      ) : memberData.userId !== data?.workingSpaceRole.roleId ? (
-        <select onChange={changeRoleHandler} className={styles.memberSelectRole} defaultValue={memberData.roleId}>
-          <option value={'2'}>Модератор</option>
-          <option value={'3'}>Только чтение</option>
-        </select>
+      {data.workingSpaceRole ? (
+        userId !== data.workingSpace.user.id ? (
+          <p className={styles.membersRole}>{getRole(memberData.roleId)}</p>
+        ) : memberData.userId !== data.workingSpace.user.id ? (
+          <select onChange={changeRoleHandler} className={styles.memberSelectRole} defaultValue={memberData.roleId}>
+            <option value={'2'}>Модератор</option>
+            <option value={'3'}>Только чтение</option>
+          </select>
+        ) : (
+          <p className={styles.membersRole}>{getRole(memberData.roleId)}</p>
+        )
       ) : (
         <p className={styles.membersRole}>{getRole(memberData.roleId)}</p>
       )}
