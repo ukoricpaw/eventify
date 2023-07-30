@@ -1,4 +1,3 @@
-import type { DeskListItem } from '@/types/deskListTypes';
 import styles from '../../styles/Desk.module.scss';
 import { Draggable } from 'react-beautiful-dnd';
 import { useAppSelector } from '@/hooks/reduxHooks';

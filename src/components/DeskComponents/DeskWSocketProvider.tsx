@@ -1,14 +1,10 @@
-import { DeskList, DeskListItem, ReloadedDeskData } from '@/types/deskListTypes';
-import { createContext, useRef, useEffect, ReactNode, MouseEvent, useCallback } from 'react';
+import { createContext, useRef, useEffect, ReactNode } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import {
-  reloadData,
-  addNewColumn as newColumnAction,
-  addNewItemToColumn,
-  changeColumns,
-} from '@/store/slices/deskSlice';
-import { DeskWSocketContextInterface } from '@/types/deskTypes';
+import { DeskWSocketContextInterface, DeskWSocketEmitEvents } from '@/types/deskTypes';
+import deskSocketEventsHandlers from '@/connection/deskSocketEventsHandlers';
+import deskSocketEmitHandlers from '@/connection/deskSocketEmitHandlers';
+import eventsHandlers from '@/connection/eventsHandlers';
 
 export const DeskWSocketContext = createContext<null | DeskWSocketContextInterface>(null);
 
@@ -20,69 +16,26 @@ interface DeskWSocketIProps {
 
 export default function DeskWSocketProvider({ children, wspaceId, deskId }: DeskWSocketIProps) {
   const socketRef = useRef<Socket | null>(null);
+  const emitHandlersRef = useRef<DeskWSocketEmitEvents | null>(null);
   const dispatch = useAppDispatch();
+  const eventHandlers = eventsHandlers(dispatch);
   useEffect(() => {
     socketRef.current = io(process.env.NEXT_PUBLIC_API_URL as string, {
       query: { wspaceId, deskId },
       withCredentials: true,
     });
-
-    socketRef.current.on('desk', (data: ReloadedDeskData) => {
-      dispatch(reloadData(data));
-    });
-
-    socketRef.current.on('desk:newcol', (data: DeskList) => {
-      dispatch(newColumnAction(data));
-    });
-
-    socketRef.current.on('list:getItem', (data: { listId: number; item: DeskListItem }) => {
-      dispatch(addNewItemToColumn(data));
-    });
-
-    socketRef.current.on('errorMessage', message => {
-      console.log(message);
-    });
-
-    socketRef.current.on('item:getNewOrder', (data: { list: DeskList; secondList: DeskList | null }) => {
-      dispatch(changeColumns(data));
-    });
+    deskSocketEventsHandlers({ socket: socketRef.current, eventsHandlers: eventHandlers });
+    emitHandlersRef.current = deskSocketEmitHandlers({ socket: socketRef.current });
     return () => {
+      eventHandlers.forEach(event => {
+        socketRef.current?.off(event.event);
+      });
       socketRef.current?.disconnect();
     };
   }, []);
+  const emitEvent = <T extends keyof DeskWSocketEmitEvents>(event: T) => {
+    return (emitHandlersRef.current as DeskWSocketEmitEvents)[event];
+  };
 
-  const addNewColumn = useCallback((name: string) => {
-    if (name.trim() === '') return;
-    socketRef.current?.emit('list:add', name);
-  }, []);
-
-  const deleteColumn = useCallback((id: number) => {
-    socketRef.current?.emit('list:delete', id);
-  }, []);
-
-  const reorderColumns = useCallback((id: number, order: number) => {
-    socketRef.current?.emit('list:reorder', id, order);
-  }, []);
-
-  const addNewItem = useCallback((e: MouseEvent<HTMLButtonElement>, columnId: number, name: string) => {
-    e.preventDefault();
-    if (name.trim() === '') return;
-    socketRef.current?.emit('list:newItem', columnId, name);
-  }, []);
-
-  const reorderItemInColumns = useCallback(
-    (listId: number, itemId: number, order: number, secondList: number | null) => {
-      console.log('reorder');
-      socketRef.current?.emit('item:reorder', listId, itemId, order, secondList);
-    },
-    [],
-  );
-
-  return (
-    <DeskWSocketContext.Provider
-      value={{ addNewColumn, deleteColumn, reorderColumns, addNewItem, reorderItemInColumns }}
-    >
-      {children}
-    </DeskWSocketContext.Provider>
-  );
+  return <DeskWSocketContext.Provider value={{ emitEvent }}>{children}</DeskWSocketContext.Provider>;
 }

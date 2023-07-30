@@ -32,7 +32,7 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
           {value => (
             <CompoundButton
               onClick={e => {
-                value?.addNewItem(e, columnId, name);
+                value?.emitEvent('addNewItem')(e, columnId, name);
                 setName('');
               }}
               variant="success"

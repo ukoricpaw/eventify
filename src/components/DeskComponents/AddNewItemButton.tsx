@@ -1,7 +1,8 @@
 import { AiOutlinePlus } from 'react-icons/ai';
 import styles from '../../styles/Desk.module.scss';
-import { useEffect, useCallback, memo } from 'react';
+import { memo } from 'react';
 import AddNewItemTextInput from './AddNewItemTextInput';
+import useClickBodyListener from '@/hooks/useClickBodyListener';
 
 interface AddNewItemButtonIProps {
   columnId: number;
@@ -14,18 +15,13 @@ export default memo(function AddNewItemButton({
   setActiveColumnHandler,
   columnId,
 }: AddNewItemButtonIProps) {
-  const activeColumnCondition = activeColumn === columnId;
-  useEffect(() => {
-    if (activeColumnCondition) {
-      document.body.addEventListener('click', setActiveColumnNull);
-    } else {
-      document.body.removeEventListener('click', setActiveColumnNull);
-    }
-  }, [activeColumn]);
+  const [activeColumnCondition, setActiveColumnNull] = useClickBodyListener({
+    activeCol: activeColumn,
+    colId: columnId,
+    setActiveHandler: setActiveColumnHandler,
+  });
 
-  const setActiveColumnNull = useCallback(() => {
-    setActiveColumnHandler && setActiveColumnHandler(null);
-  }, []);
+  console.log(columnId, activeColumnCondition);
 
   return (
     <section

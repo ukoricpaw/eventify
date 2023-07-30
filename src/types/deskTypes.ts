@@ -30,10 +30,14 @@ export type DeskAct = {
   name: string;
 };
 
-export interface DeskWSocketContextInterface {
+export interface DeskWSocketEmitEvents {
   addNewColumn: (name: string) => void;
   deleteColumn: (id: number) => void;
   addNewItem: (e: MouseEvent<HTMLButtonElement>, columnId: number, name: string) => void;
   reorderColumns: (id: number, order: number) => void;
   reorderItemInColumns: (listId: number, itemId: number, order: number, secondList: number | null) => void;
 }
+
+export type DeskWSocketContextInterface = {
+  emitEvent: <T extends keyof DeskWSocketEmitEvents>(event: T) => DeskWSocketEmitEvents[T];
+};

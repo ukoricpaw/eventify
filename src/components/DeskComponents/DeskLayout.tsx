@@ -21,11 +21,11 @@ interface DeskLayoutIProps {
 export default function DeskLayout({ children }: DeskLayoutIProps) {
   const { query } = useRouter();
   const { userData } = useAppSelector(userSelector);
-  const { background, isLoading, isError } = useAppSelector(layoutSelector);
+  const { name, background, isLoading, isError } = useAppSelector(layoutSelector);
   const dispatch = useAppDispatch();
   const wspaceData = useGetWorkingSpacesClientQuery(userData.id);
   const singleWspace = useGetSingleWorkingSpaceClientQuery(Number(query.id));
-
+  const title = `${name} | Eventify`;
   useEffect(() => {
     dispatch(getSingleDesk({ wspaceId: Number(query.id), deskId: Number(query.deskId) }));
   }, []);
@@ -38,12 +38,12 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
     if (wspaceData.isError || isError || singleWspace.isError) {
       return <div>Error</div>;
     }
+    console.log('renderlayout');
 
-    console.log('render');
     return (
       <DeskWSocketProvider wspaceId={Number(query.id)} deskId={Number(query.deskId)}>
         <Head>
-          <title>Доска</title>
+          <title>{title}</title>
         </Head>
         <Image
           draggable={false}

@@ -10,11 +10,18 @@ import { useCallback, useContext } from 'react';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import AddNewColumnButton from './AddNewColumnButton';
 import ColumnsActiveProvider from './ColumnsActiveProvider';
+import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
+import { useRouter } from 'next/router';
+import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
 
 export default function ColumnList() {
   const dispatch = useAppDispatch();
   const deskWSocketData = useContext(DeskWSocketContext);
-
+  const { query } = useRouter();
+  const data = useAppSelector(deskDataSelectorResult);
+  const wspace = useAppSelector(
+    state => selectSingleWorkingSpaceResult(state, Number(query.id)) as SingleWorkingSpaceType,
+  );
   const onDragEnd = useCallback((result: DropResult) => {
     const source = {
       id: Number(result.source.droppableId),
@@ -27,7 +34,7 @@ export default function ColumnList() {
         index: result.destination.index,
       };
       if (result.type === 'columns' && result.destination.index !== result.source.index) {
-        deskWSocketData?.reorderColumns(Number(result.draggableId), result.destination.index);
+        deskWSocketData?.emitEvent('reorderColumns')(Number(result.draggableId), result.destination.index);
       } else if (result.type === 'items') {
         let secondList = null;
         if (result.destination.droppableId !== result.source.droppableId) {
@@ -36,7 +43,7 @@ export default function ColumnList() {
         if (secondList === null && result.source.index === result.destination.index) {
           return;
         }
-        deskWSocketData?.reorderItemInColumns(
+        deskWSocketData?.emitEvent('reorderItemInColumns')(
           Number(result.source.droppableId),
           Number(result.draggableId),
           Number(result.destination.index),
@@ -54,8 +61,6 @@ export default function ColumnList() {
     );
   }, []);
 
-  const data = useAppSelector(deskDataSelectorResult);
-
   return (
     <ColumnsActiveProvider>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -63,10 +68,15 @@ export default function ColumnList() {
           {provided => (
             <ul ref={provided.innerRef} {...provided.droppableProps} className={styles.columnList}>
               {data.map((list, index) => (
-                <SingleColumn index={index} listId={list.id} key={String(list.id)} />
+                <SingleColumn
+                  roleId={wspace.workingSpaceRole ? wspace.workingSpaceRole.roleId : 0}
+                  index={index}
+                  listId={list.id}
+                  key={String(list.id)}
+                />
               ))}
               {provided.placeholder}
-              {<AddNewColumnButton />}
+              {wspace.workingSpaceRole && wspace.workingSpaceRole.roleId <= 2 && <AddNewColumnButton />}
             </ul>
           )}
         </Droppable>

@@ -55,7 +55,7 @@ const deskSlice = createSlice({
     },
     addNewColumn(state, action: PayloadAction<DeskList>) {
       action.payload.desk_list_items = [];
-      state.lists.splice(state.lists.length, 0, action.payload);
+      state.lists.push(action.payload);
     },
     reloadData(state, action: PayloadAction<ReloadedDeskData>) {
       state.lists = action.payload.desk.desk_lists;
@@ -119,6 +119,7 @@ export const getDeskInfo = createSelector(deskSelector, res => res);
 export const deskDataSelectorResult = createSelector(deskDataSelector, res => res);
 
 export const layoutSelector = createSelector([deskSelector, statusSelector], (desk, status) => ({
+  name: desk.name,
   background: desk.background,
   isLoading: status.isLoading,
   isError: status.isError,

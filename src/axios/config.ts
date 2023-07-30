@@ -18,7 +18,7 @@ $privateApi.interceptors.response.use(
   },
   async err => {
     const originalConfig = err.config;
-    if (err.response.status == 401 && err.config && !resCheck) {
+    if ((err.response.status == 401 || err.response.status == 403) && err.config && !resCheck) {
       resCheck = true;
       try {
         await $publicApi.get('/api/user/refresh');

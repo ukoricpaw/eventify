@@ -11,13 +11,15 @@ import ContextConsumer from '../GeneralComponents/ContextConsumer';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import AddNewItemButton from './AddNewItemButton';
 import { ColumnsContext } from './ColumnsActiveProvider';
+import ColumnMoreButton from './ColumnMoreButton';
 
 interface SingleColumnIProps {
   listId: number;
   index: number;
+  roleId: number;
 }
 
-export default memo(function SingleColumn({ listId, index }: SingleColumnIProps) {
+export default memo(function SingleColumn({ listId, index, roleId }: SingleColumnIProps) {
   const list = useAppSelector(state => state.deskReducer.lists.find(list => list.id == listId));
   const { query } = useRouter();
   const wspace = useAppSelector(
@@ -27,8 +29,6 @@ export default memo(function SingleColumn({ listId, index }: SingleColumnIProps)
   if (!list) {
     return;
   }
-
-  console.log(list);
 
   return (
     <Draggable
@@ -46,9 +46,22 @@ export default memo(function SingleColumn({ listId, index }: SingleColumnIProps)
               className={styles.column}
             >
               <div className={styles.column__wrapper}>
-                <p className={styles.column__columnName} {...provided.dragHandleProps}>
-                  {list.name}
-                </p>
+                <div className={styles.column__nameWrapper}>
+                  <p className={styles.column__columnName} {...provided.dragHandleProps}>
+                    {list.name}
+                  </p>
+                  {roleId !== 0 && roleId <= 2 && (
+                    <ContextConsumer Context={ColumnsContext}>
+                      {value => (
+                        <ColumnMoreButton
+                          columnId={listId}
+                          activeMoreInfo={value?.activeMoreInfo}
+                          setActiveMoreInfoHandler={value?.setActiveMoreInfoHandler}
+                        />
+                      )}
+                    </ContextConsumer>
+                  )}
+                </div>
                 <Droppable droppableId={String(list.id)} type="items">
                   {provided => (
                     <ul {...provided.droppableProps} ref={provided.innerRef} className={styles.itemList}>
@@ -67,15 +80,17 @@ export default memo(function SingleColumn({ listId, index }: SingleColumnIProps)
                     </ul>
                   )}
                 </Droppable>
-                <ContextConsumer Context={ColumnsContext}>
-                  {value => (
-                    <AddNewItemButton
-                      columnId={listId}
-                      activeColumn={value?.activeColumn}
-                      setActiveColumnHandler={value?.setActiveColumnHandler}
-                    />
-                  )}
-                </ContextConsumer>
+                {roleId !== 0 && roleId <= 2 && (
+                  <ContextConsumer Context={ColumnsContext}>
+                    {value => (
+                      <AddNewItemButton
+                        columnId={listId}
+                        activeColumn={value?.activeColumn}
+                        setActiveColumnHandler={value?.setActiveColumnHandler}
+                      />
+                    )}
+                  </ContextConsumer>
+                )}
               </div>
             </li>
           )}

@@ -66,7 +66,7 @@ export default memo(function AddNewColumnButton() {
                 className={styles.addNewColumnButton}
                 noBrTop={true}
                 onClick={() => {
-                  value?.addNewColumn(name);
+                  value?.emitEvent('addNewColumn')(name);
                   setName('');
                 }}
                 variant="success"
