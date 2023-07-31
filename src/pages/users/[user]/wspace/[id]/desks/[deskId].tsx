@@ -1,10 +1,21 @@
-import DeskLayout from '@/components/DeskComponents/DeskLayout';
+import DeskLayout from '@/components/DeskComponents/GeneralDeskComponents/DeskLayout';
 import ColumnList from '@/components/DeskComponents/ColumnList';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { layoutSelector } from '@/store/slices/deskSlice';
+import ColumnProvider from '@/components/DeskComponents/GeneralDeskComponents/ColumnsActiveProvider';
 
 export default function DeskPage() {
   const { isLoading } = useAppSelector(layoutSelector);
 
-  return <DeskLayout>{isLoading ? <p>Loading...</p> : <ColumnList />}</DeskLayout>;
+  return (
+    <DeskLayout>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <ColumnProvider>
+          <ColumnList />
+        </ColumnProvider>
+      )}
+    </DeskLayout>
+  );
 }

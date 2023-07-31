@@ -7,9 +7,8 @@ import type { DropResult } from 'react-beautiful-dnd';
 import { reorderItem } from '@/store/slices/deskSlice';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { useCallback, useContext } from 'react';
-import { DeskWSocketContext } from './DeskWSocketProvider';
+import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
 import AddNewColumnButton from './AddNewColumnButton';
-import ColumnsActiveProvider from './ColumnsActiveProvider';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
@@ -62,25 +61,23 @@ export default function ColumnList() {
   }, []);
 
   return (
-    <ColumnsActiveProvider>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="all-columns" type="columns" direction="horizontal">
-          {provided => (
-            <ul ref={provided.innerRef} {...provided.droppableProps} className={styles.columnList}>
-              {data.map((list, index) => (
-                <SingleColumn
-                  roleId={wspace.workingSpaceRole ? wspace.workingSpaceRole.roleId : 0}
-                  index={index}
-                  listId={list.id}
-                  key={String(list.id)}
-                />
-              ))}
-              {provided.placeholder}
-              {wspace.workingSpaceRole && wspace.workingSpaceRole.roleId <= 2 && <AddNewColumnButton />}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </ColumnsActiveProvider>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="all-columns" type="columns" direction="horizontal">
+        {provided => (
+          <ul ref={provided.innerRef} {...provided.droppableProps} className={styles.columnList}>
+            {data.map((list, index) => (
+              <SingleColumn
+                roleId={wspace.workingSpaceRole ? wspace.workingSpaceRole.roleId : 0}
+                index={index}
+                listId={list.id}
+                key={String(list.id)}
+              />
+            ))}
+            {provided.placeholder}
+            {wspace.workingSpaceRole && wspace.workingSpaceRole.roleId <= 2 && <AddNewColumnButton />}
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }

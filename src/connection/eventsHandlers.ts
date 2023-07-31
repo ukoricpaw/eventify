@@ -21,7 +21,6 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
     {
       event: 'desk:newcol',
       handler: (data: DeskList) => {
-        console.log('render');
         dispatch(newColumnAction(data));
       },
     },

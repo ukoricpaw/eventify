@@ -1,18 +1,18 @@
 import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../../styles/Desk.module.scss';
-import default_picture from '../../assets/images/default_picture.jpeg';
+import styles from '../../../styles/Desk.module.scss';
+import default_picture from '../../../assets/images/default_picture.jpeg';
 import Image from 'next/image';
 import { useGetWorkingSpacesClientQuery, useGetSingleWorkingSpaceClientQuery } from '@/store/api/wspaceApi';
 import { useAppSelector, useAppDispatch } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import { getSingleDesk, layoutSelector } from '@/store/slices/deskSlice';
 import Head from 'next/head';
-import CreateWspaceModalProvider from '../GeneralComponents/CreateWspaceModalProvider';
-import OwnNavbar from '../GeneralComponents/OwnNavbar';
-import homeStyles from '../../styles/General.module.scss';
-import DeskInfo from './DeskInfo';
-import DeskAsideInfo from './DeskAsideInfo';
+import CreateWspaceModalProvider from '../../GeneralComponents/CreateWspaceModalProvider';
+import OwnNavbar from '../../GeneralComponents/OwnNavbar';
+import homeStyles from '../../../styles/General.module.scss';
+import DeskInfo from '../DeskInfo';
+import DeskAsideInfo from '../DeskAsideInfo';
 import DeskWSocketProvider from './DeskWSocketProvider';
 interface DeskLayoutIProps {
   children: ReactNode;

@@ -3,7 +3,7 @@ import { useAppSelector } from '@/hooks/reduxHooks';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
 import { useRouter } from 'next/router';
-import LeftAsideSettings from './LeftAsideSettings';
+import LeftAsideSettings from './GeneralDeskComponents/LeftAsideSettings';
 
 export default function DeskAsideInfo() {
   const { query } = useRouter();

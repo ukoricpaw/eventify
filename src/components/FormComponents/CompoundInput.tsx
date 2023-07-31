@@ -15,7 +15,7 @@ interface InputIProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default forwardRef<HTMLInputElement, InputIProps>(function CompoundInput(
-  { width, padding, variant, onChange, placeholder, type, value, children, noBrTop, noBrBottom, focus },
+  { width, padding, variant, onChange, placeholder, type, value, children, noBrTop, noBrBottom, focus, onKeyDown },
   ref,
 ) {
   let inputStyles = ['formContainer__inputContainer-light', 'formContainer__input-light'];
@@ -35,6 +35,7 @@ export default forwardRef<HTMLInputElement, InputIProps>(function CompoundInput(
   return (
     <div className={`${styles[inputStyles[0]]} ${styles.formContainer__inputContainer} settings`}>
       <input
+        onKeyDown={onKeyDown}
         ref={ref}
         placeholder={placeholder}
         type={type}

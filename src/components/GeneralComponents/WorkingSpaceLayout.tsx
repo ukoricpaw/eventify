@@ -36,7 +36,11 @@ export default function WorkingSpaceLayout({ children }: { children: ReactNode }
       <div className={styles.workingSpaceContainer}>
         <LeftWspaceAside data={data} />
         <div className={styles.wspaceLayoutChildren}>
-          <WspaceDescription data={data} />
+          <WspaceDescription
+            roleId={data?.workingSpaceRole ? data?.workingSpaceRole.roleId : 0}
+            name={data?.workingSpace.name as string}
+            description={data?.workingSpace.description as string}
+          />
           <div className={styles.wspaceLayoutChildren__elements}>{children}</div>
         </div>
       </div>

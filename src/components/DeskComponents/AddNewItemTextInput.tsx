@@ -2,7 +2,7 @@ import FormGroup from '../FormComponents/FormGroup';
 import { RxCross1 } from 'react-icons/rx';
 import CompoundButton from '../FormComponents/CompoundButton';
 import ContextConsumer from '../GeneralComponents/ContextConsumer';
-import { DeskWSocketContext } from './DeskWSocketProvider';
+import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
 import styles from '../../styles/Desk.module.scss';
 import { useState, ChangeEvent } from 'react';
 
@@ -19,17 +19,24 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
   };
 
   return (
-    <FormGroup gap="8px">
-      <textarea
-        value={name}
-        onChange={setNameHandler}
-        rows={3}
-        className={styles.itemNameInput}
-        placeholder="Введите название для карточки"
-      ></textarea>
-      <div className={styles.inputButtons}>
-        <ContextConsumer Context={DeskWSocketContext}>
-          {value => (
+    <ContextConsumer Context={DeskWSocketContext}>
+      {value => (
+        <FormGroup gap="8px">
+          <textarea
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                if (e.repeat) return;
+                value?.emitEvent('addNewItem')(e, columnId, name);
+                setName('');
+              }
+            }}
+            value={name}
+            onChange={setNameHandler}
+            rows={3}
+            className={styles.itemNameInput}
+            placeholder="Введите название для карточки"
+          ></textarea>
+          <div className={styles.inputButtons}>
             <CompoundButton
               onClick={e => {
                 value?.emitEvent('addNewItem')(e, columnId, name);
@@ -40,10 +47,10 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
             >
               Добавить
             </CompoundButton>
-          )}
-        </ContextConsumer>
-        <RxCross1 onClick={setActiveColumnNull} className={styles.cancelButton} size={20} />
-      </div>
-    </FormGroup>
+            <RxCross1 onClick={setActiveColumnNull} className={styles.cancelButton} size={20} />
+          </div>
+        </FormGroup>
+      )}
+    </ContextConsumer>
   );
 }

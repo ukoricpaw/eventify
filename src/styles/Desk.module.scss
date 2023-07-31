@@ -279,19 +279,45 @@
       margin-top: 15px;
       border-top: 1px solid rgb(199, 199, 199);
 
+      & .moreInfoPrivateList {
+        @extend %flexColumnTemplate;
+        gap: 10px;
+        padding-top: 15px;
+        border-top: 1px solid rgb(199, 199, 199);
+        margin-top: 15px;
+      }
+
       & .moreInfoList__item {
+        cursor: pointer;
         @extend %flexTemplate;
         justify-content: start;
         gap: 8px;
         align-items: center;
+        padding: 2px;
+        border-radius: 4px;
+        transition: background-color 0.15s;
+      }
+
+      & .moreInfoList__item:hover {
+        background-color: rgb(231, 231, 231);
+      }
+
+      & .moreInfoList__delete {
+        color: rgb(189, 20, 20);
       }
     }
-
-    & .moreInfoWrapper__title {
-      font-size: 16px;
-      font-weight: 500;
-      white-space: nowrap;
-      text-align: center;
+    & .moreInfoWrapper__header {
+      @extend %flexTemplate;
+      gap: 20px;
+      & .moreInfoWrapper__title {
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+        text-align: center;
+      }
+      & .moreInfoWrapper__close {
+        cursor: pointer;
+      }
     }
   }
 }

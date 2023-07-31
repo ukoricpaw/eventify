@@ -4,7 +4,7 @@ import { FaPlus } from 'react-icons/fa';
 import CompoundInput from '../FormComponents/CompoundInput';
 import { useState, ChangeEvent, useCallback, useRef, useEffect, MouseEvent, memo } from 'react';
 import ContextConsumer from '../GeneralComponents/ContextConsumer';
-import { DeskWSocketContext } from './DeskWSocketProvider';
+import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
 
 export default memo(function AddNewColumnButton() {
   const [name, setName] = useState<string>('');
@@ -26,7 +26,7 @@ export default memo(function AddNewColumnButton() {
     } else {
       document.body.removeEventListener('click', setActiveFalse);
     }
-  }, [active]);
+  }, [active, setActiveFalse]);
 
   const setActiveHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -48,20 +48,27 @@ export default memo(function AddNewColumnButton() {
           Создать колонку
         </CompoundButton>
       ) : (
-        <div className={styles.addNewColumnContainer} onClick={e => e.stopPropagation()}>
-          <CompoundInput
-            ref={ref}
-            focus={true}
-            value={name}
-            placeholder="Название колонны"
-            onChange={setNameHandler}
-            padding={{ y: '15', x: '10' }}
-            variant="light"
-            width="230px"
-            noBrBottom={true}
-          />
-          <ContextConsumer Context={DeskWSocketContext}>
-            {value => (
+        <ContextConsumer Context={DeskWSocketContext}>
+          {value => (
+            <div className={styles.addNewColumnContainer} onClick={e => e.stopPropagation()}>
+              <CompoundInput
+                ref={ref}
+                focus={true}
+                value={name}
+                placeholder="Название колонны"
+                onChange={setNameHandler}
+                padding={{ y: '15', x: '10' }}
+                variant="light"
+                width="230px"
+                noBrBottom={true}
+                onKeyDown={e => {
+                  if (e.key == 'Enter') {
+                    if (e.repeat) return;
+                    value?.emitEvent('addNewColumn')(name);
+                    setName('');
+                  }
+                }}
+              />
               <CompoundButton
                 className={styles.addNewColumnButton}
                 noBrTop={true}
@@ -75,9 +82,9 @@ export default memo(function AddNewColumnButton() {
               >
                 Создать
               </CompoundButton>
-            )}
-          </ContextConsumer>
-        </div>
+            </div>
+          )}
+        </ContextConsumer>
       )}
     </section>
   );

@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io-client';
-import { MouseEvent } from 'react';
+import { MouseEvent, KeyboardEvent } from 'react';
 import { DeskWSocketEmitEvents } from '@/types/deskTypes';
 
 export default function deskSocketEmitHandlers({ socket }: { socket: Socket | null }): DeskWSocketEmitEvents {
@@ -16,14 +16,17 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('list:reorder', id, order);
   };
 
-  const addNewItem = (e: MouseEvent<HTMLButtonElement>, columnId: number, name: string) => {
+  const addNewItem = (
+    e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLTextAreaElement>,
+    columnId: number,
+    name: string,
+  ) => {
     e.preventDefault();
     if (name.trim() === '') return;
     socket?.emit('list:newItem', columnId, name);
   };
 
   const reorderItemInColumns = (listId: number, itemId: number, order: number, secondList: number | null) => {
-    console.log('reorder');
     socket?.emit('item:reorder', listId, itemId, order, secondList);
   };
 

@@ -1,31 +1,27 @@
-import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
+import { WorkingSpaceType } from '@/types/wspaceTypes';
 import styles from '../../../styles/WorkingSpace.module.scss';
 import ItemTitleWrapper from './ItemTitleWrapper';
 import CompoundButton from '@/components/FormComponents/CompoundButton';
 import { BiUserPlus } from 'react-icons/bi';
 
-interface WspaceDescriptionIProps {
-  data?: Pick<SingleWorkingSpaceType, 'workingSpace'>;
-}
+type WspaceDescriptionIProps = Pick<WorkingSpaceType, 'name' | 'description'> & { roleId: number };
 
-export default function WspaceDescription({ data }: WspaceDescriptionIProps) {
+export default function WspaceDescription({ name, description, roleId }: WspaceDescriptionIProps) {
   return (
     <div className={styles.wspaceDescription}>
-      {data && (
+      {name && (
         <>
-          <ItemTitleWrapper wspace={data?.workingSpace.name as string} ellipsis="350px">
-            <div className={styles.wspaceEditInvite}>
-              <CompoundButton variant="success" padding={{ x: '12', y: '4' }}>
-                <BiUserPlus size={18} />
-                Пригласить пользователя в рабочее пространств
-              </CompoundButton>
-            </div>
+          <ItemTitleWrapper wspace={name as string} ellipsis="350px">
+            {roleId !== 0 && roleId <= 2 && (
+              <div className={styles.wspaceEditInvite}>
+                <CompoundButton variant="success" padding={{ x: '12', y: '4' }}>
+                  <BiUserPlus size={18} />
+                  Пригласить пользователя в рабочее пространств
+                </CompoundButton>
+              </div>
+            )}
           </ItemTitleWrapper>
-          {data.workingSpace.description ? (
-            <p className={styles.wspaceDescription__content}>{data.workingSpace.description}</p>
-          ) : (
-            ''
-          )}
+          {description ? <p className={styles.wspaceDescription__content}>{description}</p> : ''}
         </>
       )}
     </div>

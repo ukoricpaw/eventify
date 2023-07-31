@@ -1,13 +1,13 @@
-import styles from '../../styles/Desk.module.scss';
-import CompoundButton from '../FormComponents/CompoundButton';
+import styles from '../../../styles/Desk.module.scss';
+import CompoundButton from '../../FormComponents/CompoundButton';
 import { useState, useCallback, lazy, Suspense } from 'react';
 import { activeType } from '@/utils/deskAsideButtons';
 import useDeskAsideButtons from '@/utils/deskAsideButtons';
-import DeskArchive from './DeskArchive';
+import DeskArchive from '../DeskArchive';
 
-const DeskHistoryComponent = lazy(() => import('./DeskHistory'));
+const DeskHistoryComponent = lazy(() => import('../DeskHistory'));
 const LeftSectionItemSettingsComponent = lazy(
-  () => import('../WspaceComponents/LeftSectionComponents/LeftSectionItemSettings'),
+  () => import('../../WspaceComponents/LeftSectionComponents/LeftSectionItemSettings'),
 );
 
 interface LeftAsideSettingsIProps {

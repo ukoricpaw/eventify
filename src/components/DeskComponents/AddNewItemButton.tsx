@@ -10,39 +10,49 @@ interface AddNewItemButtonIProps {
   setActiveColumnHandler?: (column: number | null) => void;
 }
 
-export default memo(function AddNewItemButton({
-  activeColumn,
-  setActiveColumnHandler,
-  columnId,
-}: AddNewItemButtonIProps) {
-  const [activeColumnCondition, setActiveColumnNull] = useClickBodyListener({
-    activeCol: activeColumn,
-    colId: columnId,
-    setActiveHandler: setActiveColumnHandler,
-  });
+export default memo(
+  function AddNewItemButton({ activeColumn, setActiveColumnHandler, columnId }: AddNewItemButtonIProps) {
+    const [activeColumnCondition, setActiveColumnNull] = useClickBodyListener({
+      activeCol: activeColumn,
+      colId: columnId,
+      setActiveHandler: setActiveColumnHandler,
+    });
 
-  console.log(columnId, activeColumnCondition);
-
-  return (
-    <section
-      className={styles.addNewItemContainer}
-      onClick={e => {
-        e.stopPropagation();
-      }}
-    >
-      {!activeColumnCondition && (
-        <div
-          style={!activeColumnCondition ? { cursor: 'pointer' } : {}}
-          className={styles.addNewItemButton}
-          onClick={() => {
-            setActiveColumnHandler && setActiveColumnHandler(columnId);
-          }}
-        >
-          <AiOutlinePlus size={16} />
-          Добавить карточку
-        </div>
-      )}
-      {activeColumnCondition && <AddNewItemTextInput setActiveColumnNull={setActiveColumnNull} columnId={columnId} />}
-    </section>
-  );
-});
+    return (
+      <section
+        className={styles.addNewItemContainer}
+        onClick={e => {
+          e.stopPropagation();
+        }}
+      >
+        {!activeColumnCondition && (
+          <div
+            style={!activeColumnCondition ? { cursor: 'pointer' } : {}}
+            className={styles.addNewItemButton}
+            onClick={() => {
+              setActiveColumnHandler && setActiveColumnHandler(columnId);
+            }}
+          >
+            <AiOutlinePlus size={16} />
+            Добавить карточку
+          </div>
+        )}
+        {activeColumnCondition && <AddNewItemTextInput setActiveColumnNull={setActiveColumnNull} columnId={columnId} />}
+      </section>
+    );
+  },
+  (prevProps: Readonly<AddNewItemButtonIProps>, nextProps: Readonly<AddNewItemButtonIProps>) => {
+    if (prevProps.activeColumn === null && nextProps.activeColumn !== prevProps.columnId) {
+      return true;
+    } else if (
+      prevProps.activeColumn !== null &&
+      prevProps.activeColumn !== prevProps.columnId &&
+      nextProps.activeColumn !== nextProps.columnId
+    ) {
+      return true;
+    } else if (prevProps.activeColumn === prevProps.columnId && nextProps.activeColumn === nextProps.columnId) {
+      return true;
+    }
+    return false;
+  },
+);

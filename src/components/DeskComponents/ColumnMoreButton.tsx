@@ -8,33 +8,43 @@ interface ColumnMoreButtonIProps {
   activeMoreInfo?: number | null;
   setActiveMoreInfoHandler?: (columnId: number | null) => void;
   columnId: number;
+  roleId: number;
 }
 
-export default memo(function ColumnMoreButton({
-  columnId,
-  activeMoreInfo,
-  setActiveMoreInfoHandler,
-}: ColumnMoreButtonIProps) {
-  const [activeColumnCondition, setActiveColumnNull] = useClickBodyListener({
-    activeCol: activeMoreInfo,
-    colId: columnId,
-    setActiveHandler: setActiveMoreInfoHandler,
-  });
+export default memo(
+  function ColumnMoreButton({ columnId, activeMoreInfo, setActiveMoreInfoHandler, roleId }: ColumnMoreButtonIProps) {
+    const [activeColumnCondition, setActiveColumnNull] = useClickBodyListener({
+      activeCol: activeMoreInfo,
+      colId: columnId,
+      setActiveHandler: setActiveMoreInfoHandler,
+    });
 
-  console.log(activeColumnCondition, columnId);
-
-  return (
-    <div className={styles.moreInfo}>
-      <div
-        className={styles.moreButtonContainer}
-        onClick={e => {
-          e.stopPropagation();
-          setActiveMoreInfoHandler && setActiveMoreInfoHandler(columnId);
-        }}
-      >
-        <AiOutlineMore size={25} className={styles.moreButton} />
+    return (
+      <div className={styles.moreInfo}>
+        <div
+          className={styles.moreButtonContainer}
+          onClick={e => {
+            e.stopPropagation();
+            setActiveMoreInfoHandler && setActiveMoreInfoHandler(columnId);
+          }}
+        >
+          <AiOutlineMore size={25} className={styles.moreButton} />
+        </div>
+        {activeColumnCondition && <MoreInfoWrapper setActiveColumnNull={setActiveColumnNull} />}
       </div>
-      {activeColumnCondition && <MoreInfoWrapper />}
-    </div>
-  );
-});
+    );
+  },
+  (prevProps: Readonly<ColumnMoreButtonIProps>, nextProps: Readonly<ColumnMoreButtonIProps>) => {
+    if (
+      (prevProps.activeMoreInfo !== null &&
+        nextProps.activeMoreInfo !== nextProps.columnId &&
+        prevProps.activeMoreInfo !== prevProps.columnId) ||
+      prevProps.activeMoreInfo === nextProps.activeMoreInfo
+    ) {
+      return true;
+    } else if (prevProps.activeMoreInfo === null && nextProps.activeMoreInfo !== prevProps.columnId) {
+      return true;
+    }
+    return false;
+  },
+);
