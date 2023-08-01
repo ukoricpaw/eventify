@@ -1,5 +1,12 @@
 import { $privateApi } from '@/axios/config';
-import { DeskList, DeskListItem, ReloadedDeskData, SingleDesk, SingleDeskState } from '@/types/deskListTypes';
+import {
+  ArchivedList,
+  DeskList,
+  DeskListItem,
+  ReloadedDeskData,
+  SingleDesk,
+  SingleDeskState,
+} from '@/types/deskListTypes';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
 import { RootState } from '..';
@@ -14,6 +21,13 @@ const initialState: SingleDeskState = {
   data: {} as SingleDesk,
   listItems: [],
   lists: [],
+  archived: {
+    isLoading: true,
+    isError: null,
+    archivedList: [],
+    isFulfilled: false,
+    deskId: null,
+  } as ArchivedList,
 };
 
 export const getSingleDesk = createAsyncThunk(
@@ -34,10 +48,61 @@ export const getSingleDesk = createAsyncThunk(
   },
 );
 
+export const getArchivedLists = createAsyncThunk(
+  'archivedList',
+  async ({ wspaceId, deskId }: { wspaceId: number; deskId: number }, { rejectWithValue }) => {
+    try {
+      const archivedLists = await $privateApi.get<SingleDesk>(`/api/wspace/desk/${wspaceId}/${deskId}?archive=true`);
+      return { archivedDeskLists: archivedLists.data };
+    } catch (err) {
+      if (isAxiosError(err)) {
+        return rejectWithValue(err.response?.data.message);
+      }
+      return rejectWithValue('Произошла ошибка');
+    }
+  },
+);
+
 const deskSlice = createSlice({
   name: 'deskSlice',
   initialState,
   reducers: {
+    renameColumn(state, action: PayloadAction<{ listId: number; name: string }>) {
+      const list = state.lists.find(list => list.id === action.payload.listId);
+      if (!list) return;
+      list.name = action.payload.name;
+    },
+    rearchiveColumn(state, action: PayloadAction<{ listId: number; type: 'toArchive' | 'fromArchive' }>) {
+      let listIndex = null;
+      let lists = state.lists;
+      let secondLists = state.archived.archivedList;
+      if (action.payload.type === 'fromArchive') {
+        lists = state.archived.archivedList;
+        secondLists = state.lists;
+      }
+      const list = lists.find((list, index) => {
+        if (list.id === action.payload.listId) {
+          listIndex = index;
+          return true;
+        }
+      });
+      if (!list || listIndex === null) return;
+      lists.splice(listIndex, 1);
+      secondLists.push(list);
+    },
+    deleteColumn(state, action: PayloadAction<{ listId: number }>) {
+      let listIndex = null;
+      const list = state.lists.find((list, index) => {
+        if (list.id === action.payload.listId) {
+          listIndex = index;
+          return true;
+        }
+      });
+      if (!list || listIndex === null) return;
+      state.listItems = state.listItems.filter(item => item.deskListId !== list.id);
+
+      state.lists.splice(listIndex, 1);
+    },
     changeColumns(state, action: PayloadAction<{ list: DeskList; secondList: null | DeskList }>) {
       const list = state.lists.find(list => list.id === action.payload.list.id);
       if (!list) return;
@@ -86,6 +151,9 @@ const deskSlice = createSlice({
         }
       }
     },
+    clearArchive(state) {
+      state.archived.isFulfilled = false;
+    },
   },
   extraReducers: builder => {
     builder.addCase(getSingleDesk.pending, state => {
@@ -104,23 +172,33 @@ const deskSlice = createSlice({
       state.status.isError = action.error.message as string;
       state.status.isLoading = false;
     });
+    builder.addCase(getArchivedLists.fulfilled, (state, action) => {
+      state.archived.isFulfilled = true;
+      state.archived.isLoading = false;
+      state.archived.archivedList = action.payload.archivedDeskLists.desk_lists;
+      state.archived.deskId = action.payload.archivedDeskLists.id;
+    });
+    builder.addCase(getArchivedLists.pending, state => {
+      state.archived.isLoading = true;
+      state.archived.isError = null;
+      state.archived.archivedList = [];
+    });
+    builder.addCase(getArchivedLists.rejected, (state, action) => {
+      state.archived.isError = action.error.message as string;
+      state.status.isLoading = false;
+    });
   },
 });
 
 export default deskSlice.reducer;
-export const { reorderItem, reloadData, addNewColumn, addNewItemToColumn, changeColumns } = deskSlice.actions;
-
-export const deskSelector = (state: RootState) => state.deskReducer.data;
-export const statusSelector = (state: RootState) => state.deskReducer.status;
-export const deskDataSelector = (state: RootState) => state.deskReducer.lists;
-
-export const getDeskInfo = createSelector(deskSelector, res => res);
-
-export const deskDataSelectorResult = createSelector(deskDataSelector, res => res);
-
-export const layoutSelector = createSelector([deskSelector, statusSelector], (desk, status) => ({
-  name: desk.name,
-  background: desk.background,
-  isLoading: status.isLoading,
-  isError: status.isError,
-}));
+export const {
+  renameColumn,
+  clearArchive,
+  rearchiveColumn,
+  deleteColumn,
+  reorderItem,
+  reloadData,
+  addNewColumn,
+  addNewItemToColumn,
+  changeColumns,
+} = deskSlice.actions;

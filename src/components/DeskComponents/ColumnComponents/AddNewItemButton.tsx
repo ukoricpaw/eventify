@@ -1,5 +1,5 @@
 import { AiOutlinePlus } from 'react-icons/ai';
-import styles from '../../styles/Desk.module.scss';
+import styles from '../../../styles/Desk.module.scss';
 import { memo } from 'react';
 import AddNewItemTextInput from './AddNewItemTextInput';
 import useClickBodyListener from '@/hooks/useClickBodyListener';

@@ -4,6 +4,8 @@ import {
   addNewColumn as newColumnAction,
   addNewItemToColumn,
   changeColumns,
+  rearchiveColumn,
+  renameColumn,
 } from '@/store/slices/deskSlice';
 
 import { DeskList, DeskListItem, ReloadedDeskData } from '@/types/deskListTypes';
@@ -12,6 +14,18 @@ export type EventsHandlersType = { event: string; handler: (...args: any) => voi
 
 export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersType {
   return [
+    {
+      event: 'list:newName',
+      handler: ({ listId, name }: { listId: number; name: string }) => {
+        dispatch(renameColumn({ listId, name }));
+      },
+    },
+    {
+      event: 'list:archiveList',
+      handler: ({ listId, type }: { listId: number; type: 'toArchive' | 'fromArchive' }) => {
+        dispatch(rearchiveColumn({ listId, type }));
+      },
+    },
     {
       event: 'desk',
       handler: (data: ReloadedDeskData) => {

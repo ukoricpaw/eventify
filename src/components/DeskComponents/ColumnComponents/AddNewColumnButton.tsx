@@ -1,10 +1,10 @@
-import styles from '../../styles/Desk.module.scss';
-import CompoundButton from '../FormComponents/CompoundButton';
+import styles from '../../../styles/Desk.module.scss';
+import CompoundButton from '../../FormComponents/CompoundButton';
 import { FaPlus } from 'react-icons/fa';
-import CompoundInput from '../FormComponents/CompoundInput';
+import CompoundInput from '../../FormComponents/CompoundInput';
 import { useState, ChangeEvent, useCallback, useRef, useEffect, MouseEvent, memo } from 'react';
-import ContextConsumer from '../GeneralComponents/ContextConsumer';
-import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
+import ContextConsumer from '../../GeneralComponents/ContextConsumer';
+import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
 
 export default memo(function AddNewColumnButton() {
   const [name, setName] = useState<string>('');

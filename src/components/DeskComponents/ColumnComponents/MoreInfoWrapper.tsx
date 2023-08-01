@@ -1,8 +1,8 @@
-import styles from '../../styles/Desk.module.scss';
+import styles from '../../../styles/Desk.module.scss';
 import { FaInfo } from 'react-icons/fa';
 import { Suspense, lazy } from 'react';
-import ContextConsumer from '../GeneralComponents/ContextConsumer';
-import { ColumnInfoContext } from './GeneralDeskComponents/ColumnInfoProvider';
+import ContextConsumer from '../../GeneralComponents/ContextConsumer';
+import { ColumnInfoContext } from '../GeneralDeskComponents/ColumnInfoProvider';
 import { RxCross1 } from 'react-icons/rx';
 
 const MoreInfoPrivateListLazy = lazy(() => import('./MoreInfoPrivateList'));

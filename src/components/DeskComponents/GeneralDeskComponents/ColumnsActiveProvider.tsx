@@ -22,12 +22,17 @@ function DeleteColumnModalProvider({ children }: { children: ReactNode }) {
 function ColumnsActiveProvider({ children }: { children: ReactNode }) {
   const [activeColumn, setActiveColumn] = useState<number | null>(null);
   const [activeMoreInfo, setActiveMoreInfo] = useState<number | null>(null);
+  const [activeInput, setActiveInput] = useState<number | null>(null);
   const setActiveColumnHandler = useCallback((column: number | null) => {
     setActiveColumn(prev => (column ? (prev === column ? null : column) : null));
   }, []);
 
   const setActiveMoreInfoHandler = useCallback((column: number | null) => {
     setActiveMoreInfo(prev => (column ? (prev === column ? null : column) : null));
+  }, []);
+
+  const setActiveInputHandler = useCallback((column: number | null) => {
+    setActiveInput(column);
   }, []);
   return (
     <ColumnsContextProvider
@@ -36,6 +41,8 @@ function ColumnsActiveProvider({ children }: { children: ReactNode }) {
         setActiveColumnHandler,
         setActiveMoreInfoHandler,
         activeMoreInfo,
+        activeInput,
+        setActiveInputHandler,
       }}
     >
       {children}

@@ -18,6 +18,12 @@
   display: flex;
   flex-direction: column;
 }
+
+%scrollTemplate {
+  overflow-y: scroll;
+  height: calc(100vh - 238px);
+  padding-left: 20px;
+}
 .deskContainer {
   @extend %flexTemplate;
   justify-content: space-between;
@@ -106,18 +112,33 @@
       color: var(--light-white-color);
       padding: 5px 15px;
       font-size: 16px;
-      & .column__columnName {
-        height: 40px;
-        display: flex;
-        align-items: center;
-        @include textEllipsis(240);
-        letter-spacing: 1px;
-        text-align: start;
-        flex: 1;
-        font-weight: 300;
-      }
     }
   }
+}
+.column__columnName {
+  background-color: var(--dark-green-color);
+  outline: none;
+  color: var(--light-white-color);
+  border: none;
+  display: flex;
+  align-items: center;
+  @include textEllipsis(170);
+  letter-spacing: 1px;
+  text-align: start;
+  flex: 1;
+  font-weight: 300;
+  font-size: 14px;
+  transition: all 0.15s;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.column__columnName:focus {
+  background-color: var(--light-white-color);
+  color: var(--dark-color);
+  border-radius: 5px;
+  border: 3px solid rgb(61, 190, 141);
 }
 
 .asideSettings {
@@ -138,12 +159,14 @@
   }
 }
 
-.deskAct__list::-webkit-scrollbar {
+.deskAct__list::-webkit-scrollbar,
+.archiveList::-webkit-scrollbar {
   left: -100px;
   width: 8px;
 }
 
-.deskAct__list::-webkit-scrollbar-thumb {
+.deskAct__list::-webkit-scrollbar-thumb,
+.archiveList::-webkit-scrollbar-thumb {
   background-color: var(--light-green-color);
   border-radius: 12px;
 }
@@ -152,9 +175,7 @@
   margin-top: 25px;
   @extend %flexColumnTemplate;
   gap: 15px;
-  overflow-y: scroll;
-  height: calc(100vh - 238px);
-  padding-left: 20px;
+  @extend %scrollTemplate;
   direction: rtl;
 
   .deskAct__item {
@@ -318,6 +339,53 @@
       & .moreInfoWrapper__close {
         cursor: pointer;
       }
+    }
+  }
+}
+
+.archiveList {
+  @extend %flexColumnTemplate;
+  @extend %scrollTemplate;
+  direction: rtl;
+  margin-top: 20px;
+  font-size: 18px;
+  gap: 20px;
+  overflow-y: scroll;
+
+  & .archiveList__qty {
+    direction: ltr;
+  }
+
+  & .archiveList__archiveEmptyTitle {
+    direction: ltr;
+
+    color: rgb(156, 156, 156);
+  }
+
+  & .archiveList__item {
+    direction: ltr;
+    @extend %flexTemplate;
+    align-items: center;
+    justify-content: space-between;
+    @extend %borderTemplate;
+    background-color: var(--light-white-color);
+    cursor: pointer;
+
+    .item__name {
+      @include textEllipsis(160);
+      margin-left: 30px;
+    }
+
+    & .item__backToDesk {
+      cursor: pointer;
+      transform: rotate(180deg);
+      padding: 30px;
+      transition: all 0.15s;
+    }
+
+    & .item__backToDesk:hover {
+      background-color: rgb(219, 219, 219);
+      color: var(--light-white-color);
     }
   }
 }

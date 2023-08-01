@@ -26,9 +26,17 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('list:newItem', columnId, name);
   };
 
+  const archiveColumn = (listId: number, isarchive: 'false' | 'true') => {
+    socket?.emit('list:archive', listId, isarchive === 'false' ? 'false' : 'true');
+  };
+
   const reorderItemInColumns = (listId: number, itemId: number, order: number, secondList: number | null) => {
     socket?.emit('item:reorder', listId, itemId, order, secondList);
   };
 
-  return { addNewColumn, addNewItem, reorderColumns, reorderItemInColumns, deleteColumn };
+  const renameColumn = (listId: number, name: string) => {
+    socket?.emit('list:name', listId, name);
+  };
+
+  return { addNewColumn, addNewItem, reorderColumns, reorderItemInColumns, deleteColumn, archiveColumn, renameColumn };
 }

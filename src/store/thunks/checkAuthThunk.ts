@@ -2,7 +2,6 @@ import { isAxiosError } from 'axios';
 import { AppDispatch } from '..';
 import { authError, authLoading, authSuccess } from '../slices/userSlice';
 import { $publicApi } from '@/axios/config';
-import getCookies from '@/utils/getCookies';
 import { UserResponse } from '@/types/userTypes';
 
 export default function checkAuthThunk(cookies: string) {

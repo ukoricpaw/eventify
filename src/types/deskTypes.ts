@@ -32,6 +32,8 @@ export type DeskAct = {
 
 export interface DeskWSocketEmitEvents {
   addNewColumn: (name: string) => void;
+  renameColumn: (listId: number, name: string) => void;
+  archiveColumn: (listId: number, isarchive: 'false' | 'true') => void;
   deleteColumn: (id: number) => void;
   addNewItem: (
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLTextAreaElement>,
@@ -51,6 +53,8 @@ export interface ColumnsContextInterface {
   activeMoreInfo: number | null;
   setActiveColumnHandler: (column: number | null) => void;
   setActiveMoreInfoHandler: (column: number | null) => void;
+  activeInput: number | null;
+  setActiveInputHandler: (column: number | null) => void;
 }
 
 export interface DeleteColumnModalInterface {
@@ -62,4 +66,5 @@ export interface ColumnInfoContextInterface {
   listId: number;
   name: string;
   roleId: number;
+  isarchived: boolean;
 }

@@ -1,6 +1,6 @@
-import { getDeskInfo } from '@/store/slices/deskSlice';
 import styles from '../../styles/Desk.module.scss';
 import { useAppSelector } from '@/hooks/reduxHooks';
+import { getDeskInfo } from '@/store/selectors/deskSelectors';
 
 export default function DeskInfo() {
   const deskInfo = useAppSelector(getDeskInfo);

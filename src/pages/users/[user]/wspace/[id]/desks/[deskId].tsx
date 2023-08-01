@@ -1,7 +1,7 @@
 import DeskLayout from '@/components/DeskComponents/GeneralDeskComponents/DeskLayout';
-import ColumnList from '@/components/DeskComponents/ColumnList';
+import ColumnList from '@/components/DeskComponents/ColumnComponents/ColumnList';
 import { useAppSelector } from '@/hooks/reduxHooks';
-import { layoutSelector } from '@/store/slices/deskSlice';
+import { layoutSelector } from '@/store/selectors/deskSelectors';
 import ColumnProvider from '@/components/DeskComponents/GeneralDeskComponents/ColumnsActiveProvider';
 
 export default function DeskPage() {

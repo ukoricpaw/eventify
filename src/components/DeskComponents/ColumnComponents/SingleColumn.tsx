@@ -1,4 +1,4 @@
-import styles from '../../styles/Desk.module.scss';
+import styles from '../../../styles/Desk.module.scss';
 import ColumnItem from './ColumnItem';
 import { Droppable } from 'react-beautiful-dnd';
 import { useAppSelector } from '@/hooks/reduxHooks';
@@ -7,12 +7,12 @@ import { Draggable } from 'react-beautiful-dnd';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
-import ContextConsumer from '../GeneralComponents/ContextConsumer';
-import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
+import ContextConsumer from '@/components/GeneralComponents/ContextConsumer';
 import AddNewItemButton from './AddNewItemButton';
-import { ColumnsContext } from './GeneralDeskComponents/ColumnsActiveProvider';
+import { ColumnsContext } from '../GeneralDeskComponents/ColumnsActiveProvider';
 import ColumnMoreButton from './ColumnMoreButton';
-import ColumnInfoContextProvider from './GeneralDeskComponents/ColumnInfoProvider';
+import ColumnInfoContextProvider from '../GeneralDeskComponents/ColumnInfoProvider';
+import ColumnInputFieldName from './ColumnInputFieldName';
 
 interface SingleColumnIProps {
   listId: number;
@@ -22,6 +22,7 @@ interface SingleColumnIProps {
 
 export default memo(function SingleColumn({ listId, index, roleId }: SingleColumnIProps) {
   const list = useAppSelector(state => state.deskReducer.lists.find(list => list.id == listId));
+
   const { query } = useRouter();
   const wspace = useAppSelector(
     state => selectSingleWorkingSpaceResult(state, Number(query.id)) as SingleWorkingSpaceType,
@@ -40,13 +41,23 @@ export default memo(function SingleColumn({ listId, index, roleId }: SingleColum
       {provided => (
         <li ref={provided.innerRef} {...provided.draggableProps} className={styles.column}>
           <div className={styles.column__wrapper}>
-            <div className={styles.column__nameWrapper}>
-              <p className={styles.column__columnName} {...provided.dragHandleProps}>
-                {list.name}
-              </p>
-              <ContextConsumer Context={ColumnsContext}>
-                {value => (
-                  <ColumnInfoContextProvider roleId={roleId} name={list.name} listId={list.id}>
+            <ContextConsumer Context={ColumnsContext}>
+              {value => (
+                <div className={styles.column__nameWrapper}>
+                  <ColumnInputFieldName
+                    roleId={roleId}
+                    listId={list.id}
+                    activeInput={value?.activeInput}
+                    setActiveInputHandler={value?.setActiveInputHandler}
+                    name={list.name}
+                    dragHandleProps={provided.dragHandleProps}
+                  />
+                  <ColumnInfoContextProvider
+                    isarchived={list.isarchived}
+                    roleId={roleId}
+                    name={list.name}
+                    listId={list.id}
+                  >
                     <ColumnMoreButton
                       roleId={roleId}
                       columnId={listId}
@@ -54,9 +65,9 @@ export default memo(function SingleColumn({ listId, index, roleId }: SingleColum
                       setActiveMoreInfoHandler={value?.setActiveMoreInfoHandler}
                     />
                   </ColumnInfoContextProvider>
-                )}
-              </ContextConsumer>
-            </div>
+                </div>
+              )}
+            </ContextConsumer>
             <Droppable droppableId={String(list.id)} type="items">
               {provided => (
                 <ul {...provided.droppableProps} ref={provided.innerRef} className={styles.itemList}>

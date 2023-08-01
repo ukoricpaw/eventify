@@ -1,5 +1,5 @@
 import { AiOutlineMore } from 'react-icons/ai';
-import styles from '../../styles/Desk.module.scss';
+import styles from '../../../styles/Desk.module.scss';
 import { memo } from 'react';
 import useClickBodyListener from '@/hooks/useClickBodyListener';
 import MoreInfoWrapper from './MoreInfoWrapper';

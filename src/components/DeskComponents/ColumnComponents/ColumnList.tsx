@@ -1,13 +1,13 @@
 import { useAppSelector } from '@/hooks/reduxHooks';
-import styles from '../../styles/Desk.module.scss';
+import styles from '../../../styles/Desk.module.scss';
 import SingleColumn from './SingleColumn';
-import { deskDataSelectorResult } from '@/store/slices/deskSlice';
+import { deskDataSelectorResult } from '@/store/selectors/deskSelectors';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import type { DropResult } from 'react-beautiful-dnd';
 import { reorderItem } from '@/store/slices/deskSlice';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { useCallback, useContext } from 'react';
-import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
+import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
 import AddNewColumnButton from './AddNewColumnButton';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';

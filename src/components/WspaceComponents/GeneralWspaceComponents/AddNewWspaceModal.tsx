@@ -16,11 +16,6 @@ interface AddNewWspaceModalIProps {
   setActiveModal: () => void;
 }
 
-type InfoType = {
-  name: string;
-  description: string;
-};
-
 export default function AddNewWspaceModal({ setActiveModal }: AddNewWspaceModalIProps) {
   const { userData } = useAppSelector(userSelector);
   const data = useAppSelector(state => selectWorkingSpacesResult(state, userData.id) as WorkingSpacesResponce);

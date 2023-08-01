@@ -13,6 +13,7 @@ export default function ColumnInfoContextProvider({
   roleId,
   name,
   listId,
+  isarchived,
 }: ColumnInfoContextProviderIProps & ColumnInfoContextInterface) {
-  return <ColumnInfoProvider value={{ roleId, name, listId }}>{children}</ColumnInfoProvider>;
+  return <ColumnInfoProvider value={{ isarchived, roleId, name, listId }}>{children}</ColumnInfoProvider>;
 }

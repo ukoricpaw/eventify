@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { useGetWorkingSpacesClientQuery, useGetSingleWorkingSpaceClientQuery } from '@/store/api/wspaceApi';
 import { useAppSelector, useAppDispatch } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
-import { getSingleDesk, layoutSelector } from '@/store/slices/deskSlice';
+import { clearArchive, getSingleDesk } from '@/store/slices/deskSlice';
+import { layoutSelector } from '@/store/selectors/deskSelectors';
 import Head from 'next/head';
 import CreateWspaceModalProvider from '../../GeneralComponents/CreateWspaceModalProvider';
 import OwnNavbar from '../../GeneralComponents/OwnNavbar';
@@ -28,6 +29,9 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
   const title = `${name} | Eventify`;
   useEffect(() => {
     dispatch(getSingleDesk({ wspaceId: Number(query.id), deskId: Number(query.deskId) }));
+    return () => {
+      dispatch(clearArchive());
+    };
   }, []);
 
   const render = () => {

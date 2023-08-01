@@ -1,9 +1,9 @@
-import FormGroup from '../FormComponents/FormGroup';
+import FormGroup from '../../FormComponents/FormGroup';
 import { RxCross1 } from 'react-icons/rx';
-import CompoundButton from '../FormComponents/CompoundButton';
-import ContextConsumer from '../GeneralComponents/ContextConsumer';
-import { DeskWSocketContext } from './GeneralDeskComponents/DeskWSocketProvider';
-import styles from '../../styles/Desk.module.scss';
+import CompoundButton from '../../FormComponents/CompoundButton';
+import ContextConsumer from '../../GeneralComponents/ContextConsumer';
+import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
+import styles from '../../../styles/Desk.module.scss';
 import { useState, ChangeEvent } from 'react';
 
 interface AddNewItemTextInputIProps {

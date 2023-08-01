@@ -6,7 +6,16 @@ export type SingleDeskState = {
   data: SingleDesk;
   lists: DeskList[];
   listItems: DeskListItem[];
+  archived: ArchivedList;
 };
+
+export interface ArchivedList {
+  isLoading: boolean;
+  isError: string | null;
+  archivedList: DeskList[];
+  isFulfilled: boolean;
+  deskId: number | null;
+}
 
 export interface SingleDesk {
   id: number;
@@ -28,6 +37,7 @@ export interface DeskList extends Omit<SingleDesk, 'background' | 'desk_lists' |
 
 export interface DeskListItem extends Omit<DeskList, 'isarchived' | 'deskId' | 'desk_list_items'> {
   deadline: string;
+  deskListId: number;
 }
 
 export type ReloadedDeskData = { desk: SingleDesk };
