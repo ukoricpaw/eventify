@@ -13,10 +13,10 @@ export default memo(function DeleteWspace({ wspaceId }: { wspaceId: number }) {
   const [deleteWspace, { isLoading }] = useDeleteWspaceMutation();
   const router = useRouter();
 
-  const deleteWspaceHandler = useCallback(async () => {
+  const deleteWspaceHandler = async () => {
     await deleteWspace(wspaceId);
     router.push(`/users/${userData.id}/dashboard`);
-  }, []);
+  };
 
   const [openHandler, isOpen, DeleteModal] = useDeleteModal({
     handler: deleteWspaceHandler,

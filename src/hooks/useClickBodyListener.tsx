@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 
 interface useClickBodyListenerIProps {
   activeCol?: number | null;
@@ -20,9 +20,9 @@ export default function useClickBodyListener({
     }
   }, [activeCol]);
 
-  const setActiveColumnNull = useCallback(() => {
+  const setActiveColumnNull = () => {
     setActiveHandler && setActiveHandler(null);
-  }, []);
+  };
 
   return [activeColumnCondition, setActiveColumnNull];
 }

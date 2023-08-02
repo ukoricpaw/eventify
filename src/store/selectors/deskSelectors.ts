@@ -9,11 +9,14 @@ export const getDeskInfo = createSelector(deskSelector, res => res);
 
 export const deskDataSelectorResult = createSelector(deskDataSelector, res => res);
 
-export const layoutSelector = createSelector([deskSelector, statusSelector], (desk, status) => ({
-  name: desk.name,
-  background: desk.background,
+export const layoutSelector = createSelector([statusSelector], status => ({
   isLoading: status.isLoading,
   isError: status.isError,
+}));
+
+export const titleBackgroundSelector = createSelector([deskSelector], desk => ({
+  background: desk.background,
+  name: desk.name,
 }));
 
 const getArchiveDataSelector = (state: RootState) => state.deskReducer.archived;

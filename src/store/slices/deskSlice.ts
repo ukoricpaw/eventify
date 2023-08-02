@@ -9,13 +9,11 @@ import {
 } from '@/types/deskListTypes';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
-import { RootState } from '..';
-import { createSelector } from '@reduxjs/toolkit';
 import { Reorder, sourceDest } from '@/types/deskItemTypes';
 
 const initialState: SingleDeskState = {
   status: {
-    isLoading: false,
+    isLoading: true,
     isError: null,
   },
   data: {} as SingleDesk,
@@ -67,6 +65,9 @@ const deskSlice = createSlice({
   name: 'deskSlice',
   initialState,
   reducers: {
+    renameDesk(state, action: PayloadAction<string>) {
+      state.data.name = action.payload;
+    },
     renameColumn(state, action: PayloadAction<{ listId: number; name: string }>) {
       const list = state.lists.find(list => list.id === action.payload.listId);
       if (!list) return;
@@ -192,6 +193,7 @@ const deskSlice = createSlice({
 
 export default deskSlice.reducer;
 export const {
+  renameDesk,
   renameColumn,
   clearArchive,
   rearchiveColumn,

@@ -38,5 +38,18 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('list:name', listId, name);
   };
 
-  return { addNewColumn, addNewItem, reorderColumns, reorderItemInColumns, deleteColumn, archiveColumn, renameColumn };
+  const renameFullDesk = (deskId: number, name: string) => {
+    socket?.emit('desk:name', deskId, name);
+  };
+
+  return {
+    renameFullDesk,
+    addNewColumn,
+    addNewItem,
+    reorderColumns,
+    reorderItemInColumns,
+    deleteColumn,
+    archiveColumn,
+    renameColumn,
+  };
 }

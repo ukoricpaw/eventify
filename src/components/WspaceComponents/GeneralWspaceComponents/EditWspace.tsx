@@ -33,9 +33,7 @@ export default function EditWspace({ data }: { data: SingleWorkingSpaceType }) {
     if (state.name && state.name.trim() !== data.workingSpace.name.trim()) {
       body['name'] = state.name;
     }
-    if (state.description?.trim() !== '') {
-      body['description'] = state.description;
-    }
+    body['description'] = state.description;
     if (
       (!data.workingSpace.private && state.isPrivate === '1') ||
       (data.workingSpace.private && state.isPrivate === '2')

@@ -6,6 +6,7 @@ import {
   changeColumns,
   rearchiveColumn,
   renameColumn,
+  renameDesk,
 } from '@/store/slices/deskSlice';
 
 import { DeskList, DeskListItem, ReloadedDeskData } from '@/types/deskListTypes';
@@ -14,6 +15,12 @@ export type EventsHandlersType = { event: string; handler: (...args: any) => voi
 
 export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersType {
   return [
+    {
+      event: 'desk:newName',
+      handler: (name: string) => {
+        dispatch(renameDesk(name));
+      },
+    },
     {
       event: 'list:newName',
       handler: ({ listId, name }: { listId: number; name: string }) => {
@@ -47,7 +54,7 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
     {
       event: 'errorMessage',
       handler: message => {
-        console.log(message);
+        alert(message);
       },
     },
     {

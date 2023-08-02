@@ -32,13 +32,13 @@ export default function MembersInputContainer() {
     limit: 6,
   });
 
-  const setPage = useCallback(onChange('page'), []);
-  const setSearch = useCallback(onChange('search'), []);
+  const setPage = onChange('page');
+  const setSearch = onChange('search');
 
-  const submitHandler = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+  const submitHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setState(prev => ({ ...prev, resultSearch: prev.search }));
-  }, []);
+  };
 
   return (
     <>

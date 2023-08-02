@@ -2,7 +2,7 @@ import styles from '../../../styles/WorkingSpace.module.scss';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import LeftSectionItemSettings from './LeftSectionItemSettings';
 import ItemTitleWrapper from '../GeneralWspaceComponents/ItemTitleWrapper';
-import { useCallback } from 'react';
+import { memo } from 'react';
 interface LeftSectionWspaceItemIProps {
   handleActive: (itemNumber: number) => void;
   active: number | null;
@@ -11,14 +11,14 @@ interface LeftSectionWspaceItemIProps {
   name: string;
 }
 
-export default function LeftSectionWspaceItem({
+export default memo(function LeftSectionWspaceItem({
   wspaceId,
   handleActive,
   active,
   roleId,
   name,
 }: LeftSectionWspaceItemIProps) {
-  const handler = useCallback(() => handleActive(wspaceId), []);
+  const handler = () => handleActive(wspaceId);
   return (
     <div onClick={handler} className={styles.leftSectionItem}>
       <div className={styles.itemTitleContainer}>
@@ -32,4 +32,4 @@ export default function LeftSectionWspaceItem({
       {active === wspaceId && <LeftSectionItemSettings wspaceRoleId={roleId} wspaceId={wspaceId} />}
     </div>
   );
-}
+});

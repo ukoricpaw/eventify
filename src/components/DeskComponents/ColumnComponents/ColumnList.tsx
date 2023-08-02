@@ -21,7 +21,7 @@ export default function ColumnList() {
   const wspace = useAppSelector(
     state => selectSingleWorkingSpaceResult(state, Number(query.id)) as SingleWorkingSpaceType,
   );
-  const onDragEnd = useCallback((result: DropResult) => {
+  const onDragEnd = (result: DropResult) => {
     const source = {
       id: Number(result.source.droppableId),
       index: result.source.index,
@@ -58,7 +58,7 @@ export default function ColumnList() {
         type: result.type as 'columns' | 'items',
       }),
     );
-  }, []);
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

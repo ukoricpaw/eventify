@@ -21,21 +21,22 @@ export default memo(
     roleId,
     setActiveInputHandler,
   }: ColumnInputFieldNameIProps) {
-    const [activeColumnCondition] = useClickBodyListener({
+    const [activeColumnCondition, setNull] = useClickBodyListener({
       activeCol: activeInput,
       colId: listId,
       setActiveHandler: setActiveInputHandler,
     });
 
-    const handler = useCallback((e: MouseEvent<HTMLParagraphElement>) => {
+    const handler = (e: MouseEvent<HTMLParagraphElement>) => {
       if (roleId !== 0 && roleId <= 2) {
         e.stopPropagation();
         setActiveInputHandler && setActiveInputHandler(listId);
       }
-    }, []);
+    };
 
     return (
       <TextInputField
+        setNull={setNull}
         paragraphHandler={handler}
         condition={activeColumnCondition}
         textVal={name}

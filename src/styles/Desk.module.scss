@@ -58,11 +58,16 @@
     color: var(--light-white-color);
     @extend %widthTemplate;
 
-    & .deskInfo__name {
+    & .deskInfo__nameInfo {
+      @extend %flexTemplate;
+      gap: 10px;
+      align-items: center;
       margin-left: 20px;
-      font-weight: 300;
-      text-transform: capitalize;
-      font-size: 32px;
+      & .deskInfo__name {
+        font-weight: 300;
+        text-transform: capitalize;
+        font-size: 32px;
+      }
     }
   }
 }
@@ -99,6 +104,15 @@
         text-align: center;
         padding: 10px;
         @extend %borderTemplate;
+        transition: background-color 0.15s;
+      }
+
+      & .columnItem:hover {
+        background-color: rgb(235, 234, 234);
+      }
+
+      & .columnItem:active {
+        background-color: rgb(214, 213, 213);
       }
     }
 
@@ -139,6 +153,10 @@
   color: var(--dark-color);
   border-radius: 5px;
   border: 3px solid rgb(61, 190, 141);
+}
+
+.column__columnName {
+  background-color: transparent;
 }
 
 .asideSettings {

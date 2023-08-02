@@ -1,5 +1,5 @@
 import useDeleteModal from '@/hooks/useDeleteModal';
-import { useContext, useCallback, useState, ReactElement } from 'react';
+import { useContext, useState, ReactElement } from 'react';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { deleteColumn as deleteColumnAction } from '@/store/slices/deskSlice';
@@ -12,18 +12,18 @@ export default function DeleteColumnModal(): DeleteColumnModalType {
 
   const [listNameId, setListNameId] = useState<string | null>(null);
 
-  const deleteColumn = useCallback(() => {
+  const deleteColumn = () => {
     value?.emitEvent('deleteColumn')(Number(listNameId?.split('/')[0]) as number);
     dispatch(deleteColumnAction({ listId: Number(listNameId?.split('/')[0]) }));
-  }, [listNameId, value]);
+  };
   const [openHandler, isOpen, DeleteModal] = useDeleteModal({
     handler: deleteColumn,
     title: `Вы действительно хотите удалить список ${listNameId?.split('/')[1]}?`,
   });
 
-  const setListIdHandler = useCallback((namelistId: string) => {
+  const setListIdHandler = (namelistId: string) => {
     setListNameId(namelistId);
-  }, []);
+  };
 
   return [setListIdHandler, openHandler, isOpen, DeleteModal];
 }

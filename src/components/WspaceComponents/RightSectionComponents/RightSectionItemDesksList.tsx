@@ -1,7 +1,7 @@
 import styles from '../../../styles/WorkingSpace.module.scss';
 import CompoundButton from '../../FormComponents/CompoundButton';
 import { createPortal } from 'react-dom';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import AddNewDeskModal from '../GeneralWspaceComponents/AddNewDeskModal';
 import DesksList from './DesksList';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
@@ -15,9 +15,9 @@ export default function RightSectionDeskList({ wspaceId }: { wspaceId?: number }
   const data = useAppSelector(
     state => selectSingleWorkingSpaceResult(state, wspaceId ?? Number(query.id)) as SingleWorkingSpaceType,
   );
-  const setActiveModal = useCallback(() => {
+  const setActiveModal = () => {
     setModalActive(prev => !prev);
-  }, []);
+  };
 
   return (
     <ul className={styles.rightSection__desksList}>
