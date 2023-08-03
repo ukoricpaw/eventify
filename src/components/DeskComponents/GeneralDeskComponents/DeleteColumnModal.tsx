@@ -2,7 +2,7 @@ import useDeleteModal from '@/hooks/useDeleteModal';
 import { useContext, useState, ReactElement } from 'react';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import { deleteColumn as deleteColumnAction } from '@/store/slices/deskSlice';
+import { deleteColumn as deleteColumnAction } from '@/store/slices/listsSlice';
 
 type DeleteColumnModalType = [(nameListId: string) => void, () => void, boolean, () => ReactElement];
 

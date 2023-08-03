@@ -4,7 +4,8 @@ import CompoundButton from '../../FormComponents/CompoundButton';
 import ContextConsumer from '../../GeneralComponents/ContextConsumer';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
 import styles from '../../../styles/Desk.module.scss';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, MouseEvent, KeyboardEvent } from 'react';
+import { DeskWSocketContextInterface } from '@/types/deskTypes';
 
 interface AddNewItemTextInputIProps {
   setActiveColumnNull: () => void;
@@ -18,6 +19,14 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
     setName(e.target.value);
   };
 
+  const submitHandler = (
+    e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLTextAreaElement>,
+    value: DeskWSocketContextInterface | null,
+  ) => {
+    value?.emitEvent('addNewItem')(e, columnId, name);
+    setName('');
+  };
+
   return (
     <ContextConsumer Context={DeskWSocketContext}>
       {value => (
@@ -26,8 +35,7 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
             onKeyDown={e => {
               if (e.key === 'Enter') {
                 if (e.repeat) return;
-                value?.emitEvent('addNewItem')(e, columnId, name);
-                setName('');
+                submitHandler(e, value);
               }
             }}
             value={name}
@@ -39,8 +47,7 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
           <div className={styles.inputButtons}>
             <CompoundButton
               onClick={e => {
-                value?.emitEvent('addNewItem')(e, columnId, name);
-                setName('');
+                submitHandler(e, value);
               }}
               variant="success"
               padding={{ y: '8' }}

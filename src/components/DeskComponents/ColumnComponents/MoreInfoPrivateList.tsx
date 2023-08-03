@@ -20,7 +20,13 @@ export default function MoreInfoPrivateList({ name, listId }: MoreInfoPrivateLis
     <ul className={styles.moreInfoPrivateList}>
       <ContextConsumer Context={DeskWSocketContext}>
         {value => (
-          <li className={styles.moreInfoList__item} onClick={() => value?.emitEvent('archiveColumn')(listId, 'true')}>
+          <li
+            className={styles.moreInfoList__item}
+            onClick={() => {
+              columnData?.setActiveMoreInfoHandler(null);
+              value?.emitEvent('archiveColumn')(listId, 'true');
+            }}
+          >
             <FaArchive size={12} /> Архивировать...
           </li>
         )}

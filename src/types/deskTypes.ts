@@ -43,6 +43,10 @@ export interface DeskWSocketEmitEvents {
   reorderColumns: (id: number, order: number) => void;
   reorderItemInColumns: (listId: number, itemId: number, order: number, secondList: number | null) => void;
   renameFullDesk: (deskId: number, name: string) => void;
+  renameItem: (listId: number, itemId: number, name: string) => void;
+  changeDescription: (listId: number, itemId: number, description: string) => void;
+  changeDeskDescription: (deskId: number, description: string) => void;
+  changeColumnDescription: (listId: number, description: string) => void;
 }
 
 export type DeskWSocketContextInterface = {

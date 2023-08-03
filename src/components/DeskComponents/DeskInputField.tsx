@@ -5,36 +5,44 @@ import { MouseEvent, useState } from 'react';
 interface DeskInputFieldIProps {
   name: string;
   roleId: number;
-  deskId: number;
+  inputId: number;
+  rows?: number;
+  elementRef?: HTMLDivElement;
 }
 
-export default function DeskInputField({ name, deskId, roleId }: DeskInputFieldIProps) {
+export default function DeskInputField({ name, inputId, roleId, rows, elementRef }: DeskInputFieldIProps) {
   const [active, setActive] = useState<number | null>(null);
 
-  const setActiveHandler = (deskId: null | number) => {
-    setActive(deskId);
+  const setActiveHandler = (inputId: null | number) => {
+    setActive(inputId);
   };
 
   const paragraphHandler = (e: MouseEvent<HTMLParagraphElement>) => {
     if (roleId !== 0 && roleId <= 2) {
       e.stopPropagation();
-      setActiveHandler(deskId);
+      setActiveHandler(inputId);
     }
   };
 
-  const [activeDeskCondition, setNull] = useClickBodyListener({ activeCol: active, colId: deskId, setActiveHandler });
+  const [activeDeskCondition, setNull] = useClickBodyListener({
+    elementRef,
+    activeCol: active,
+    colId: inputId,
+    setActiveHandler,
+  });
 
   return (
     <TextInputField
       cp={roleId !== 0 && roleId <= 2 ? true : false}
       setNull={setNull}
       color={true}
-      capitalize={true}
+      deskListId={null}
       size="24"
       emitFunction="renameFullDesk"
       textVal={name}
+      rows={rows}
       condition={activeDeskCondition}
-      id={deskId}
+      id={inputId}
       paragraphHandler={paragraphHandler}
     />
   );

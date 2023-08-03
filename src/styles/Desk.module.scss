@@ -54,9 +54,12 @@
   background-color: rgba(0, 0, 0, 0.3);
   padding: 20px 0;
   @extend %flexTemplate;
+  height: 35px;
   & .deskInfo__wrapper {
     color: var(--light-white-color);
     @extend %widthTemplate;
+    @extend %flexColumnTemplate;
+    align-items: flex-start;
 
     & .deskInfo__nameInfo {
       @extend %flexTemplate;
@@ -405,5 +408,20 @@
       background-color: rgb(219, 219, 219);
       color: var(--light-white-color);
     }
+  }
+}
+
+//
+
+.deskModalSection {
+  width: 400px;
+  padding: 20px;
+  @extend %flexColumnTemplate;
+  gap: 20px;
+  box-sizing: border-box;
+
+  & .modal__nameField {
+    @extend %flexColumnTemplate;
+    gap: 10px;
   }
 }

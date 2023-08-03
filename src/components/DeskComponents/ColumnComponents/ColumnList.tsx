@@ -1,12 +1,12 @@
 import { useAppSelector } from '@/hooks/reduxHooks';
 import styles from '../../../styles/Desk.module.scss';
 import SingleColumn from './SingleColumn';
-import { deskDataSelectorResult } from '@/store/selectors/deskSelectors';
+import { deskListsSelector } from '@/store/selectors/deskSelectors';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import type { DropResult } from 'react-beautiful-dnd';
-import { reorderItem } from '@/store/slices/deskSlice';
+import { reorderItem } from '@/store/slices/listsSlice';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
 import AddNewColumnButton from './AddNewColumnButton';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
@@ -17,7 +17,7 @@ export default function ColumnList() {
   const dispatch = useAppDispatch();
   const deskWSocketData = useContext(DeskWSocketContext);
   const { query } = useRouter();
-  const data = useAppSelector(deskDataSelectorResult);
+  const data = useAppSelector(deskListsSelector);
   const wspace = useAppSelector(
     state => selectSingleWorkingSpaceResult(state, Number(query.id)) as SingleWorkingSpaceType,
   );
@@ -69,8 +69,8 @@ export default function ColumnList() {
               <SingleColumn
                 roleId={wspace.workingSpaceRole ? wspace.workingSpaceRole.roleId : 0}
                 index={index}
-                listId={list.id}
-                key={String(list.id)}
+                listId={list}
+                key={String(list)}
               />
             ))}
             {provided.placeholder}

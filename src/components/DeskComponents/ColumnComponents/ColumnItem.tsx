@@ -12,7 +12,7 @@ interface ColumnItemIProps {
 }
 
 export default memo(function ColumnItem({ itemId, index, roleId }: ColumnItemIProps) {
-  const item = useAppSelector(state => state.deskReducer.listItems.find(item => item.id === itemId));
+  const item = useAppSelector(state => state.listReducer.listItems.find(item => item.id === itemId));
   if (!item) {
     return;
   }

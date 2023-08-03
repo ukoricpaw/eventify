@@ -25,7 +25,7 @@ export default function DeskInfo({ roleId }: { roleId: number }) {
               )}
             </ContextConsumer>
           )}
-          <DeskInputField name={deskInfo.name} deskId={deskInfo.id} roleId={roleId} />
+          <DeskInputField name={deskInfo.name} inputId={deskInfo.id} roleId={roleId} />
         </div>
         {deskInfo.description && <p className={styles.deskInfo__description}>{deskInfo.description}</p>}
       </div>

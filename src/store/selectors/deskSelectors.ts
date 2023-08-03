@@ -3,11 +3,12 @@ import { RootState } from '..';
 
 export const deskSelector = (state: RootState) => state.deskReducer.data;
 export const statusSelector = (state: RootState) => state.deskReducer.status;
-export const deskDataSelector = (state: RootState) => state.deskReducer.lists;
+export const deskDataSelector = (state: RootState) => state.listReducer.lists;
 
 export const getDeskInfo = createSelector(deskSelector, res => res);
 
 export const deskDataSelectorResult = createSelector(deskDataSelector, res => res);
+export const deskListsSelector = (state: RootState) => state.listReducer.listIndexes;
 
 export const layoutSelector = createSelector([statusSelector], status => ({
   isLoading: status.isLoading,
@@ -19,7 +20,7 @@ export const titleBackgroundSelector = createSelector([deskSelector], desk => ({
   name: desk.name,
 }));
 
-const getArchiveDataSelector = (state: RootState) => state.deskReducer.archived;
+const getArchiveDataSelector = (state: RootState) => state.listReducer.archived;
 
 export const archiveStatusSelector = createSelector(getArchiveDataSelector, res => ({
   isLoading: res.isLoading,

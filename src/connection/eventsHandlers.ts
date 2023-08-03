@@ -5,9 +5,10 @@ import {
   addNewItemToColumn,
   changeColumns,
   rearchiveColumn,
-  renameColumn,
-  renameDesk,
-} from '@/store/slices/deskSlice';
+  changeInfoColumn,
+  changeInfoItem,
+} from '@/store/slices/listsSlice';
+import { changeDescription, renameDesk } from '@/store/slices/deskSlice';
 
 import { DeskList, DeskListItem, ReloadedDeskData } from '@/types/deskListTypes';
 
@@ -15,6 +16,31 @@ export type EventsHandlersType = { event: string; handler: (...args: any) => voi
 
 export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersType {
   return [
+    {
+      event: 'item:newDescription',
+      handler: ({ itemId, description }: { itemId: number; description: string }) => {
+        dispatch(changeInfoItem({ itemId, info: description, payloadType: 'description' }));
+      },
+    },
+    {
+      event: 'item:newName',
+      handler: ({ itemId, name }: { itemId: number; name: string }) => {
+        dispatch(changeInfoItem({ itemId, info: name, payloadType: 'name' }));
+      },
+    },
+
+    {
+      event: 'list:newDescription',
+      handler: ({ listId, description }: { listId: number; description: string }) => {
+        dispatch(changeInfoColumn({ listId, info: description, payloadType: 'description' }));
+      },
+    },
+    {
+      event: 'desk:newDescription',
+      handler: (description: string) => {
+        dispatch(changeDescription(description));
+      },
+    },
     {
       event: 'desk:newName',
       handler: (name: string) => {
@@ -24,7 +50,7 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
     {
       event: 'list:newName',
       handler: ({ listId, name }: { listId: number; name: string }) => {
-        dispatch(renameColumn({ listId, name }));
+        dispatch(changeInfoColumn({ listId, info: name, payloadType: 'name' }));
       },
     },
     {

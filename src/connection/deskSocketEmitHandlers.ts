@@ -38,8 +38,24 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('list:name', listId, name);
   };
 
+  const changeColumnDescription = (listId: number, description: string) => {
+    socket?.emit('list:description', listId, description);
+  };
+
   const renameFullDesk = (deskId: number, name: string) => {
     socket?.emit('desk:name', deskId, name);
+  };
+
+  const changeDeskDescription = (deskId: number, description: string) => {
+    socket?.emit('desk:description', deskId, description);
+  };
+
+  const renameItem = (listId: number, itemId: number, name: string) => {
+    socket?.emit('item:name', listId, itemId, name);
+  };
+
+  const changeDescription = (listId: number, itemId: number, description: string) => {
+    socket?.emit('item:description', listId, itemId, description);
   };
 
   return {
@@ -51,5 +67,9 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     deleteColumn,
     archiveColumn,
     renameColumn,
+    renameItem,
+    changeDescription,
+    changeDeskDescription,
+    changeColumnDescription,
   };
 }

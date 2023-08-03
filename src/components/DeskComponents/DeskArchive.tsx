@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import { getArchivedLists } from '@/store/slices/deskSlice';
+import { getArchivedLists } from '@/store/thunks/fetchSingleDeskThunks';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { useRouter } from 'next/router';
 import ArchiveColumnsList from './ArchiveColumnsList';

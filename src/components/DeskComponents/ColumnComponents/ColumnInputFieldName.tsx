@@ -1,4 +1,4 @@
-import { useCallback, memo, MouseEvent } from 'react';
+import { memo, MouseEvent } from 'react';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import useClickBodyListener from '@/hooks/useClickBodyListener';
 import TextInputField from '@/hooks/TextInputField';
@@ -36,6 +36,7 @@ export default memo(
 
     return (
       <TextInputField
+        deskListId={null}
         setNull={setNull}
         paragraphHandler={handler}
         condition={activeColumnCondition}

@@ -2,7 +2,6 @@ import { createContext, useState, ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 import DeskModal from './DeskModal';
 import { EnumModal, ModalGeneralType } from '@/types/modalDeskTypes';
-
 export const DeskColumnModalContext = createContext<{
   setActiveModalHandler: ({ type, content }: ModalGeneralType) => void;
 } | null>(null);

@@ -21,7 +21,7 @@ interface SingleColumnIProps {
 }
 
 export default memo(function SingleColumn({ listId, index, roleId }: SingleColumnIProps) {
-  const list = useAppSelector(state => state.deskReducer.lists.find(list => list.id == listId));
+  const list = useAppSelector(state => state.listReducer.lists.find(list => list.id == listId));
 
   const { query } = useRouter();
   const wspace = useAppSelector(

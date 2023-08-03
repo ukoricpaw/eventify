@@ -31,10 +31,10 @@ export default function useProvideModalContent<T extends ResultOfSelector, U ext
   let modalContent: ((...args: any) => any) | null = null;
   switch (type) {
     case EnumModal.COLUMN:
-      modalContent = (state: RootState) => state.deskReducer.lists.find(list => list.id === content);
+      modalContent = (state: RootState) => state.listReducer.lists.find(list => list.id === content);
       break;
     case EnumModal.ITEM:
-      modalContent = (state: RootState) => state.deskReducer.listItems.find(item => item.id === content);
+      modalContent = (state: RootState) => state.listReducer.listItems.find(item => item.id === content);
       break;
     case EnumModal.DESK:
       modalContent = createSelector(deskSelector, desk => ({

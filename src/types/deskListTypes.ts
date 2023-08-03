@@ -4,9 +4,13 @@ export type SingleDeskState = {
     isError: null | string;
   };
   data: SingleDesk;
+};
+
+export type ListsState = {
   lists: DeskList[];
-  listItems: DeskListItem[];
+  listIndexes: number[];
   archived: ArchivedList;
+  listItems: DeskListItem[];
 };
 
 export interface ArchivedList {

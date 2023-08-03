@@ -4,11 +4,13 @@ import { MouseEvent, ReactNode, useEffect } from 'react';
 interface ModalLayoutIProps {
   setActiveModal: () => void;
   children: ReactNode;
+  wrapperHandler?: () => void;
 }
 
-export default function ModalLayout({ setActiveModal, children }: ModalLayoutIProps) {
+export default function ModalLayout({ setActiveModal, children, wrapperHandler }: ModalLayoutIProps) {
   const stopModalPropagation = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
+    wrapperHandler && wrapperHandler();
   };
 
   useEffect(() => {
