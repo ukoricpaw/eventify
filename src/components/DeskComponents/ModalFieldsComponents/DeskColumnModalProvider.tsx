@@ -15,9 +15,10 @@ interface ActiveModalState {
 
 interface DeskColumnModalInterface {
   children: ReactElement;
+  wspaceRoleId: number;
 }
 
-export default function DeskColumnModalProvider({ children }: DeskColumnModalInterface) {
+export default function DeskColumnModalProvider({ children, wspaceRoleId }: DeskColumnModalInterface) {
   const [activeModal, setActiveModal] = useState<ActiveModalState>({ type: null, status: false });
   const [modalContent, setModalContent] = useState<number | null>(null);
 
@@ -36,7 +37,12 @@ export default function DeskColumnModalProvider({ children }: DeskColumnModalInt
       {children}
       {activeModal.status &&
         createPortal(
-          <DeskModal type={activeModal.type} modalContent={modalContent} modalHandler={disableModal} />,
+          <DeskModal
+            roleId={wspaceRoleId}
+            type={activeModal.type}
+            modalContent={modalContent}
+            modalHandler={disableModal}
+          />,
           document.body,
         )}
     </DeskColumnProvider>

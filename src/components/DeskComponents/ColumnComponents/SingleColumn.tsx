@@ -43,14 +43,13 @@ export default memo(function SingleColumn({ listId, index, roleId }: SingleColum
           <div className={styles.column__wrapper}>
             <ContextConsumer Context={ColumnsContext}>
               {value => (
-                <div className={styles.column__nameWrapper}>
+                <div className={styles.column__nameWrapper} {...provided.dragHandleProps}>
                   <ColumnInputFieldName
                     roleId={roleId}
                     listId={list.id}
                     activeInput={value?.activeInput}
                     setActiveInputHandler={value?.setActiveInputHandler}
                     name={list.name}
-                    dragHandleProps={provided.dragHandleProps}
                   />
                   <ColumnInfoContextProvider
                     isarchived={list.isarchived}

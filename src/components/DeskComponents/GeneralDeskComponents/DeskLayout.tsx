@@ -14,7 +14,7 @@ import DeskInfo from '../DeskInfo';
 import DeskAsideInfo from '../DeskAsideInfo';
 import DeskWSocketProvider from './DeskWSocketProvider';
 import DeskTitleBackground from './DeskTitleBackground';
-import DeskColumnModalProvider from './DeskColumnModalProvider';
+import DeskColumnModalProvider from '../ModalFieldsComponents/DeskColumnModalProvider';
 interface DeskLayoutIProps {
   children: ReactNode;
 }
@@ -26,6 +26,7 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
   const dispatch = useAppDispatch();
   const wspaceData = useGetWorkingSpacesClientQuery(userData.id);
   const singleWspace = useGetSingleWorkingSpaceClientQuery(Number(query.id));
+  const roleIdCondition = singleWspace.data?.workingSpaceRole ? singleWspace.data.workingSpaceRole.roleId : 0;
   useEffect(() => {
     dispatch(getSingleDesk({ wspaceId: Number(query.id), deskId: Number(query.deskId) }));
     return () => {
@@ -47,13 +48,11 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
         <DeskTitleBackground />
         <CreateWspaceModalProvider>
           <OwnNavbar />
-          <DeskColumnModalProvider>
+          <DeskColumnModalProvider wspaceRoleId={roleIdCondition}>
             <div className={styles.deskContainer}>
               <DeskAsideInfo />
               <div className={styles.deskWrapper}>
-                <DeskInfo
-                  roleId={singleWspace.data?.workingSpaceRole ? singleWspace.data.workingSpaceRole.roleId : 0}
-                />
+                <DeskInfo roleId={roleIdCondition} />
                 <main className={homeStyles.mainContainer}>
                   <div className={homeStyles.mainWrapper}>{children}</div>
                 </main>

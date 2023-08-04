@@ -1,10 +1,10 @@
-import TextInputField from '@/hooks/TextInputField';
+import TextInputField from '@/components/DeskComponents/ModalFieldsComponents/TextInputField';
 import { FieldsActionTypes } from '@/utils/defineFieldsModalType';
 import { MouseEvent } from 'react';
 
 interface DeskInputFieldIProps {
   name: string;
-  roleId: number;
+  roleCondition: boolean;
   inputId: string;
   rows?: number;
   cols?: number;
@@ -17,7 +17,7 @@ interface DeskInputFieldIProps {
 
 export default function ModalInputField({
   name,
-  roleId,
+  roleCondition,
   inputId,
   rows,
   activeId,
@@ -28,7 +28,7 @@ export default function ModalInputField({
   const activeCondition = activeId === inputId;
 
   const paragraphHandler = (id: string | null) => (e?: MouseEvent<HTMLParagraphElement>) => {
-    if (roleId !== 0 && roleId <= 2) {
+    if (roleCondition) {
       if (e) e.stopPropagation();
       setActiveHandler(id);
     }
@@ -36,15 +36,16 @@ export default function ModalInputField({
 
   return (
     <TextInputField
+      mw={'400'}
       deskListId={listId}
-      cp={roleId !== 0 && roleId <= 2 ? true : false}
+      cursor={roleCondition}
       setNull={paragraphHandler(null)}
       color={true}
       size="24"
+      inputId={inputId}
       emitFunction={emitHandler}
       textVal={name}
       rows={rows}
-      mw={true}
       condition={activeCondition}
       id={Number(inputId.split('/')[0])}
       paragraphHandler={paragraphHandler(inputId)}

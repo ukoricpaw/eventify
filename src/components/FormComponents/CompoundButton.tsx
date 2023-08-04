@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import styles from '../../styles/Form.module.scss';
+import { MouseEvent } from 'react';
 interface ButtonIProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: 'light' | 'success' | 'dark';
   mt?: string;
@@ -46,12 +47,17 @@ export default function CompoundButton({
       break;
   }
 
+  const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onClick && onClick(e);
+  };
+
   return (
     <>
       <button
         title={title}
         disabled={disabled}
-        onClick={onClick}
+        onClick={clickHandler}
         className={`${styles[variantClass]} ${className ? className : ''} ${
           styles.formContainer__button
         } settings buttonContainer`}

@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { memo } from 'react';
 import ContextConsumer from '@/components/GeneralComponents/ContextConsumer';
-import { DeskColumnModalContext } from '../GeneralDeskComponents/DeskColumnModalProvider';
+import { DeskColumnModalContext } from '../ModalFieldsComponents/DeskColumnModalProvider';
 import { EnumModal } from '@/types/modalDeskTypes';
 interface ColumnItemIProps {
   itemId: number;
@@ -28,7 +28,7 @@ export default memo(function ColumnItem({ itemId, index, roleId }: ColumnItemIPr
               className={styles.columnItem}
               onClick={() => value?.setActiveModalHandler({ type: EnumModal.ITEM, content: itemId })}
             >
-              {item.name}
+              <p className={styles.columnItem__text}>{item.name}</p>
             </li>
           )}
         </ContextConsumer>

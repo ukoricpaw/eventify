@@ -101,6 +101,7 @@
       padding: 10px 0 0;
       background-color: rgb(250, 250, 250);
       & .columnItem {
+        cursor: pointer;
         margin-bottom: 10px;
         border-radius: 5px;
         background-color: var(--light-white-color);
@@ -108,6 +109,11 @@
         padding: 10px;
         @extend %borderTemplate;
         transition: background-color 0.15s;
+
+        & .columnItem__text {
+          @include textEllipsis(190);
+          margin: auto;
+        }
       }
 
       & .columnItem:hover {
@@ -133,22 +139,30 @@
   }
 }
 .column__columnName {
-  background-color: var(--dark-green-color);
+  color: rgb(78, 78, 78);
   outline: none;
+  resize: none;
   color: var(--light-white-color);
   border: none;
   display: flex;
   align-items: center;
-  @include textEllipsis(170);
+  // @include textEllipsis(170);
+  // overflow-y: hidden;
   letter-spacing: 1px;
   text-align: start;
   flex: 1;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.15s;
   padding: 5px;
   box-sizing: border-box;
+  background-color: transparent;
   width: 100%;
+  word-wrap: wrap;
+}
+
+.column__paragraph {
+  @include textEllipsis(160);
 }
 
 .column__columnName:focus {
@@ -156,10 +170,6 @@
   color: var(--dark-color);
   border-radius: 5px;
   border: 3px solid rgb(61, 190, 141);
-}
-
-.column__columnName {
-  background-color: transparent;
 }
 
 .asideSettings {
@@ -414,14 +424,38 @@
 //
 
 .deskModalSection {
-  width: 400px;
+  width: 500px;
   padding: 20px;
   @extend %flexColumnTemplate;
   gap: 20px;
   box-sizing: border-box;
 
+  & .modal__title {
+    font-size: 32px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgb(155, 155, 155);
+    @extend %flexTemplate;
+    justify-content: space-between;
+    align-items: center;
+
+    & .modal__iconTitle {
+      @extend %flexTemplate;
+      align-items: center;
+      gap: 15px;
+    }
+    & .modal__createdAt {
+      font-weight: 300;
+      font-size: 18px;
+    }
+  }
+
+  & .deskModalTitles {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
   & .modal__nameField {
     @extend %flexColumnTemplate;
-    gap: 10px;
+    gap: 15px;
   }
 }

@@ -63,6 +63,11 @@ const listsSlice = createSlice({
       if (!list || listIndex === null) return;
       lists.splice(listIndex, 1);
       secondLists.push(list);
+      if (action.payload.type === 'fromArchive') {
+        state.listIndexes.push(list.id);
+      } else {
+        state.listIndexes.splice(listIndex, 1);
+      }
     },
     deleteColumn(state, action: PayloadAction<{ listId: number }>) {
       let listIndex = null;
@@ -91,7 +96,7 @@ const listsSlice = createSlice({
       state.lists.push(action.payload);
     },
     reloadData(state, action: PayloadAction<ReloadedDeskData>) {
-      state.lists = action.payload.desk.desk_lists;
+      state.listIndexes = action.payload.desk.desk_lists.map(list => list.id);
     },
     clearArchive(state) {
       state.archived.isFulfilled = false;
@@ -119,12 +124,15 @@ const listsSlice = createSlice({
             const endList = state.lists.find(item => item.id === (action.payload.destination as sourceDest).id);
             const [movedItem] = startList?.desk_list_items.splice(action.payload.source.index, 1) as DeskListItem[];
             endList?.desk_list_items.splice(action.payload.destination.index, 0, movedItem);
+            const item = state.listItems.find(item => item.id === movedItem.id);
+            if (!item) return;
+            item.deskListId = action.payload.destination.id;
           }
         }
       } else if (action.payload.type === 'columns') {
         if (action.payload.destination) {
-          const [movedItem] = state.lists.splice(action.payload.source.index, 1);
-          state.lists.splice((action.payload.destination as sourceDest).index, 0, movedItem);
+          const [movedItem] = state.listIndexes.splice(action.payload.source.index, 1);
+          state.listIndexes.splice((action.payload.destination as sourceDest).index, 0, movedItem);
         }
       }
     },

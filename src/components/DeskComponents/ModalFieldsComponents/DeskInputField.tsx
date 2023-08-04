@@ -1,4 +1,4 @@
-import TextInputField from '@/hooks/TextInputField';
+import TextInputField from '@/components/DeskComponents/ModalFieldsComponents/TextInputField';
 import useClickBodyListener from '@/hooks/useClickBodyListener';
 import { MouseEvent, useState } from 'react';
 
@@ -33,7 +33,8 @@ export default function DeskInputField({ name, inputId, roleId, rows, elementRef
 
   return (
     <TextInputField
-      cp={roleId !== 0 && roleId <= 2 ? true : false}
+      mw={'600'}
+      cursor={roleId !== 0 && roleId <= 2 ? true : false}
       setNull={setNull}
       color={true}
       deskListId={null}

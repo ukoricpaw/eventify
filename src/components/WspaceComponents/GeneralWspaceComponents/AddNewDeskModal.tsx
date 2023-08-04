@@ -16,6 +16,7 @@ import { userSelector } from '@/store/slices/userSlice';
 import useFormFields from '@/hooks/useFormFields';
 import { WorkingSpacesResponce } from '@/types/wspaceTypes';
 import { DeskType } from '@/types/deskTypes';
+import useInputImageFile from '@/hooks/useInputImageFile';
 
 interface AddNewDeskModalIProps {
   setActiveModal: () => void;
@@ -34,15 +35,8 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
     wspaceNumber: wspaceId,
     name: '',
   });
-  const [background, setBackground] = useState<Blob | null>(null);
+  const [background, InputImageFile] = useInputImageFile({});
   const [postNewDesk, { isLoading, error, isError }] = usePostNewDeskInWorkingSpaceMutation();
-
-  const setBackgroundHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.target.files) {
-      setBackground(e.target.files[0]);
-    }
-  };
 
   const postNewDeskHandler = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -68,22 +62,7 @@ export default function AddNewDeskModal({ setActiveModal, wspaceId }: AddNewDesk
       <FormGroup>
         <div className={styles.backgroundContainer}>
           <p className={styles.backgroundContainer__title}>Фон:</p>
-          {!background && (
-            <Image
-              className={styles.backgroundDefaultImage}
-              src={default_picture}
-              alt="background"
-              width={340}
-              height={200}
-              priority
-            />
-          )}
-          <input
-            className={styles.changeFileInput}
-            onChange={setBackgroundHandler}
-            type="file"
-            accept="image/jpeg, image/png"
-          />
+          <InputImageFile />
         </div>
         <div className={styles.nameInputContainer}>
           <CompoundLabel>Название доски</CompoundLabel>

@@ -309,10 +309,6 @@
     }
 
     & .backgroundContainer {
-      & .backgroundDefaultImage {
-        border-radius: 10px;
-      }
-
       & .backgroundContainer__title {
         font-weight: 300;
         font-size: 18px;
@@ -334,6 +330,20 @@
       }
     }
   }
+}
+
+.backgroundDefaultImage {
+  border-radius: 10px;
+  height: auto;
+}
+
+.backgroundThemeInput {
+  background-color: var(--light-green-color);
+  color: var(--light-white-color);
+  padding: 5px 8px;
+  font-size: 12px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .addNewWSTitle {

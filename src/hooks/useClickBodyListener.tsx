@@ -27,7 +27,6 @@ export default function useClickBodyListener({
   }, [activeCol, docRef, activeColumnCondition]);
 
   const setActiveColumnNull = () => {
-    console.log('null');
     setActiveHandler && setActiveHandler(null);
   };
 

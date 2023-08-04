@@ -1,12 +1,10 @@
 import { memo, MouseEvent } from 'react';
-import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import useClickBodyListener from '@/hooks/useClickBodyListener';
-import TextInputField from '@/hooks/TextInputField';
+import TextInputField from '@/components/DeskComponents/ModalFieldsComponents/TextInputField';
 
 interface ColumnInputFieldNameIProps {
   name: string;
   listId: number;
-  dragHandleProps: DraggableProvidedDragHandleProps | undefined | null;
   activeInput?: number | null;
   setActiveInputHandler?: (column: number | null) => void;
   roleId: number;
@@ -15,7 +13,6 @@ interface ColumnInputFieldNameIProps {
 export default memo(
   function ColumnInputFieldName({
     name,
-    dragHandleProps,
     listId,
     activeInput,
     roleId,
@@ -36,12 +33,12 @@ export default memo(
 
     return (
       <TextInputField
+        cursor={roleId !== 0 && roleId <= 2 ? true : false}
         deskListId={null}
         setNull={setNull}
         paragraphHandler={handler}
         condition={activeColumnCondition}
         textVal={name}
-        dragProps={dragHandleProps}
         emitFunction="renameColumn"
         id={listId}
       />

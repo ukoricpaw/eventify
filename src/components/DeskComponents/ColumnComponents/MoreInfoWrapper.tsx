@@ -4,7 +4,7 @@ import { Suspense, lazy } from 'react';
 import ContextConsumer from '../../GeneralComponents/ContextConsumer';
 import { ColumnInfoContext } from '../GeneralDeskComponents/ColumnInfoProvider';
 import { RxCross1 } from 'react-icons/rx';
-import { DeskColumnModalContext } from '../GeneralDeskComponents/DeskColumnModalProvider';
+import { DeskColumnModalContext } from '../ModalFieldsComponents/DeskColumnModalProvider';
 import { EnumModal } from '@/types/modalDeskTypes';
 
 const MoreInfoPrivateListLazy = lazy(() => import('./MoreInfoPrivateList'));
