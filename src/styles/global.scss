@@ -24,6 +24,7 @@ a {
 
 // variables
 
+$border-color: rgb(199, 199, 199);
 $light-green: #54d8a8;
 $dark-green: #4eca9d;
 $light-white: #fff;
@@ -38,4 +39,5 @@ $dark-gray: rgb(238, 237, 237);
   --dark-color: #{$dark-color};
   --light-gray-color: #{$light-gray};
   --dark-gray-color: #{$dark-gray};
+  --border-color: #{$border-color};
 }

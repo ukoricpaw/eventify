@@ -14,9 +14,16 @@ export default function ModalLayout({ setActiveModal, children, wrapperHandler }
   };
 
   useEffect(() => {
+    const onKeyDownHandler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveModal();
+      }
+    };
     document.body.style.overflowY = 'hidden';
+    document.body.addEventListener('keydown', onKeyDownHandler);
     return () => {
       document.body.style.overflowY = 'auto';
+      document.body.removeEventListener('keydown', onKeyDownHandler);
     };
   }, []);
 

@@ -118,7 +118,8 @@ export default function TextInputField({
             ${cursor ? 'cursor: pointer;' : 'cursor: auto;'}
             transition: all 0.15s;
             word-wrap: break-word;
-            ${mw ? `max-width: ${mw}px` : ''}
+            ${mw ? `max-width: ${mw}px;` : ''}
+            font-weight: 300;
           }
 
           ${cursor &&

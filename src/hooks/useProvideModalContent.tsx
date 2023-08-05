@@ -43,6 +43,7 @@ export default function useProvideModalContent<T extends ResultOfSelector, U ext
         id: desk.id,
         createdAt: desk.createdAt,
         description: desk.description,
+        workingSpaceId: desk.workingSpaceId,
       }));
       break;
     default:

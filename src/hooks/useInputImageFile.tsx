@@ -6,13 +6,15 @@ import styles from '../styles/WorkingSpace.module.scss';
 interface InputImageFileIProps {
   backgroundUrl?: string;
   width?: number;
-  height: number;
+  height?: number;
+  roleCondition?: boolean;
 }
 
 export default function useInputImageFile({
   backgroundUrl,
   width,
   height,
+  roleCondition,
 }: InputImageFileIProps): [Blob | null, () => ReactElement] {
   const [dataUrl, setDataUrl] = useState<string>('');
   const [background, setBackground] = useState<Blob | null>(null);
@@ -68,17 +70,21 @@ export default function useInputImageFile({
             priority
           />
         )}
-        <input
-          className={styles.changeFileInput}
-          onChange={setBackgroundHandler}
-          type="file"
-          accept="image/jpeg, image/png"
-          id="image"
-          style={{ display: 'none' }}
-        />
-        <label className={styles.backgroundThemeInput} htmlFor="image">
-          Задать фон
-        </label>
+        {(roleCondition || roleCondition == undefined) && (
+          <>
+            <input
+              className={styles.changeFileInput}
+              onChange={setBackgroundHandler}
+              type="file"
+              accept="image/jpeg, image/png"
+              id="image"
+              style={{ display: 'none' }}
+            />
+            <label className={styles.backgroundThemeInput} htmlFor="image">
+              Задать фон
+            </label>
+          </>
+        )}
       </>
     );
   }

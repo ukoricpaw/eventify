@@ -146,8 +146,6 @@
   border: none;
   display: flex;
   align-items: center;
-  // @include textEllipsis(170);
-  // overflow-y: hidden;
   letter-spacing: 1px;
   text-align: start;
   flex: 1;
@@ -329,13 +327,13 @@
     & .moreInfoList {
       padding-top: 15px;
       margin-top: 15px;
-      border-top: 1px solid rgb(199, 199, 199);
+      border-top: 1px solid var(--border-color);
 
       & .moreInfoPrivateList {
         @extend %flexColumnTemplate;
         gap: 10px;
         padding-top: 15px;
-        border-top: 1px solid rgb(199, 199, 199);
+        border-top: 1px solid var(--border-color);
         margin-top: 15px;
       }
 
@@ -423,17 +421,66 @@
 
 //
 
+.deskModalSectionColumn {
+  max-height: 700px !important;
+  max-width: 440px;
+}
+
+.modalSectionDate {
+  @extend %flexColumnTemplate;
+  margin-top: 20px;
+  gap: 10px;
+  // max-width: 75%;
+
+  & .variantsDeadlineList {
+    @extend %flexTemplate;
+    justify-content: space-between;
+    gap: 10px;
+    overflow-x: scroll !important;
+    overflow: hidden;
+    & .variantsDeadlineItem {
+      cursor: pointer;
+      @extend %borderTemplate;
+      border-radius: 10px;
+      padding: 10px;
+    }
+  }
+}
+
 .deskModalSection {
-  width: 500px;
+  max-height: 410px;
   padding: 20px;
   @extend %flexColumnTemplate;
   gap: 20px;
   box-sizing: border-box;
 
+  & .deskModalInfoColumn {
+    @extend %flexColumnTemplate;
+  }
+
+  & .deskModalInfo {
+    @extend %flexTemplate;
+    justify-content: space-between;
+
+    & .deskModalLeftSide {
+      @extend %flexColumnTemplate;
+      gap: 20px;
+      width: 400px;
+    }
+
+    & .deskImageInputSection {
+      @extend %flexColumnTemplate;
+      margin-left: 30px;
+      padding-left: 30px;
+      border-left: 1px solid var(--border-color);
+      gap: 10px;
+    }
+  }
+
   & .modal__title {
     font-size: 32px;
     padding-bottom: 15px;
-    border-bottom: 1px solid rgb(155, 155, 155);
+    border-bottom: 1px solid var(--border-color);
     @extend %flexTemplate;
     justify-content: space-between;
     align-items: center;
@@ -442,6 +489,10 @@
       @extend %flexTemplate;
       align-items: center;
       gap: 15px;
+
+      & .nameOfModal {
+        font-size: 24px;
+      }
     }
     & .modal__createdAt {
       font-weight: 300;
@@ -450,7 +501,7 @@
   }
 
   & .deskModalTitles {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 500;
   }
 

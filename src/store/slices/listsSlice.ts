@@ -107,6 +107,11 @@ const listsSlice = createSlice({
       list.desk_list_items.push(action.payload.item);
       state.listItems.push(action.payload.item);
     },
+    setDeadlineToItem(state, action: PayloadAction<{ itemId: number; deadline: string }>) {
+      const item = state.listItems.find(item => item.id === action.payload.itemId);
+      if (!item) return;
+      item.deadline = action.payload.deadline;
+    },
     reorderItem: (state, action: PayloadAction<Reorder>) => {
       if (action.payload.type === 'items') {
         if (action.payload.destination) {
@@ -176,5 +181,6 @@ export const {
   clearArchive,
   addNewColumn,
   changeInfoItem,
+  setDeadlineToItem,
 } = listsSlice.actions;
 export default listsSlice.reducer;

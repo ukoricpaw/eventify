@@ -1,10 +1,7 @@
 import styles from '../../../styles/WorkingSpace.module.scss';
-import { ChangeEvent, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import FormGroup from '../../FormComponents/FormGroup';
-import default_picture from '../../../assets/images/default_picture.jpeg';
-import Image from 'next/image';
 import { selectWorkingSpacesResult } from '@/store/api/wspaceApi';
-import { useState } from 'react';
 import CompoundInput from '../../FormComponents/CompoundInput';
 import CompoundLabel from '../../FormComponents/CompoundLabel';
 import CompoundButton from '../../FormComponents/CompoundButton';
