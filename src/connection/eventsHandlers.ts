@@ -94,7 +94,6 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
     {
       event: 'item:getNewOrder',
       handler: (data: { list: DeskList; secondList: DeskList | null }) => {
-        console.log('order');
         dispatch(changeColumns(data));
       },
     },

@@ -3,8 +3,6 @@ import styles from '../../../styles/Desk.module.scss';
 import SingleColumn from './SingleColumn';
 import { deskListsSelector } from '@/store/selectors/deskSelectors';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import type { DropResult } from 'react-beautiful-dnd';
-import { reorderItem } from '@/store/slices/listsSlice';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { useContext } from 'react';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
@@ -12,6 +10,7 @@ import AddNewColumnButton from './AddNewColumnButton';
 import { selectSingleWorkingSpaceResult } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import { SingleWorkingSpaceType } from '@/types/wspaceTypes';
+import onDragEndHandler from '@/utils/onDragEndHandler';
 
 export default function ColumnList() {
   const dispatch = useAppDispatch();
@@ -21,45 +20,8 @@ export default function ColumnList() {
   const wspace = useAppSelector(
     state => selectSingleWorkingSpaceResult(state, Number(query.id)) as SingleWorkingSpaceType,
   );
-  const onDragEnd = (result: DropResult) => {
-    const source = {
-      id: Number(result.source.droppableId),
-      index: result.source.index,
-    };
-    let destination = null;
-    if (result.destination) {
-      destination = {
-        id: Number(result.destination?.droppableId),
-        index: result.destination.index,
-      };
-      if (result.type === 'columns' && result.destination.index !== result.source.index) {
-        deskWSocketData?.emitEvent('reorderColumns')(Number(result.draggableId), result.destination.index);
-      } else if (result.type === 'items') {
-        let secondList = null;
-        if (result.destination.droppableId !== result.source.droppableId) {
-          secondList = result.destination.droppableId;
-        }
-        if (secondList === null && result.source.index === result.destination.index) {
-          return;
-        }
-        deskWSocketData?.emitEvent('reorderItemInColumns')(
-          Number(result.source.droppableId),
-          Number(result.draggableId),
-          Number(result.destination.index),
-          Number(secondList),
-        );
-      }
-    }
-    dispatch(
-      reorderItem({
-        draggableId: Number(result.draggableId),
-        source,
-        destination,
-        type: result.type as 'columns' | 'items',
-      }),
-    );
-  };
 
+  const onDragEnd = onDragEndHandler(dispatch, deskWSocketData);
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" type="columns" direction="horizontal">

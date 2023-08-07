@@ -71,7 +71,7 @@ export default function DeskModal({ modalHandler, type, modalContent, roleId }: 
                   <CompoundButton
                     variant="light"
                     onClick={() => setActiveFieldHandler(`${data.id}/2`)}
-                    padding={{ y: '84' }}
+                    padding={{ y: '98' }}
                   >
                     Добавить описание
                   </CompoundButton>
@@ -83,7 +83,7 @@ export default function DeskModal({ modalHandler, type, modalContent, roleId }: 
                   inputId={`${data.id}/2`}
                   roleCondition={roleCondition}
                   activeId={activeField}
-                  rows={9}
+                  rows={10}
                   name={data.description ?? ''}
                   setActiveHandler={setActiveFieldHandler}
                 />

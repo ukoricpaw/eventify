@@ -80,6 +80,7 @@ const listsSlice = createSlice({
       if (!list || listIndex === null) return;
 
       state.lists.splice(listIndex, 1);
+      state.listIndexes.splice(listIndex, 1);
     },
     changeColumns(state, action: PayloadAction<{ list: DeskList; secondList: null | DeskList }>) {
       const list = state.lists.find(list => list.id === action.payload.list.id);

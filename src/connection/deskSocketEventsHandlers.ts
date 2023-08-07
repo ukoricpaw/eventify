@@ -6,6 +6,8 @@ interface DeskSocketEventsHandlersIProps {
   eventsHandlers: EventsHandlersType;
 }
 
+
+
 export default function deskSocketEventsHandlers({ socket, eventsHandlers }: DeskSocketEventsHandlersIProps) {
   if (!socket) return;
 
