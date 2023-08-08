@@ -17,7 +17,11 @@ export default function EmitModalEvent({
   id,
 }: EmitModalEventInterface) {
   if (debouncedValue.trim().length > 0) {
-    if (emitFunction === 'renameItem' || emitFunction === 'changeDescription') {
+    if (
+      emitFunction === 'renameItem' ||
+      emitFunction === 'changeDescription' ||
+      emitFunction === 'changeItemDeadline'
+    ) {
       if (deskListId) {
         socket?.emitEvent(emitFunction)(deskListId, id, debouncedValue);
       }

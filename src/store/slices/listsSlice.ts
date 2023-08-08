@@ -4,6 +4,10 @@ import { ArchivedList } from '@/types/deskListTypes';
 import { DeskList, ReloadedDeskData, DeskListItem } from '@/types/deskListTypes';
 import { Reorder, sourceDest } from '@/types/deskItemTypes';
 import { getArchivedLists, getSingleDesk } from '../thunks/fetchSingleDeskThunks';
+import { ActionPaylodForInfo, changeInfoForItemOrColumn } from '../utils/changeInfoForItemOrColumn';
+import { findAndRemoveListIndexByListId } from '../utils/findAndRemoveListIndexByListId';
+import { findById } from '../utils/findById';
+import { reorderForItems } from '../utils/reorderForItems';
 
 const initialState: ListsState = {
   lists: [],
@@ -22,70 +26,42 @@ const listsSlice = createSlice({
   name: 'listsSlice',
   initialState,
   reducers: {
-    changeInfoItem(
-      state,
-      action: PayloadAction<{ itemId: number; info: string; payloadType: 'description' | 'name' }>,
-    ) {
-      const item = state.listItems.find(item => item.id === action.payload.itemId);
-      if (!item) return;
-      if (action.payload.payloadType === 'name') {
-        item.name = action.payload.info;
-      } else {
-        item.description = action.payload.info;
-      }
+    changeInfoItem(state, action: PayloadAction<ActionPaylodForInfo>) {
+      changeInfoForItemOrColumn(state, action.payload, 'listItems');
     },
     changeInfoColumn(
       state,
       action: PayloadAction<{ listId: number; info: string; payloadType: 'description' | 'name' }>,
     ) {
-      const list = state.lists.find(list => list.id === action.payload.listId);
-      if (!list) return;
-      if (action.payload.payloadType === 'name') {
-        list.name = action.payload.info;
-      } else {
-        list.description = action.payload.info;
-      }
+      changeInfoForItemOrColumn(state, action.payload, 'lists');
     },
     rearchiveColumn(state, action: PayloadAction<{ listId: number; type: 'toArchive' | 'fromArchive' }>) {
-      let listIndex = null;
       let lists = state.lists;
       let secondLists = state.archived.archivedList;
       if (action.payload.type === 'fromArchive') {
         lists = state.archived.archivedList;
         secondLists = state.lists;
       }
-      const list = lists.find((list, index) => {
-        if (list.id === action.payload.listId) {
-          listIndex = index;
-          return true;
-        }
-      });
+      const [list, listIndex] = findById(lists, action.payload.listId);
       if (!list || listIndex === null) return;
       lists.splice(listIndex, 1);
-      secondLists.push(list);
+      secondLists.push(list as DeskList);
       if (action.payload.type === 'fromArchive') {
         state.listIndexes.push(list.id);
       } else {
-        state.listIndexes.splice(listIndex, 1);
+        findAndRemoveListIndexByListId(state.listIndexes, list.id);
       }
     },
     deleteColumn(state, action: PayloadAction<{ listId: number }>) {
-      let listIndex = null;
-      const list = state.lists.find((list, index) => {
-        if (list.id === action.payload.listId) {
-          listIndex = index;
-          return true;
-        }
-      });
+      const [list, listIndex] = findById(state.lists, action.payload.listId);
       if (!list || listIndex === null) return;
-
       state.lists.splice(listIndex, 1);
-      state.listIndexes.splice(listIndex, 1);
+      findAndRemoveListIndexByListId(state.listIndexes, list.id);
     },
     changeColumns(state, action: PayloadAction<{ list: DeskList; secondList: null | DeskList }>) {
-      const list = state.lists.find(list => list.id === action.payload.list.id);
+      const [list] = findById(state.lists, action.payload.list.id);
       if (!list) return;
-      list.desk_list_items = action.payload.list.desk_list_items;
+      (list as DeskList).desk_list_items = action.payload.list.desk_list_items;
       if (action.payload.secondList) {
         const secondList = state.lists.find(list => list.id === action.payload.secondList?.id);
         (secondList as DeskList).desk_list_items = action.payload.secondList.desk_list_items;
@@ -103,38 +79,19 @@ const listsSlice = createSlice({
       state.archived.isFulfilled = false;
     },
     addNewItemToColumn(state, action: PayloadAction<{ listId: number; item: DeskListItem }>) {
-      const list = state.lists.find(list => list.id === action.payload.listId);
+      const [list] = findById(state.lists, action.payload.listId);
       if (!list) return;
-      list.desk_list_items.push(action.payload.item);
+      (list as DeskList).desk_list_items.push(action.payload.item);
       state.listItems.push(action.payload.item);
     },
     setDeadlineToItem(state, action: PayloadAction<{ itemId: number; deadline: string }>) {
-      const item = state.listItems.find(item => item.id === action.payload.itemId);
+      const [item] = findById(state.listItems, action.payload.itemId);
       if (!item) return;
-      item.deadline = action.payload.deadline;
+      (item as DeskListItem).deadline = action.payload.deadline;
     },
     reorderItem: (state, action: PayloadAction<Reorder>) => {
       if (action.payload.type === 'items') {
-        if (action.payload.destination) {
-          if (
-            action.payload.destination.id === action.payload.source.id &&
-            action.payload.source.index === action.payload.destination.index
-          )
-            return;
-
-          const startList = state.lists.find(item => item.id === action.payload.source.id);
-          if (action.payload.destination.id === action.payload.source.id) {
-            const [movedItem] = startList?.desk_list_items.splice(action.payload.source.index, 1) as DeskListItem[];
-            startList?.desk_list_items.splice(action.payload.destination.index, 0, movedItem);
-          } else {
-            const endList = state.lists.find(item => item.id === (action.payload.destination as sourceDest).id);
-            const [movedItem] = startList?.desk_list_items.splice(action.payload.source.index, 1) as DeskListItem[];
-            endList?.desk_list_items.splice(action.payload.destination.index, 0, movedItem);
-            const item = state.listItems.find(item => item.id === movedItem.id);
-            if (!item) return;
-            item.deskListId = action.payload.destination.id;
-          }
-        }
+        reorderForItems(state, action.payload);
       } else if (action.payload.type === 'columns') {
         if (action.payload.destination) {
           const [movedItem] = state.listIndexes.splice(action.payload.source.index, 1);

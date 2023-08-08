@@ -1,5 +1,6 @@
 type VariantOfDeadline = {
   type: DeadlineType;
+  inLocale: string;
   value: number;
 };
 export type DeadlineType = 'hour' | 'minute' | 'month' | 'year' | 'date';
@@ -43,31 +44,38 @@ export const deadlineActionHandler: DeadlineAction = (deadlineType: DeadlineType
 
 export const variantsOfDeadline: VariantOfDeadline[] = [
   {
-    type: 'hour',
-    value: 1,
-  },
-  {
-    type: 'hour',
-    value: 2,
-  },
-  {
-    type: 'month',
-    value: 1,
-  },
-  {
-    type: 'month',
-    value: 2,
-  },
-  {
     type: 'minute',
+    inLocale: 'минут',
     value: 30,
   },
   {
+    type: 'hour',
+    inLocale: 'час',
+    value: 1,
+  },
+  {
+    type: 'hour',
+    inLocale: 'часа',
+    value: 2,
+  },
+  {
     type: 'date',
+    inLocale: 'день',
     value: 1,
   },
   {
     type: 'date',
+    inLocale: 'дней',
     value: 7,
+  },
+  {
+    type: 'month',
+    inLocale: 'месяц',
+    value: 1,
+  },
+  {
+    type: 'month',
+    inLocale: 'месяца',
+    value: 2,
   },
 ];

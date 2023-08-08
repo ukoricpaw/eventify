@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import getDate from '@/utils/getDate';
 import styles from '../../../styles/Desk.module.scss';
 import CompoundButton from '@/components/FormComponents/CompoundButton';
@@ -8,6 +8,7 @@ import { deadlineActionHandler } from '@/utils/getVariantsOfDeadline';
 import useFormFields from '@/hooks/useFormFields';
 import ContextConsumer from '@/components/GeneralComponents/ContextConsumer';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
+import getLocaleDateString from '@/utils/getLocaleDateString';
 
 interface InputDateIProps {
   dateVal?: string;
@@ -17,21 +18,34 @@ interface InputDateIProps {
 
 export default function InputDate({ dateVal, listId, itemId }: InputDateIProps) {
   const { state, onChange, setState } = useFormFields({
-    time: dateVal ? getDate(dateVal, 'onlyTime') : '',
-    date: dateVal ? getDate(dateVal, 'onlyDate', true) : '',
-    fullDate: dateVal ?? '',
+    time: dateVal ? (getDate(dateVal, 'onlyTime') as string) : '',
+    date: dateVal ? (getDate(dateVal, 'onlyDate', true) as string) : '',
+    fullDate: dateVal ? new Date(dateVal) : '',
   });
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (state.fullDate) {
+      if (!state.date) return;
+      const date = (state.date as string).split('-');
+      const newDate = state.fullDate as Date;
+      alert(date[0]);
+      newDate.setFullYear(Number(date[0]));
+      setState(prev => ({ ...prev, fullDate: newDate }));
+    }
+  }, [state.date, state.time, state.fullDate, setState]);
+
   const setDateByVariant = (type: DeadlineType, value: number) => {
-    const ownDate = deadlineActionHandler(type)(value).toISOString();
-    const date = getDate(ownDate, 'dateTime', true);
+    const ownDate = deadlineActionHandler(type)(value);
+    const date = getDate(ownDate.toISOString(), 'dateTime', true);
     setState(prev => ({ ...prev, date: date[0], time: date[1], fullDate: ownDate }));
   };
 
   const setIsOpenHandler = () => {
     setIsOpen(true);
   };
+
+  const deadlineDate = useMemo(() => getLocaleDateString(state.fullDate as string), [state]);
 
   return (
     <section className={styles.modalSectionDate}>
@@ -45,19 +59,31 @@ export default function InputDate({ dateVal, listId, itemId }: InputDateIProps) 
                 onClick={() => setDateByVariant(item.type, item.value)}
                 key={index}
               >
-                {item.type + item.value}
+                {item.value} {item.inLocale}
               </li>
             ))}
           </ul>
-          <input value={state.date ?? ''} min="2023-01-01" type="date" onChange={onChange('date')} />
-          <input value={state.time ?? ''} type="time" onChange={onChange('time')} />
-          <p>
-            {state.date} - {state.time}
-          </p>
+          <input
+            value={state.date ?? ''}
+            className={styles.modalChangeDateInput}
+            min="2000-01-01"
+            type="date"
+            onChange={onChange('date')}
+          />
+          <input
+            value={state.time ?? ''}
+            className={styles.modalChangeDateInput}
+            type="time"
+            onChange={onChange('time')}
+          />
+          <p className={styles.deadlineDate}>{deadlineDate}</p>
           <ContextConsumer Context={DeskWSocketContext}>
             {value => (
               <CompoundButton
-                onClick={() => value?.emitEvent('changeItemDeadline')(listId, itemId, state.fullDate)}
+                disabled={state.fullDate ? false : true}
+                onClick={() =>
+                  value?.emitEvent('changeItemDeadline')(listId, itemId, (state.fullDate as Date).toISOString())
+                }
                 variant="light"
               >
                 Задать
