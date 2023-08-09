@@ -26,7 +26,6 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
     {
       event: 'item:newDeadline',
       handler: ({ itemId, deadline }: { itemId: number; deadline: string }) => {
-        alert(deadline);
         dispatch(setDeadlineToItem({ itemId, deadline }));
       },
     },

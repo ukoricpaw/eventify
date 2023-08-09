@@ -52,12 +52,13 @@
 
 .deskInfo {
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 20px 0;
+  padding: 20px 10px;
   @extend %flexTemplate;
+  justify-content: flex-start;
   height: 35px;
   & .deskInfo__wrapper {
     color: var(--light-white-color);
-    @extend %widthTemplate;
+    // @extend %widthTemplate;
     @extend %flexColumnTemplate;
     align-items: flex-start;
 
@@ -75,16 +76,17 @@
   }
 }
 .columnList {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  // column-gap: 25px;
-  // row-gap: 25px;
+  height: calc(100vh - 185px);
+  @extend %flexTemplate;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  padding: 0 10px;
 
   & .column {
     @extend %flexColumnTemplate;
 
     & .column__wrapper {
+      width: 300px;
       border-radius: 10px;
       background-color: rgb(250, 250, 250);
       @extend %borderTemplate;
@@ -108,7 +110,30 @@
         text-align: start;
         padding: 10px;
         @extend %borderTemplate;
+        @extend %flexTemplate;
+        justify-content: space-between;
         transition: background-color 0.15s;
+
+        & .deadlineContainer {
+          @extend %flexTemplate;
+          color: white;
+          align-items: center;
+          padding: 0 5px;
+          gap: 8px;
+          box-sizing: border-box;
+          border-radius: 5px;
+        }
+
+        .deadlineNotExpires {
+          background-color: var(--light-green-color);
+        }
+
+        .deadlineExpires {
+          background-color: rgb(194, 194, 87);
+        }
+        .deadlineExpired {
+          background-color: rgb(221, 78, 68);
+        }
 
         & .columnItem__text {
           @include textEllipsis(120);
@@ -159,7 +184,7 @@
 }
 
 .column__paragraph {
-  @include textEllipsis(160);
+  @include textEllipsis(240);
 }
 
 .column__columnName:focus {
@@ -196,10 +221,14 @@
 .variantsDeadlineList::-webkit-scrollbar {
   height: 10px;
 }
+.columnList::-webkit-scrollbar {
+  height: 20px;
+}
 
 .deskAct__list::-webkit-scrollbar-thumb,
 .archiveList::-webkit-scrollbar-thumb,
-.variantsDeadlineList::-webkit-scrollbar-thumb {
+.variantsDeadlineList::-webkit-scrollbar-thumb,
+.columnList::-webkit-scrollbar-thumb {
   background-color: var(--light-green-color);
   border-radius: 5px;
 }
@@ -447,6 +476,11 @@
     border-radius: 5px;
     border: none;
     @extend %borderTemplate;
+  }
+
+  .modalChangeDateInput::-ms-clear {
+    width: 0;
+    height: 0;
   }
 
   & .variantsDeadlineList {

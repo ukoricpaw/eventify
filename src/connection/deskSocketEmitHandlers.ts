@@ -58,7 +58,7 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('item:description', listId, itemId, description);
   };
 
-  const changeItemDeadline = (listId: number, itemId: number, deadline: string) => {
+  const changeItemDeadline = (listId: number, itemId: number, deadline: string | null) => {
     socket?.emit('item:deadline', listId, itemId, deadline);
   };
 

@@ -51,12 +51,10 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
           <DeskColumnModalProvider wspaceRoleId={roleIdCondition}>
             <div className={styles.deskContainer}>
               <DeskAsideInfo />
-              <div className={styles.deskWrapper}>
+              <main className={styles.deskWrapper}>
                 <DeskInfo roleId={roleIdCondition} />
-                <main className={homeStyles.mainContainer}>
-                  <div className={homeStyles.mainWrapper}>{children}</div>
-                </main>
-              </div>
+                {children}
+              </main>
             </div>
           </DeskColumnModalProvider>
         </CreateWspaceModalProvider>

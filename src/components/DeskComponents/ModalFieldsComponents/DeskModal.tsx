@@ -8,7 +8,7 @@ import ModalInputField from './ModalInputField';
 import { DeskListItem, SingleDesk } from '@/types/deskListTypes';
 import getNameByModaltype from '@/utils/getNameByModalType';
 import CompoundButton from '@/components/FormComponents/CompoundButton';
-import SpecialInputFields from './SpecialInputFields';
+import { Suspense, lazy } from 'react';
 
 interface DeskModalIProps {
   modalHandler: () => void;
@@ -16,6 +16,8 @@ interface DeskModalIProps {
   modalContent: Omit<ModalGeneralType, 'type'>['content'] | null;
   roleId: number;
 }
+
+const LazySpecialInputFields = lazy(() => import('./SpecialInputFields'));
 
 export default function DeskModal({ modalHandler, type, modalContent, roleId }: DeskModalIProps) {
   const data = useProvideModalContent({ type, content: modalContent });
@@ -91,16 +93,18 @@ export default function DeskModal({ modalHandler, type, modalContent, roleId }: 
             </div>
           </div>
           {type !== EnumModal.COLUMN && (
-            <SpecialInputFields
-              roleCondition={roleCondition}
-              wsId={(data as SingleDesk).workingSpaceId}
-              deskId={(data as SingleDesk).id}
-              listId={(data as DeskListItem).deskListId}
-              itemId={data.id}
-              type={type as EnumModal}
-              backgroundUrl={(data as SingleDesk).background ?? ''}
-              dateVal={(data as DeskListItem).deadline}
-            />
+            <Suspense fallback={<>Подождите пожалуйста...</>}>
+              <LazySpecialInputFields
+                roleCondition={roleCondition}
+                wsId={(data as SingleDesk).workingSpaceId}
+                deskId={(data as SingleDesk).id}
+                listId={(data as DeskListItem).deskListId}
+                itemId={data.id}
+                type={type as EnumModal}
+                backgroundUrl={(data as SingleDesk).background ?? ''}
+                dateVal={(data as DeskListItem).deadline}
+              />
+            </Suspense>
           )}
         </section>
       </section>

@@ -27,6 +27,6 @@ export default memo(function SpecialInputFields({
   return type === EnumModal.DESK ? (
     <InputImage roleCondition={roleCondition} wsId={wsId} deskId={deskId} backgroundUrl={backgroundUrl} />
   ) : (
-    <InputDate listId={listId} itemId={itemId} dateVal={dateVal} />
+    <InputDate roleCondition={roleCondition} listId={listId} itemId={itemId} dateVal={dateVal} />
   );
 });

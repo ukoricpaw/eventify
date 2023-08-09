@@ -41,7 +41,7 @@ export default memo(function AddNewColumnButton() {
           className={styles.addNewColumnButton}
           gap="6"
           padding={{ y: '15', x: '40' }}
-          width="250px"
+          width="300px"
           variant="success"
         >
           <FaPlus size={12} />
@@ -59,7 +59,7 @@ export default memo(function AddNewColumnButton() {
                 onChange={setNameHandler}
                 padding={{ y: '15', x: '10' }}
                 variant="light"
-                width="230px"
+                width="280px"
                 noBrBottom={true}
                 onKeyDown={e => {
                   if (e.key == 'Enter') {
@@ -78,7 +78,7 @@ export default memo(function AddNewColumnButton() {
                 }}
                 variant="success"
                 padding={{ y: '10', x: '40' }}
-                width="250px"
+                width="300px"
               >
                 Создать
               </CompoundButton>

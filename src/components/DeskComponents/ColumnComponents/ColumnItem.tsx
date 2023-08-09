@@ -5,6 +5,7 @@ import { memo } from 'react';
 import ContextConsumer from '@/components/GeneralComponents/ContextConsumer';
 import { DeskColumnModalContext } from '../ModalFieldsComponents/DeskColumnModalProvider';
 import { EnumModal } from '@/types/modalDeskTypes';
+import ColumnItemDeadline from './ColumnItemDeadline';
 interface ColumnItemIProps {
   itemId: number;
   index: number;
@@ -29,6 +30,7 @@ export default memo(function ColumnItem({ itemId, index, roleId }: ColumnItemIPr
               onClick={() => value?.setActiveModalHandler({ type: EnumModal.ITEM, content: itemId })}
             >
               <p className={styles.columnItem__text}>{item.name}</p>
+              {item.deadline && <ColumnItemDeadline deadline={item.deadline} />}
             </li>
           )}
         </ContextConsumer>

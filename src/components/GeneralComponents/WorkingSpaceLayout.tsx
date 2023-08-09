@@ -37,6 +37,7 @@ export default function WorkingSpaceLayout({ children }: { children: ReactNode }
         <LeftWspaceAside data={data} />
         <div className={styles.wspaceLayoutChildren}>
           <WspaceDescription
+            inviteLink={data?.workingSpace.inviteLink ?? null}
             roleId={data?.workingSpaceRole ? data?.workingSpaceRole.roleId : 0}
             name={data?.workingSpace.name as string}
             description={data?.workingSpace.description as string}
