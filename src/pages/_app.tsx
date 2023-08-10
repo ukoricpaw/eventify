@@ -35,9 +35,6 @@ App.getInitialProps = wrapper.getInitialAppProps(store => async ctx => {
       }
     });
   }
-  if (ctx.Component.getInitialProps) {
-    pageProps = await ctx.Component.getInitialProps(ctx.ctx);
-  }
   return {
     pageProps,
   };

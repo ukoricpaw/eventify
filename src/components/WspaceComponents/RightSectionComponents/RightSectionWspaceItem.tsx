@@ -14,7 +14,7 @@ export default function RightSectionWspaceItem({ wspace }: { wspace: number }) {
       {data && (
         <RightSectionItemSettings
           deskCount={data.workingSpace.desks.length}
-          wspaceRoleId={data.workingSpaceRole.roleId}
+          wspaceRoleId={data.workingSpaceRole ? data.workingSpaceRole.roleId : 0}
           wspaceName={data?.workingSpace.name}
           wspaceId={data.workingSpace.id}
         />

@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, useContext, useRef } from 'react';
 import getDate from '@/utils/getDate';
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Modal.module.scss';
 import CompoundButton from '@/components/FormComponents/CompoundButton';
 import { FaClock } from 'react-icons/fa';
 import { DeadlineType } from '@/utils/getVariantsOfDeadline';
@@ -76,6 +76,7 @@ export default function InputDate({ dateVal, listId, itemId, roleCondition }: In
                 value={date ?? ''}
                 className={styles.modalChangeDateInput}
                 min="2000-01-01"
+                max="2100-01-01"
                 type="date"
                 onChange={changeFullDate}
               />
@@ -106,7 +107,7 @@ export default function InputDate({ dateVal, listId, itemId, roleCondition }: In
           <OpenWindowToChangeDeadline title={'Добавить срок'} setIsOpenHandler={setIsOpenHandler} />
         )
       ) : (
-        <DeadlineInLocale deadlineDate={deadlineDate as string} />
+        <DeadlineInLocale deadlineDate={dateVal ? (deadlineDate as string) : 'Срок выполнения не указан'} />
       )}
     </section>
   );

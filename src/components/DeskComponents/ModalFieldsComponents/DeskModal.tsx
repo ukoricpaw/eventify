@@ -2,7 +2,7 @@ import ModalLayout from '@/components/GeneralComponents/ModalLayout';
 import useProvideModalContent from '@/hooks/useProvideModalContent';
 import { EnumModal, ModalGeneralType } from '@/types/modalDeskTypes';
 import defineFieldsModalType from '@/utils/defineFieldsModalType';
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Modal.module.scss';
 import { useState, useEffect } from 'react';
 import ModalInputField from './ModalInputField';
 import { DeskListItem, SingleDesk } from '@/types/deskListTypes';

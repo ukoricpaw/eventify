@@ -12,6 +12,7 @@ import {
 import { changeDescription, renameDesk } from '@/store/slices/deskSlice';
 
 import { DeskList, DeskListItem, ReloadedDeskData } from '@/types/deskListTypes';
+import { notify } from '@/components/DeskComponents/GeneralDeskComponents/DeskLayout';
 
 export type EventsHandlersType = { event: string; handler: (...args: any) => void }[];
 
@@ -87,7 +88,11 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
     {
       event: 'errorMessage',
       handler: message => {
-        alert(message);
+        if (message.includes('255')) {
+          notify('Слишком большое количество символов');
+        } else {
+          notify(message);
+        }
       },
     },
     {

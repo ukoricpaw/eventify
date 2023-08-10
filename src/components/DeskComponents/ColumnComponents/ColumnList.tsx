@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/hooks/reduxHooks';
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Column.module.scss';
 import SingleColumn from './SingleColumn';
 import { deskListsSelector } from '@/store/selectors/deskSelectors';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';

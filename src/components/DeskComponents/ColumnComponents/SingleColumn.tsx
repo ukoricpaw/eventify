@@ -1,4 +1,4 @@
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Column.module.scss';
 import ColumnItem from './ColumnItem';
 import { Droppable } from 'react-beautiful-dnd';
 import { useAppSelector } from '@/hooks/reduxHooks';

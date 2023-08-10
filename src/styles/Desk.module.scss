@@ -24,6 +24,10 @@
   height: calc(100vh - 238px);
   padding-left: 20px;
 }
+%borderTemplate {
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
 .deskContainer {
   @extend %flexTemplate;
   justify-content: space-between;
@@ -43,11 +47,6 @@
   position: fixed;
   z-index: -100;
   filter: brightness(0.5);
-}
-
-%borderTemplate {
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
 }
 
 .deskInfo {
@@ -75,124 +74,6 @@
     }
   }
 }
-.columnList {
-  height: calc(100vh - 185px);
-  @extend %flexTemplate;
-  justify-content: flex-start;
-  overflow-x: scroll;
-  padding: 0 10px;
-
-  & .column {
-    @extend %flexColumnTemplate;
-
-    & .column__wrapper {
-      width: 300px;
-      border-radius: 10px;
-      background-color: rgb(250, 250, 250);
-      @extend %borderTemplate;
-      margin: 10px;
-    }
-
-    .column:first-child > .column__wrapper {
-      margin-left: 0;
-    }
-
-    .itemList {
-      margin: 12px;
-      @extend %flexColumnTemplate;
-      padding: 10px 0 0;
-      background-color: rgb(250, 250, 250);
-      & .columnItem {
-        cursor: pointer;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        background-color: var(--light-white-color);
-        text-align: start;
-        padding: 10px;
-        @extend %borderTemplate;
-        @extend %flexTemplate;
-        justify-content: space-between;
-        transition: background-color 0.15s;
-
-        & .deadlineContainer {
-          @extend %flexTemplate;
-          color: white;
-          align-items: center;
-          padding: 0 5px;
-          gap: 8px;
-          box-sizing: border-box;
-          border-radius: 5px;
-        }
-
-        .deadlineNotExpires {
-          background-color: var(--light-green-color);
-        }
-
-        .deadlineExpires {
-          background-color: rgb(194, 194, 87);
-        }
-        .deadlineExpired {
-          background-color: rgb(221, 78, 68);
-        }
-
-        & .columnItem__text {
-          @include textEllipsis(120);
-        }
-      }
-
-      & .columnItem:hover {
-        background-color: rgb(235, 234, 234);
-      }
-
-      & .columnItem:active {
-        background-color: rgb(214, 213, 213);
-      }
-    }
-
-    & .column__nameWrapper {
-      @extend %flexTemplate;
-      align-items: center;
-      justify-content: space-between;
-      background-color: var(--dark-green-color);
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      color: var(--light-white-color);
-      padding: 5px 15px;
-      font-size: 16px;
-    }
-  }
-}
-.column__columnName {
-  color: rgb(78, 78, 78);
-  outline: none;
-  resize: none;
-  color: var(--light-white-color);
-  border: none;
-  display: flex;
-  align-items: center;
-  letter-spacing: 1px;
-  text-align: start;
-  flex: 1;
-  font-weight: 300;
-  font-size: 16px;
-  transition: all 0.15s;
-  padding: 5px;
-  box-sizing: border-box;
-  background-color: transparent;
-  width: 100%;
-  word-wrap: wrap;
-}
-
-.column__paragraph {
-  @include textEllipsis(240);
-}
-
-.column__columnName:focus {
-  background-color: var(--light-white-color);
-  color: var(--dark-color);
-  border-radius: 5px;
-  border: 3px solid rgb(61, 190, 141);
-}
 
 .asideSettings {
   @extend %flexColumnTemplate;
@@ -218,17 +99,8 @@
   width: 8px;
 }
 
-.variantsDeadlineList::-webkit-scrollbar {
-  height: 10px;
-}
-.columnList::-webkit-scrollbar {
-  height: 20px;
-}
-
 .deskAct__list::-webkit-scrollbar-thumb,
-.archiveList::-webkit-scrollbar-thumb,
-.variantsDeadlineList::-webkit-scrollbar-thumb,
-.columnList::-webkit-scrollbar-thumb {
+.archiveList::-webkit-scrollbar-thumb {
   background-color: var(--light-green-color);
   border-radius: 5px;
 }
@@ -449,119 +321,5 @@
       background-color: rgb(219, 219, 219);
       color: var(--light-white-color);
     }
-  }
-}
-
-//
-
-.deskModalSectionColumn {
-  max-height: 745px !important;
-  max-width: 440px;
-}
-
-.modalSectionDate {
-  @extend %flexColumnTemplate;
-  margin-top: 20px;
-  gap: 10px;
-  .deadlineDate {
-    font-weight: 500;
-    font-size: 18px;
-    margin: 5px 0;
-  }
-
-  .modalChangeDateInput {
-    padding: 5px;
-    font-size: 18px;
-    outline: none;
-    border-radius: 5px;
-    border: none;
-    @extend %borderTemplate;
-  }
-
-  .modalChangeDateInput::-ms-clear {
-    width: 0;
-    height: 0;
-  }
-
-  & .variantsDeadlineList {
-    @extend %flexTemplate;
-
-    justify-content: space-between;
-    gap: 10px;
-    overflow-x: scroll !important;
-    overflow: hidden;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    & .variantsDeadlineItem {
-      cursor: pointer;
-      @extend %borderTemplate;
-      border-radius: 10px;
-      padding: 10px;
-      white-space: nowrap;
-    }
-  }
-}
-
-.deskModalSection {
-  max-height: 440px;
-  padding: 20px;
-  @extend %flexColumnTemplate;
-  gap: 20px;
-  box-sizing: border-box;
-
-  & .deskModalInfoColumn {
-    @extend %flexColumnTemplate;
-  }
-
-  & .deskModalInfo {
-    @extend %flexTemplate;
-    justify-content: space-between;
-
-    & .deskModalLeftSide {
-      @extend %flexColumnTemplate;
-      gap: 20px;
-      width: 400px;
-    }
-
-    & .deskImageInputSection {
-      @extend %flexColumnTemplate;
-      margin-left: 30px;
-      padding-left: 30px;
-      border-left: 1px solid var(--border-color);
-      gap: 10px;
-    }
-  }
-
-  & .modal__title {
-    font-size: 32px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-    @extend %flexTemplate;
-    justify-content: space-between;
-    align-items: center;
-
-    & .modal__iconTitle {
-      @extend %flexTemplate;
-      align-items: center;
-      gap: 15px;
-
-      & .nameOfModal {
-        font-size: 24px;
-      }
-    }
-    & .modal__createdAt {
-      font-weight: 300;
-      font-size: 18px;
-    }
-  }
-
-  & .deskModalTitles {
-    font-size: 22px;
-    font-weight: 500;
-  }
-
-  & .modal__nameField {
-    @extend %flexColumnTemplate;
-    gap: 15px;
   }
 }

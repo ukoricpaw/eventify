@@ -1,0 +1,128 @@
+@import './Desk.module.scss';
+.deadlineContainer {
+  @extend %flexTemplate;
+  color: white;
+  align-items: center;
+  padding: 0 5px;
+  gap: 8px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.deadlineNotExpires {
+  background-color: var(--light-green-color);
+}
+
+.deadlineExpires {
+  background-color: rgb(194, 194, 87);
+}
+.deadlineExpired {
+  background-color: rgb(221, 78, 68);
+}
+
+.columnList::-webkit-scrollbar {
+  height: 20px;
+}
+
+.columnList::-webkit-scrollbar-thumb {
+  background-color: var(--light-green-color);
+  border-radius: 5px;
+}
+
+.columnList {
+  height: calc(100vh - 185px);
+  @extend %flexTemplate;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  padding: 0 10px;
+
+  & .column {
+    @extend %flexColumnTemplate;
+
+    & .column__wrapper {
+      width: 300px;
+      border-radius: 10px;
+      background-color: rgb(250, 250, 250);
+      @extend %borderTemplate;
+      margin: 10px;
+    }
+
+    .column:first-child > .column__wrapper {
+      margin-left: 0;
+    }
+
+    .itemList {
+      margin: 12px;
+      @extend %flexColumnTemplate;
+      padding: 10px 0 0;
+      background-color: rgb(250, 250, 250);
+      & .columnItem {
+        cursor: pointer;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: var(--light-white-color);
+        text-align: start;
+        padding: 10px;
+        @extend %borderTemplate;
+        @extend %flexTemplate;
+        justify-content: space-between;
+        transition: background-color 0.15s;
+
+        & .columnItem__text {
+          @include textEllipsis(120);
+        }
+      }
+
+      & .columnItem:hover {
+        background-color: rgb(235, 234, 234);
+      }
+
+      & .columnItem:active {
+        background-color: rgb(214, 213, 213);
+      }
+    }
+
+    & .column__nameWrapper {
+      @extend %flexTemplate;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--dark-green-color);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      color: var(--light-white-color);
+      padding: 5px 15px;
+      font-size: 16px;
+    }
+  }
+}
+.column__columnName {
+  color: rgb(78, 78, 78);
+  outline: none;
+  resize: none;
+  color: var(--light-white-color);
+  border: none;
+  display: flex;
+  align-items: center;
+  letter-spacing: 1px;
+  text-align: start;
+  flex: 1;
+  font-weight: 300;
+  font-size: 16px;
+  transition: all 0.15s;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: transparent;
+  width: 100%;
+  word-wrap: wrap;
+}
+
+.column__paragraph {
+  @include textEllipsis(240);
+}
+
+.column__columnName:focus {
+  background-color: var(--light-white-color);
+  color: var(--dark-color);
+  border-radius: 5px;
+  border: 3px solid rgb(61, 190, 141);
+}

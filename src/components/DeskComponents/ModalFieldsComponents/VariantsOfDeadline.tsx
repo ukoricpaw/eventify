@@ -1,4 +1,4 @@
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Modal.module.scss';
 import { variantsOfDeadline, DeadlineType } from '@/utils/getVariantsOfDeadline';
 
 interface VariantsOfDeadlineIProps {

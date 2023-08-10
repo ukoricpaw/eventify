@@ -1,4 +1,4 @@
-import styles from '../styles/Desk.module.scss';
+import styles from '../styles/Column.module.scss';
 
 export default function getBackgroundColorByDayDiff(dayDiff: number) {
   if (dayDiff > 1) {

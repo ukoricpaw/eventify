@@ -1,0 +1,122 @@
+@import './Desk.module.scss';
+
+.variantsDeadlineList::-webkit-scrollbar {
+  height: 10px;
+}
+
+.variantsDeadlineList::-webkit-scrollbar-thumb {
+  background-color: var(--light-green-color);
+  border-radius: 5px;
+}
+
+.deskModalSectionColumn {
+  max-height: 745px !important;
+  max-width: 440px;
+}
+
+.modalSectionDate {
+  @extend %flexColumnTemplate;
+  margin-top: 20px;
+  gap: 10px;
+  .deadlineDate {
+    font-weight: 500;
+    font-size: 18px;
+    margin: 5px 0;
+  }
+
+  .modalChangeDateInput {
+    padding: 5px;
+    font-size: 18px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    @extend %borderTemplate;
+  }
+
+  .modalChangeDateInput::-ms-clear {
+    width: 0;
+    height: 0;
+  }
+
+  & .variantsDeadlineList {
+    @extend %flexTemplate;
+
+    justify-content: space-between;
+    gap: 10px;
+    overflow-x: scroll !important;
+    overflow: hidden;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    & .variantsDeadlineItem {
+      cursor: pointer;
+      @extend %borderTemplate;
+      border-radius: 10px;
+      padding: 10px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.deskModalSection {
+  max-height: 440px;
+  padding: 20px;
+  @extend %flexColumnTemplate;
+  gap: 20px;
+  box-sizing: border-box;
+
+  & .deskModalInfoColumn {
+    @extend %flexColumnTemplate;
+  }
+
+  & .deskModalInfo {
+    @extend %flexTemplate;
+    justify-content: space-between;
+
+    & .deskModalLeftSide {
+      @extend %flexColumnTemplate;
+      gap: 20px;
+      width: 400px;
+    }
+
+    & .deskImageInputSection {
+      @extend %flexColumnTemplate;
+      margin-left: 30px;
+      padding-left: 30px;
+      border-left: 1px solid var(--border-color);
+      gap: 10px;
+    }
+  }
+
+  & .modal__title {
+    font-size: 32px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    @extend %flexTemplate;
+    justify-content: space-between;
+    align-items: center;
+
+    & .modal__iconTitle {
+      @extend %flexTemplate;
+      align-items: center;
+      gap: 15px;
+
+      & .nameOfModal {
+        font-size: 24px;
+      }
+    }
+    & .modal__createdAt {
+      font-weight: 300;
+      font-size: 18px;
+    }
+  }
+
+  & .deskModalTitles {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  & .modal__nameField {
+    @extend %flexColumnTemplate;
+    gap: 15px;
+  }
+}

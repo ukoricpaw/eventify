@@ -1,4 +1,4 @@
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Column.module.scss';
 import { useRef, useEffect, useState, KeyboardEvent, ChangeEvent, MouseEvent, useContext } from 'react';
 import { DeskWSocketContext } from '@/components/DeskComponents/GeneralDeskComponents/DeskWSocketProvider';
 import { FieldsActionTypes } from '@/utils/defineFieldsModalType';

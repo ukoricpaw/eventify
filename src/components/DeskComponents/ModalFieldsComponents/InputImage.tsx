@@ -1,7 +1,7 @@
 import changeDeskBackground from '@/axios/http/changeDeskBackground';
 import useInputImageFile from '@/hooks/useInputImageFile';
 import { useState, useRef } from 'react';
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Modal.module.scss';
 import { SpecialInputFieldsIProps } from './SpecialInputFields';
 import CompoundButton from '@/components/FormComponents/CompoundButton';
 

@@ -1,5 +1,5 @@
 import { getLocaleDateWithoutTimeString } from '@/utils/getLocaleDateString';
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Column.module.scss';
 import { FaClock } from 'react-icons/fa';
 import getBackgroundColorByDayDiff from '@/utils/getBackgroundColorByDayDiff';
 import { memo } from 'react';

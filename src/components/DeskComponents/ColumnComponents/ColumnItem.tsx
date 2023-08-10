@@ -1,4 +1,4 @@
-import styles from '../../../styles/Desk.module.scss';
+import styles from '../../../styles/Column.module.scss';
 import { Draggable } from 'react-beautiful-dnd';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { memo } from 'react';
