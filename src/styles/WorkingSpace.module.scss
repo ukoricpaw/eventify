@@ -563,13 +563,40 @@
 
 // Link...
 
-.inviteLink {
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 5px;
-  transition: background-color 0.15s;
-}
+.linkModalSection {
+  @extend %flexTemplate;
+  gap: 15px;
+  align-items: center;
 
-.inviteLink:hover {
-  background-color: var(--light-gray-color);
+  .linkIcon {
+    background-color: var(--light-green-color);
+    padding: 15px;
+    border-radius: 5px;
+  }
+
+  .copyLink {
+    @extend %flexColumnTemplate;
+    padding: 5px;
+    gap: 6px;
+    .copyLink__invite {
+      font-size: 20px;
+      border-radius: 5px;
+      color: rgb(48, 48, 48);
+      transition: background-color 0.15s;
+    }
+
+    .copyLink__title {
+      cursor: pointer;
+      font-size: 18px;
+      color: rgb(26, 26, 179);
+    }
+
+    .copyLink__title:hover {
+      text-decoration: underline;
+    }
+
+    .copyLink__invite:hover {
+      background-color: var(--light-gray-color);
+    }
+  }
 }

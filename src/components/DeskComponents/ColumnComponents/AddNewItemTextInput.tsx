@@ -4,7 +4,7 @@ import CompoundButton from '../../FormComponents/CompoundButton';
 import ContextConsumer from '../../GeneralComponents/ContextConsumer';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
 import styles from '../../../styles/Desk.module.scss';
-import { useState, ChangeEvent, MouseEvent, KeyboardEvent } from 'react';
+import { useState, ChangeEvent, MouseEvent, KeyboardEvent, useEffect, useRef } from 'react';
 import { DeskWSocketContextInterface } from '@/types/deskTypes';
 
 interface AddNewItemTextInputIProps {
@@ -14,6 +14,11 @@ interface AddNewItemTextInputIProps {
 
 export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: AddNewItemTextInputIProps) {
   const [name, setName] = useState<string>('');
+  const inputItemNameRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    inputItemNameRef.current?.focus();
+  }, []);
 
   const setNameHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setName(e.target.value);
@@ -32,6 +37,7 @@ export default function AddNewItemTextInput({ columnId, setActiveColumnNull }: A
       {value => (
         <FormGroup gap="8px">
           <textarea
+            ref={inputItemNameRef}
             onKeyDown={e => {
               if (e.key === 'Enter') {
                 if (e.repeat) return;

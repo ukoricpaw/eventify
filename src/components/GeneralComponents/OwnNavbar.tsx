@@ -10,6 +10,8 @@ import UserAvatar from '../WspaceComponents/GeneralWspaceComponents/UserAvatar';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { ModalContext } from './CreateWspaceModalProvider';
 import ContextConsumer from './ContextConsumer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function OwnNavbar() {
   const { userData } = useAppSelector(userSelector);
@@ -51,6 +53,7 @@ export default function OwnNavbar() {
           {userData.avatar ? <UserAvatar size={40} src={userData.avatar} /> : <FaUser color="white" size={40} />}
         </li>
       </ul>
+      <ToastContainer position="bottom-right" theme="light" />
     </nav>
   );
 }

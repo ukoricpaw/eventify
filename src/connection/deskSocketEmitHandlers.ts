@@ -62,6 +62,10 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('item:deadline', listId, itemId, deadline);
   };
 
+  const deleteItem = (listId: number, itemId: number) => {
+    socket?.emit('item:remove', listId, itemId);
+  };
+
   return {
     renameFullDesk,
     addNewColumn,
@@ -76,5 +80,6 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     changeDeskDescription,
     changeColumnDescription,
     changeItemDeadline,
+    deleteItem,
   };
 }

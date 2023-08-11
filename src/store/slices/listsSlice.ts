@@ -58,6 +58,15 @@ const listsSlice = createSlice({
       state.lists.splice(listIndex, 1);
       findAndRemoveListIndexByListId(state.listIndexes, list.id);
     },
+    deleteItem(state, action: PayloadAction<{ listId: number; itemId: number }>) {
+      const [list] = findById(state.lists, action.payload.listId);
+      if (!list) return;
+      const [itemInList, itemIndexInList] = findById((list as DeskList).desk_list_items, action.payload.itemId);
+      const [item, itemIndex] = findById(state.listItems, action.payload.itemId);
+      if (!itemInList || itemIndexInList === null || !item || itemIndex === null) return;
+      (list as DeskList).desk_list_items.splice(itemIndexInList, 1);
+      state.listItems.splice(itemIndex, 1);
+    },
     changeColumns(state, action: PayloadAction<{ list: DeskList; secondList: null | DeskList }>) {
       const [list] = findById(state.lists, action.payload.list.id);
       if (!list) return;
@@ -140,5 +149,6 @@ export const {
   addNewColumn,
   changeInfoItem,
   setDeadlineToItem,
+  deleteItem,
 } = listsSlice.actions;
 export default listsSlice.reducer;

@@ -37,7 +37,9 @@ export default memo(
             Добавить карточку
           </div>
         )}
-        {activeColumnCondition && <AddNewItemTextInput setActiveColumnNull={setActiveColumnNull} columnId={columnId} />}
+        {activeColumnCondition && (
+          <AddNewItemTextInput setActiveColumnNull={setActiveColumnNull} columnId={columnId} />
+        )}
       </section>
     );
   },

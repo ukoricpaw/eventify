@@ -1,6 +1,7 @@
 import { WorkingSpaceType } from '@/types/wspaceTypes';
 import styles from '../../../styles/WorkingSpace.module.scss';
 import WspaceProvideLink from './WspaceProvideLink';
+import ItemTitleWrapper from './ItemTitleWrapper';
 
 type WspaceDescriptionIProps = Pick<WorkingSpaceType, 'name' | 'description'> & {
   roleId: number;
@@ -12,7 +13,9 @@ export default function WspaceDescription({ name, description, roleId, inviteLin
     <div className={styles.wspaceDescription}>
       {name && (
         <>
-          <WspaceProvideLink inviteLink={inviteLink} name={name as string} roleId={roleId} />
+          <ItemTitleWrapper wspace={name} ellipsis="350px">
+            <WspaceProvideLink inviteLink={inviteLink} roleId={roleId} />
+          </ItemTitleWrapper>
           {description ? <p className={styles.wspaceDescription__content}>{description}</p> : ''}
         </>
       )}

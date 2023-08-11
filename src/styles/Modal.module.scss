@@ -1,5 +1,9 @@
 @import './Desk.module.scss';
 
+.linkModalSection {
+  @extend %flexTemplate;
+}
+
 .variantsDeadlineList::-webkit-scrollbar {
   height: 10px;
 }

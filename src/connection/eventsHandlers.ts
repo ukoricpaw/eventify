@@ -8,11 +8,12 @@ import {
   changeInfoColumn,
   changeInfoItem,
   setDeadlineToItem,
+  deleteItem,
 } from '@/store/slices/listsSlice';
 import { changeDescription, renameDesk } from '@/store/slices/deskSlice';
 
 import { DeskList, DeskListItem, ReloadedDeskData } from '@/types/deskListTypes';
-import { notify } from '@/components/DeskComponents/GeneralDeskComponents/DeskLayout';
+import { notifyWithError } from '@/utils/notificationsFromToastify';
 
 export type EventsHandlersType = { event: string; handler: (...args: any) => void }[];
 
@@ -89,9 +90,9 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
       event: 'errorMessage',
       handler: message => {
         if (message.includes('255')) {
-          notify('Слишком большое количество символов');
+          notifyWithError('Слишком большое количество символов');
         } else {
-          notify(message);
+          notifyWithError(message);
         }
       },
     },
@@ -99,6 +100,12 @@ export default function eventsHandlers(dispatch: AppDispatch): EventsHandlersTyp
       event: 'item:getNewOrder',
       handler: (data: { list: DeskList; secondList: DeskList | null }) => {
         dispatch(changeColumns(data));
+      },
+    },
+    {
+      event: 'item:removeInList',
+      handler: (data: { listId: number; itemId: number }) => {
+        dispatch(deleteItem({ listId: data.listId, itemId: data.itemId }));
       },
     },
   ];

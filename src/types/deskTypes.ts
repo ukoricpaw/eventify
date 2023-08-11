@@ -48,6 +48,7 @@ export interface DeskWSocketEmitEvents {
   changeDeskDescription: (deskId: number, description: string) => void;
   changeColumnDescription: (listId: number, description: string) => void;
   changeItemDeadline: (listId: number, itemId: number, deadline: string | null) => void;
+  deleteItem: (listId: number, itemId: number) => void;
 }
 
 export type DeskWSocketContextInterface = {

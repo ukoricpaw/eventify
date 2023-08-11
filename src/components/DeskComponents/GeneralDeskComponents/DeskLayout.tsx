@@ -14,13 +14,9 @@ import DeskAsideInfo from '../DeskAsideInfo';
 import DeskWSocketProvider from './DeskWSocketProvider';
 import DeskTitleBackground from './DeskTitleBackground';
 import DeskColumnModalProvider from '../ModalFieldsComponents/DeskColumnModalProvider';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 interface DeskLayoutIProps {
   children: ReactNode;
 }
-
-export const notify = (message: string) => toast(message);
 
 export default function DeskLayout({ children }: DeskLayoutIProps) {
   const { query } = useRouter();
@@ -61,7 +57,6 @@ export default function DeskLayout({ children }: DeskLayoutIProps) {
             </div>
           </DeskColumnModalProvider>
         </CreateWspaceModalProvider>
-        <ToastContainer position="bottom-right" theme='light'/>
       </DeskWSocketProvider>
     );
   };
