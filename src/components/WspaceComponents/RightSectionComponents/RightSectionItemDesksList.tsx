@@ -26,7 +26,7 @@ export default function RightSectionDeskList({ wspaceId }: { wspaceId?: number }
         <CompoundButton onClick={setActiveModal} variant="success" padding={{ y: '60' }}>
           <p className={styles.addNewDeskTitle}>Создать доску</p>
         </CompoundButton>
-      ) : data.workingSpace.desks.length === 0 ? (
+      ) : data.workingSpace && data.workingSpace.desks.length === 0 ? (
         <p className={styles.emptyWspaceTitle}>В рабочем пространстве нет досок</p>
       ) : (
         ''

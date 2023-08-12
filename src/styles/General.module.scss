@@ -37,10 +37,42 @@
     gap: 30px;
     align-items: center;
 
-    & .ownLeftSection__wspaceTitle {
-      display: flex;
-      gap: 10px;
-      cursor: pointer;
+    .workingSpaceDropdownContainer {
+      position: relative;
+      & .ownLeftSection__wspaceTitle {
+        display: flex;
+        gap: 10px;
+        cursor: pointer;
+        padding: 5px;
+        transition: background-color 0.15s;
+      }
+      & .ownLeftSection__wspaceTitle:hover {
+        background-color: rgba(52, 66, 52, 0.2);
+        border-radius: 5px;
+      }
+
+      .workingSpaceDropdown__List {
+        z-index: 100;
+        position: absolute;
+        top: 45px;
+        background-color: var(--light-white-color);
+        padding: 20px;
+        box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border-radius: 20px;
+        & .workingSpaceDropdown__title {
+          font-size: 18px;
+          color: black;
+        }
+
+        & .workingSpaceDropdown__emptyList {
+          width: 300px;
+          font-style: italic;
+          color: black;
+        }
+      }
     }
   }
 

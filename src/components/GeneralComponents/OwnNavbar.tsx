@@ -12,6 +12,7 @@ import { ModalContext } from './CreateWspaceModalProvider';
 import ContextConsumer from './ContextConsumer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import WorkingSpacesDropdown from './WorkingSpacesDropdown';
 
 export default function OwnNavbar() {
   const { userData } = useAppSelector(userSelector);
@@ -19,15 +20,10 @@ export default function OwnNavbar() {
     <nav className={styles.navContainer} aria-label="primary-navigation">
       <ul className={styles.navContainer__list}>
         <ul className={styles.navContainer__ownLeftSection}>
-          <Link href="/">
+          <Link href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/users/${userData.id}/dashboard`}>
             <li className={styles.leftListItem}>eventify</li>
           </Link>
-          <li className={styles.ownLeftSection__wspaceTitle}>
-            <Link href={`/users/${userData.id}/dashboard`}>
-              <p className={styles.wspaceTitle}>Рабочие пространства</p>
-            </Link>
-            <IoIosArrowDropdown size={20} cursor={'pointer'} />
-          </li>
+          <WorkingSpacesDropdown userId={userData.id} />
           <li className={styles.ownLeftSection__wspaceButton}>
             <ContextConsumer Context={ModalContext}>
               {value => (
@@ -44,9 +40,10 @@ export default function OwnNavbar() {
               x: '10',
               y: '5',
             }}
+            width="250px"
             variant="light"
             type="text"
-            placeholder="Найти"
+            placeholder="Найти рабочее пространство"
           >
             <AiOutlineSearch cursor={'pointer'} />
           </CompoundInput>

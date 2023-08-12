@@ -14,9 +14,9 @@ export default function useClickBodyListener({
   elementRef,
 }: useClickBodyListenerIProps): [boolean, () => void] {
   const activeColumnCondition = activeCol === colId;
-  const docRef = elementRef ? elementRef : document.body;
 
   useEffect(() => {
+    const docRef = elementRef ? elementRef : document.body;
     if (activeColumnCondition) {
       docRef.addEventListener('click', setActiveColumnNull);
     }
@@ -24,7 +24,7 @@ export default function useClickBodyListener({
     return () => {
       docRef.removeEventListener('click', setActiveColumnNull);
     };
-  }, [activeCol, docRef, activeColumnCondition]);
+  }, [activeCol, activeColumnCondition]);
 
   const setActiveColumnNull = () => {
     setActiveHandler && setActiveHandler(null);

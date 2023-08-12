@@ -40,7 +40,9 @@ export default function DeskInfo({ roleId }: { roleId: number }) {
             </ContextConsumer>
             <DeskInputField name={deskInfo.name} inputId={deskInfo.id} roleId={roleId} />
           </div>
-          <WspaceProvideLink roleId={roleId} inviteLink={wspaceInfo.workingSpace.inviteLink} />
+          {wspaceInfo.workingSpace && (
+            <WspaceProvideLink roleId={roleId} inviteLink={wspaceInfo.workingSpace.inviteLink} />
+          )}
         </div>
         {deskInfo.description && <p className={styles.deskInfo__description}>{deskInfo.description}</p>}
       </div>
