@@ -42,7 +42,12 @@ export default function DeskModal({ modalHandler, type, modalContent, roleId }: 
         className={`${styles.deskModalSection} ${type === EnumModal.ITEM && styles.deskModalSectionColumn}`}
         id="modalRef"
       >
-        <ModalTitle data={data as DeskEntities} createdAt={data.createdAt} type={type as EnumModal} />
+        <ModalTitle
+          roleCondition={roleCondition}
+          data={data as DeskEntities}
+          createdAt={data.createdAt}
+          type={type as EnumModal}
+        />
         <section className={`${styles.deskModalInfo} ${type === EnumModal.ITEM && styles.deskModalInfoColumn}`}>
           <div className={styles.deskModalLeftSide}>
             <div className={styles.modal__nameField}>

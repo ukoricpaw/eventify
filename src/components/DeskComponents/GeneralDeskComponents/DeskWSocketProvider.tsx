@@ -19,9 +19,9 @@ export default function DeskWSocketProvider({ children, wspaceId, deskId }: Desk
   const socketRef = useRef<Socket | null>(null);
   const emitHandlersRef = useRef<DeskWSocketEmitEvents | null>(null);
   const dispatch = useAppDispatch();
-  const { push } = useRouter();
+  const router = useRouter();
 
-  const eventHandlers = eventsHandlers(dispatch, push);
+  const eventHandlers = eventsHandlers(dispatch, router);
   useEffect(() => {
     socketRef.current = io(process.env.NEXT_PUBLIC_API_URL as string, {
       query: { wspaceId, deskId },

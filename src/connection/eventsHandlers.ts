@@ -19,7 +19,7 @@ import { NextRouter } from 'next/router';
 
 export type EventsHandlersType = { event: string; handler: (...args: any) => void }[];
 
-export default function eventsHandlers(dispatch: AppDispatch, push: NextRouter['push']): EventsHandlersType {
+export default function eventsHandlers(dispatch: AppDispatch, router: NextRouter): EventsHandlersType {
   return [
     {
       event: 'item:newDescription',
@@ -62,7 +62,7 @@ export default function eventsHandlers(dispatch: AppDispatch, push: NextRouter['
       event: 'desk:deleted',
       handler: (message: MessageType) => {
         notifyWithSuccess(message.message);
-        push('/users/1/dashboard');
+        router.push(`/users/${router.query.user}/dashboard`);
       },
     },
     {

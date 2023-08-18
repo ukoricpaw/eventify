@@ -9,9 +9,10 @@ interface ModalTitleIProps {
   type: EnumModal;
   createdAt: string;
   data: DeskEntities;
+  roleCondition: boolean;
 }
 
-export default function ModalTitle({ createdAt, type, data }: ModalTitleIProps) {
+export default function ModalTitle({ createdAt, type, data, roleCondition }: ModalTitleIProps) {
   const nameOfModal = getNameByModaltype(type, createdAt);
   return (
     <div className={styles.modal__title}>
@@ -20,7 +21,7 @@ export default function ModalTitle({ createdAt, type, data }: ModalTitleIProps) 
         <span className={styles.nameOfModal}>{nameOfModal[1]}</span>
       </div>
       <span className={styles.modal__createdAt}>{nameOfModal[2]}</span>
-      <DeleteByType listId={(data as DeskListItem).deskListId} id={data.id} type={type} />
+      {roleCondition && <DeleteByType listId={(data as DeskListItem).deskListId} id={data.id} type={type} />}
     </div>
   );
 }
