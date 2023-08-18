@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '@/hooks/reduxHooks';
 import { userSelector } from '@/store/slices/userSlice';
 import { memo } from 'react';
-import useDeleteModal from '@/hooks/useDeleteModal';
+import useDeleteModal from '@/hooks/useConfirmationModal';
 
 export default memo(function DeleteWspace({ wspaceId }: { wspaceId: number }) {
   const { userData } = useAppSelector(userSelector);
@@ -19,6 +19,7 @@ export default memo(function DeleteWspace({ wspaceId }: { wspaceId: number }) {
   };
 
   const [openHandler, isOpen, DeleteModal] = useDeleteModal({
+    confirmTitle: 'Удалить',
     handler: deleteWspaceHandler,
     title: 'Вы уверены что хотите удалить рабочее пространство?',
   });

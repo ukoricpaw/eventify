@@ -1,4 +1,4 @@
-import useDeleteModal from '@/hooks/useDeleteModal';
+import useDeleteModal from '@/hooks/useConfirmationModal';
 import { useContext, useState, ReactElement } from 'react';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import { useAppDispatch } from '@/hooks/reduxHooks';
@@ -21,6 +21,7 @@ export default function DeleteColumnModal(): DeleteColumnModalType {
   };
 
   const [openHandler, isOpen, DeleteModal] = useDeleteModal({
+    confirmTitle: 'Удалить',
     handler: deleteColumn,
     title: `Вы действительно хотите удалить список ${listNameId?.split('/')[1]}?`,
   });

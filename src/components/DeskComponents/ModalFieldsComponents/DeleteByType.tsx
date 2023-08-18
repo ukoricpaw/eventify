@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
-import useDeleteModal from '@/hooks/useDeleteModal';
+import useDeleteModal from '@/hooks/useConfirmationModal';
 import { FaTrash } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
 import { EnumModal } from '@/types/modalDeskTypes';
@@ -21,7 +21,11 @@ export default function DeleteByType({ listId, id, type }: DeleteByTypeIProps) {
     deleteHandlerForModalEntity({ dispatch, listId, id, value: value as DeskWSocketContextInterface, type });
   };
 
-  const [openHandler, isOpen, DeleteModal] = useDeleteModal({ handler: deleteHandler, title: `${type}` });
+  const [openHandler, isOpen, DeleteModal] = useDeleteModal({
+    confirmTitle: 'Удалить',
+    handler: deleteHandler,
+    title: `${type}`,
+  });
 
   return (
     <>

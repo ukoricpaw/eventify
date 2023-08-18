@@ -6,11 +6,13 @@ import { useCallback, useState, ReactElement } from 'react';
 interface useDeleteModalIProps {
   handler: (...args: any) => void;
   title: string;
+  confirmTitle: string;
 }
 
 export default function useDeleteModal({
   handler,
   title,
+  confirmTitle,
 }: useDeleteModalIProps): [() => void, boolean, () => ReactElement] {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -32,7 +34,7 @@ export default function useDeleteModal({
             padding={{ y: '8' }}
             variant="light"
           >
-            Удалить
+            {confirmTitle}
           </CompoundButton>
           <CompoundButton padding={{ y: '8' }} onClick={openHandler} variant="success">
             Отмена
