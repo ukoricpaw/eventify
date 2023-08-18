@@ -14,7 +14,7 @@ export default function WspaceDescription({ name, description, roleId, inviteLin
       {name && (
         <>
           <ItemTitleWrapper wspace={name} ellipsis="350px">
-            <WspaceProvideLink inviteLink={inviteLink} roleId={roleId} />
+            {roleId !== 0 && roleId <= 2 && <WspaceProvideLink inviteLink={inviteLink} />}
           </ItemTitleWrapper>
           {description ? <p className={styles.wspaceDescription__content}>{description}</p> : ''}
         </>

@@ -4,12 +4,12 @@ import PaginationItem from './PaginationItem';
 import { Dispatch, SetStateAction } from 'react';
 import getPages from '@/utils/getPages';
 import { memo } from 'react';
-import { MembersListState } from '../WspaceComponents/RightSectionComponents/MembersInputContainer';
+import { PaginationListState } from '@/types/wspaceTypes';
 interface PaginationIProps {
   count: number;
   current: number;
   limit: number;
-  setPage: Dispatch<SetStateAction<MembersListState>>;
+  setPage: Dispatch<SetStateAction<PaginationListState>>;
 }
 
 export default memo(function Pagination({ count, current, limit, setPage }: PaginationIProps) {

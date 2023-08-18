@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const $privateApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

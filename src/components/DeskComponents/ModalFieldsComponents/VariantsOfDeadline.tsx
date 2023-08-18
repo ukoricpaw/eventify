@@ -9,8 +9,12 @@ export default function VariantsOfDeadline({ setDateByVariant }: VariantsOfDeadl
   return (
     <ul className={styles.variantsDeadlineList}>
       {variantsOfDeadline.map((item, index) => (
-        <li className={styles.variantsDeadlineItem} onClick={() => setDateByVariant(item.type, item.value)} key={index}>
-          {item.value} {item.inLocale}
+        <li
+          className={styles.variantsDeadlineItem}
+          onClick={() => setDateByVariant(item.type, Number(item.value.split(' ')[0]))}
+          key={index}
+        >
+          {item.value}
         </li>
       ))}
     </ul>

@@ -59,3 +59,9 @@ export type MessageType = {
 };
 
 export interface UpdatedWspace extends Omit<WorkingSpaceType, 'desks'> {}
+
+export interface PaginationListState {
+  page: number;
+  search: string;
+  resultSearch: string;
+}

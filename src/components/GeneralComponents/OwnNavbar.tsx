@@ -1,6 +1,5 @@
 import styles from '../../styles/General.module.scss';
 import Link from 'next/link';
-import { IoIosArrowDropdown } from 'react-icons/io';
 import CompoundButton from '../FormComponents/CompoundButton';
 import CompoundInput from '../FormComponents/CompoundInput';
 import { useAppSelector } from '@/hooks/reduxHooks';

@@ -8,10 +8,6 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('list:add', name);
   };
 
-  const deleteColumn = (id: number) => {
-    socket?.emit('list:delete', id);
-  };
-
   const reorderColumns = (id: number, order: number) => {
     socket?.emit('list:reorder', id, order);
   };
@@ -62,8 +58,16 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     socket?.emit('item:deadline', listId, itemId, deadline);
   };
 
-  const deleteItem = (listId: number, itemId: number) => {
+  const item_delete = (listId: number, itemId: number) => {
     socket?.emit('item:remove', listId, itemId);
+  };
+
+  const desk_delete = (id: number) => {
+    socket?.emit('desk:delete', id);
+  };
+
+  const col_delete = (id: number) => {
+    socket?.emit('list:delete', id);
   };
 
   return {
@@ -72,7 +76,6 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     addNewItem,
     reorderColumns,
     reorderItemInColumns,
-    deleteColumn,
     archiveColumn,
     renameColumn,
     renameItem,
@@ -80,6 +83,8 @@ export default function deskSocketEmitHandlers({ socket }: { socket: Socket | nu
     changeDeskDescription,
     changeColumnDescription,
     changeItemDeadline,
-    deleteItem,
+    item_delete,
+    col_delete,
+    desk_delete,
   };
 }

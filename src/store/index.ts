@@ -1,4 +1,4 @@
-import { configureStore, combineReducers, ThunkAction, Action, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, ThunkAction, Action } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import userSlice from './slices/userSlice';
 import { wspaceApi } from './api/wspaceApi';

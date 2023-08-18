@@ -11,9 +11,10 @@ interface LinkModalIProps {
 }
 
 export default function LinkModal({ setActiveHandler, inviteLink }: LinkModalIProps) {
-  const copyLinkToClipboard = async (e: MouseEvent<HTMLParagraphElement>) => {
+  const copyLinkToClipboard = (e: MouseEvent<HTMLParagraphElement>) => {
     copyToClipboard(`${process.env.NEXT_PUBLIC_CLIENT_URL}/invite/${inviteLink}`);
     notifyWithSuccess('Ссылка была скопирована в буфер обмена');
+    setActiveHandler();
   };
   return (
     <ModalLayout setActiveModal={setActiveHandler}>

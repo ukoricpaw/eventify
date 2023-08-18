@@ -11,9 +11,7 @@ export default function RightSectionWspacesList({ wspaces }: { wspaces: WorkingS
   return (
     <ul className={styles.rightSection__wspacesList}>
       {wspaces && wspaces.count > 0 ? (
-        wspaces.rows.map(wspaceItem => {
-          return <RightSectionWspaceItem key={wspaceItem.id} wspace={wspaceItem.id} />;
-        })
+        <WspacesList wspaces={wspaces} />
       ) : (
         <div className={styles.rightSection__wspacesListEmpty}>
           <Image src={emptyList} width={250} height={200} alt="emptyList" priority />
@@ -29,4 +27,10 @@ export default function RightSectionWspacesList({ wspaces }: { wspaces: WorkingS
       )}
     </ul>
   );
+}
+
+function WspacesList({ wspaces }: { wspaces: WorkingSpacesResponce }) {
+  return wspaces.rows.map(wspaceItem => {
+    return <RightSectionWspaceItem key={wspaceItem.id} wspace={wspaceItem.id} />;
+  });
 }

@@ -1,3 +1,4 @@
+import { DeskList, DeskListItem } from './deskListTypes';
 import { UserType } from './userTypes';
 import { KeyboardEvent, MouseEvent } from 'react';
 export interface DeskType {
@@ -34,7 +35,6 @@ export interface DeskWSocketEmitEvents {
   addNewColumn: (name: string) => void;
   renameColumn: (listId: number, name: string) => void;
   archiveColumn: (listId: number, isarchive: 'false' | 'true') => void;
-  deleteColumn: (id: number) => void;
   addNewItem: (
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLTextAreaElement>,
     columnId: number,
@@ -48,7 +48,9 @@ export interface DeskWSocketEmitEvents {
   changeDeskDescription: (deskId: number, description: string) => void;
   changeColumnDescription: (listId: number, description: string) => void;
   changeItemDeadline: (listId: number, itemId: number, deadline: string | null) => void;
-  deleteItem: (listId: number, itemId: number) => void;
+  item_delete: (listId: number, itemId: number) => void;
+  col_delete: (id: number) => void;
+  desk_delete: (id: number) => void;
 }
 
 export type DeskWSocketContextInterface = {
@@ -75,3 +77,5 @@ export interface ColumnInfoContextInterface {
   roleId: number;
   isarchived: boolean;
 }
+
+export type DeskEntities = DeskList | DeskListItem | DeskType;

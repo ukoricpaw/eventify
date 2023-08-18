@@ -8,15 +8,10 @@ import { MouseEvent, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useGetWspaceMembersQuery } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import useFormFields from '@/hooks/useFormFields';
-
-export interface MembersListState {
-  page: number;
-  search: string;
-  resultSearch: string;
-}
+import { PaginationListState } from '@/types/wspaceTypes';
 
 interface MembersContextInterface {
-  setState: Dispatch<SetStateAction<MembersListState>>;
+  setState: Dispatch<SetStateAction<PaginationListState>>;
   setPage: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

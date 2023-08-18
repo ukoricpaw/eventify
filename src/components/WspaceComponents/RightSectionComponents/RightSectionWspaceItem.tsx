@@ -2,9 +2,13 @@ import styles from '../../../styles/WorkingSpace.module.scss';
 import RightSectionItemSettings from './RightSectionItemSettings';
 import RightSectionDeskList from './RightSectionItemDesksList';
 import { useGetSingleWorkingSpaceClientQuery } from '@/store/api/wspaceApi';
+import { useEffect } from 'react';
 
 export default function RightSectionWspaceItem({ wspace }: { wspace: number }) {
-  const { data, isLoading } = useGetSingleWorkingSpaceClientQuery(wspace);
+  const { data, isLoading, refetch } = useGetSingleWorkingSpaceClientQuery(wspace);
+  useEffect(() => {
+    refetch();
+  }, []);
   if (isLoading) {
     return <div>Loading...</div>;
   }

@@ -5,6 +5,7 @@ import { DeskWSocketContextInterface, DeskWSocketEmitEvents } from '@/types/desk
 import deskSocketEventsHandlers from '@/connection/deskSocketEventsHandlers';
 import deskSocketEmitHandlers from '@/connection/deskSocketEmitHandlers';
 import eventsHandlers from '@/connection/eventsHandlers';
+import { useRouter } from 'next/router';
 
 export const DeskWSocketContext = createContext<null | DeskWSocketContextInterface>(null);
 
@@ -18,7 +19,9 @@ export default function DeskWSocketProvider({ children, wspaceId, deskId }: Desk
   const socketRef = useRef<Socket | null>(null);
   const emitHandlersRef = useRef<DeskWSocketEmitEvents | null>(null);
   const dispatch = useAppDispatch();
-  const eventHandlers = eventsHandlers(dispatch);
+  const { push } = useRouter();
+
+  const eventHandlers = eventsHandlers(dispatch, push);
   useEffect(() => {
     socketRef.current = io(process.env.NEXT_PUBLIC_API_URL as string, {
       query: { wspaceId, deskId },

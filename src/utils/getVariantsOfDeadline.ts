@@ -1,7 +1,30 @@
+const unitMinutePlural = new Intl.NumberFormat('ru-RU', {
+  style: 'unit',
+  unit: 'minute',
+  unitDisplay: 'long',
+});
+
+const unitHourPlural = new Intl.NumberFormat('ru-RU', {
+  style: 'unit',
+  unit: 'hour',
+  unitDisplay: 'long',
+});
+
+const unitDayPlural = new Intl.NumberFormat('ru-RU', {
+  style: 'unit',
+  unit: 'day',
+  unitDisplay: 'long',
+});
+
+const unitMonthPlural = new Intl.NumberFormat('ru-RU', {
+  style: 'unit',
+  unit: 'month',
+  unitDisplay: 'long',
+});
+
 type VariantOfDeadline = {
   type: DeadlineType;
-  inLocale: string;
-  value: number;
+  value: string;
 };
 export type DeadlineType = 'hour' | 'minute' | 'month' | 'year' | 'date';
 type DeadlineAction = (deadlineType: DeadlineType) => (deadlineTime: number) => Date;
@@ -45,37 +68,30 @@ export const deadlineActionHandler: DeadlineAction = (deadlineType: DeadlineType
 export const variantsOfDeadline: VariantOfDeadline[] = [
   {
     type: 'minute',
-    inLocale: 'минут',
-    value: 30,
+    value: unitMinutePlural.format(30),
   },
   {
     type: 'hour',
-    inLocale: 'час',
-    value: 1,
+    value: unitHourPlural.format(1),
   },
   {
     type: 'hour',
-    inLocale: 'часа',
-    value: 2,
+    value: unitHourPlural.format(2),
   },
   {
     type: 'date',
-    inLocale: 'день',
-    value: 1,
+    value: unitDayPlural.format(1),
   },
   {
     type: 'date',
-    inLocale: 'дней',
-    value: 7,
+    value: unitDayPlural.format(7),
   },
   {
     type: 'month',
-    inLocale: 'месяц',
-    value: 1,
+    value: unitMonthPlural.format(1),
   },
   {
     type: 'month',
-    inLocale: 'месяца',
-    value: 2,
+    value: unitMonthPlural.format(2),
   },
 ];
