@@ -75,7 +75,7 @@ export const wspaceApi = createApi({
         queryFn: async ({ wspaceId, search, page, limit }) => {
           return await queryFn(`/api/wspace/members/${wspaceId}?search=${search}&page=${page}&limit=${limit}`, 'GET');
         },
-        providesTags: ['members'],
+        providesTags: [{ type: 'members', id: 'LIST' }],
       },
     ),
     updateWspace: builder.mutation<UpdatedWspace, UploadedWspaceInfo>({
@@ -89,6 +89,12 @@ export const wspaceApi = createApi({
         return await queryFn(`/api/wspace/${wspaceId}`, 'DELETE');
       },
       invalidatesTags: ['wspace'],
+    }),
+    deleteMemberFromWorkingSpace: builder.mutation<MessageType, { wspaceId: number; userId: number }>({
+      queryFn: async ({ wspaceId, userId }) => {
+        return await queryFn(`/api/wspace/leave/${wspaceId}`, 'DELETE', { userId });
+      },
+      invalidatesTags: [{ type: 'members', id: 'LIST' }],
     }),
   }),
   extractRehydrationInfo(action, { reducerPath }) {
@@ -106,6 +112,7 @@ export const {
   useGetSingleWorkingSpaceClientQuery,
   useGetWorkingSpacesClientQuery,
   usePostNewDeskInWorkingSpaceMutation,
+  useDeleteMemberFromWorkingSpaceMutation,
 } = wspaceApi;
 
 export const selectWorkingSpacesResult = (state: RootState, userId: number) =>

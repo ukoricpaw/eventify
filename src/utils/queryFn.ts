@@ -17,7 +17,7 @@ const queryFn = async (url: string, method: Method, body?: any) => {
         response = await $privateApi.put(url, body);
         break;
       case 'DELETE':
-        response = await $privateApi.delete(url);
+        response = await $privateApi.delete(url, { data: body });
         break;
       default:
         response = await $privateApi.get(url);
@@ -28,6 +28,7 @@ const queryFn = async (url: string, method: Method, body?: any) => {
     };
   } catch (err) {
     if (isAxiosError(err)) {
+      alert(err.response?.data.message);
       return { error: err.response?.data.message };
     }
     return { error: 'Произошла ошибка' };
