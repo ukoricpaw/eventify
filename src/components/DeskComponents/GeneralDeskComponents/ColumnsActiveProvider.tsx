@@ -1,5 +1,4 @@
-import { createContext, ReactNode, useState, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+import { createContext, ReactNode, useState } from 'react';
 import DeleteColumnModal from './DeleteColumnModal';
 import { ColumnsContextInterface, DeleteColumnModalInterface } from '@/types/deskTypes';
 
@@ -14,7 +13,7 @@ function DeleteColumnModalProvider({ children }: { children: ReactNode }) {
   return (
     <DeleteColumnModalContextProvider value={{ openDeleteHandler: openHandler, setListIdHandler }}>
       {children}
-      {isOpen && createPortal(<DeleteModal />, document.body)}
+      {isOpen && DeleteModal}
     </DeleteColumnModalContextProvider>
   );
 }

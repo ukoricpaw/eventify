@@ -1,8 +1,8 @@
 import ModalLayout from '@/components/GeneralComponents/ModalLayout';
 import styles from '../styles/WorkingSpace.module.scss';
 import CompoundButton from '@/components/FormComponents/CompoundButton';
-import { useCallback, useState, ReactElement } from 'react';
-
+import { useCallback, useState, ReactPortal } from 'react';
+import { createPortal } from 'react-dom';
 interface useDeleteModalIProps {
   handler: (...args: any) => void;
   title: string;
@@ -13,7 +13,7 @@ export default function useDeleteModal({
   handler,
   title,
   confirmTitle,
-}: useDeleteModalIProps): [() => void, boolean, () => ReactElement] {
+}: useDeleteModalIProps): [() => void, boolean, ReactPortal] {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openHandler = useCallback(() => {
@@ -44,5 +44,5 @@ export default function useDeleteModal({
     );
   }
 
-  return [openHandler, isOpen, DeleteModal];
+  return [openHandler, isOpen, createPortal(<DeleteModal />, document.body)];
 }

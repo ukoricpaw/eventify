@@ -1,10 +1,10 @@
 import useDeleteModal from '@/hooks/useConfirmationModal';
-import { useContext, useState, ReactElement } from 'react';
+import { useContext, useState, ReactPortal } from 'react';
 import { DeskWSocketContext } from './DeskWSocketProvider';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { ColDeleteType, deleteColumnAndUpdateStore } from '@/utils/deleteColumnAndUpdateStore';
 
-type DeleteColumnModalType = [(nameListId: string) => void, () => void, boolean, () => ReactElement];
+type DeleteColumnModalType = [(nameListId: string) => void, () => void, boolean, ReactPortal];
 
 export default function DeleteColumnModal(): DeleteColumnModalType {
   const value = useContext(DeskWSocketContext);

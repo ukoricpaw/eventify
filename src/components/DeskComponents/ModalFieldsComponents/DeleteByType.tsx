@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { DeskWSocketContext } from '../GeneralDeskComponents/DeskWSocketProvider';
 import useDeleteModal from '@/hooks/useConfirmationModal';
 import { FaTrash } from 'react-icons/fa';
-import { createPortal } from 'react-dom';
 import { EnumModal } from '@/types/modalDeskTypes';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { deleteHandlerForModalEntity } from '@/utils/deleteHandlerForModalEntity';
@@ -30,7 +29,7 @@ export default function DeleteByType({ listId, id, type }: DeleteByTypeIProps) {
   return (
     <>
       <FaTrash cursor={'pointer'} onClick={openHandler} size={15} color="red" />
-      {isOpen && createPortal(<DeleteModal />, document.body)}
+      {isOpen && DeleteModal}
     </>
   );
 }

@@ -29,7 +29,7 @@ export default function DeleteMember({ memberName, memberId, wspaceId, memberRol
       >
         Удалить пользователя
       </CompoundButton>
-      {isOpen && createPortal(<DeleteModal />, document.body)}
+      {isOpen && DeleteModal}
     </>
   );
 }
