@@ -98,3 +98,24 @@
   background-color: var(--light-green-color);
   color: #fff;
 }
+
+// auth
+
+.authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 200px);
+  & .authTitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  & .authPage__errorMessage {
+    color: red;
+    height: 12px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+}
