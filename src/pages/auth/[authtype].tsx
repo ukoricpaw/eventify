@@ -61,15 +61,16 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
             }
           />
         </Head>
-        <FormGroup>
-          <h1>{isLogin ? 'Войти' : 'Зарегистрироваться'}</h1>
-          <Container>
+        <FormGroup gap="12px" width="400px">
+          <h1 className={styles.authTitle}>{isLogin ? 'Войти' : 'Зарегистрироваться'}</h1>
+          <Container display={'row'} alignItems="center" spaceBetween>
             <CompoundLabel>Email: </CompoundLabel>
             <CompoundInput
               padding={{
-                x: '20',
-                y: '10',
+                x: '15',
+                y: '6',
               }}
+              width="280px"
               placeholder="Введите email"
               variant="success"
               type="email"
@@ -77,13 +78,14 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
               onChange={handleEmail}
             />
           </Container>
-          <Container>
+          <Container display={'row'} alignItems="center" spaceBetween>
             <CompoundLabel>Пароль: </CompoundLabel>
             <CompoundInput
               padding={{
-                x: '20',
-                y: '10',
+                x: '15',
+                y: '6',
               }}
+              width="280px"
               placeholder="Введите пароль"
               variant="success"
               type="password"
@@ -92,7 +94,12 @@ export default function AuthPage({ isLogin }: { isLogin: boolean }) {
             />
           </Container>
           <p className={styles.authPage__errorMessage}>{isError && isError}</p>
-          <CompoundButton variant="light" disabled={isLoading ? true : false} onClick={handleSubmit}>
+          <CompoundButton
+            padding={{ y: '10' }}
+            variant="light"
+            disabled={isLoading ? true : false}
+            onClick={handleSubmit}
+          >
             {isLogin ? 'Войти' : 'Зарегистрироваться'}
           </CompoundButton>
         </FormGroup>
