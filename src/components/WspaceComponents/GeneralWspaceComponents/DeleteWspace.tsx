@@ -1,6 +1,5 @@
 import { createPortal } from 'react-dom';
 import styles from '../../../styles/WorkingSpace.module.scss';
-import { useCallback } from 'react';
 import { useDeleteWspaceMutation } from '@/store/api/wspaceApi';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@/hooks/reduxHooks';
@@ -29,7 +28,7 @@ export default memo(function DeleteWspace({ wspaceId }: { wspaceId: number }) {
       <span onClick={openHandler} className={styles.settings__deleteWspaceTitle}>
         Удалить рабочее пространство
       </span>
-      {isOpen && createPortal(<DeleteModal />, document.body)}
+      {isOpen && DeleteModal}
     </div>
   );
 });
